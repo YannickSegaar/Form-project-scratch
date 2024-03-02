@@ -12,6 +12,7 @@
     } from "sveltekit-superforms";
     import { zodClient } from "sveltekit-superforms/adapters";
     import { toast } from "svelte-sonner"; // Import toast for notifications
+    import {Textarea} from "$lib/components/ui/textarea";
     import SuperDebug from "sveltekit-superforms";
 
 
@@ -120,5 +121,26 @@
         <Form.FieldErrors />
     </Form.Field>
 
+    <!-- Klantopmerkingen text area box
+     -->
+     <Form.Field {form} name="klantOpmerkingen">
+        <Form.Control let:attrs>
+            <Form.Label>Klantvragen en/of opmerkingen</Form.Label>
+            <Textarea
+                {...attrs}
+                placeholder="Zijn er nog vragen of opmerkingen over uw Quickscan?"
+                class="resize-none h-32"
+                bind:value={$formData.klantOpmerkingen}
+            />
+            <Form.Description>
+                Zijn er nog belangrijke dingen die wij weten moeten weten?
+            </Form.Description>
+        </Form.Control>
+        <Form.FieldErrors />
+    </Form.Field>
+      
     <Form.Button>Submit</Form.Button>
 </form>
+
+
+
