@@ -7,6 +7,7 @@ export const formSchema = z.object({
   dakType: z.string().min(1).max(50).refine(value => value !== '', { message: "Kies uw daktype" }),
   stroomAansluiting: z.string().min(1).max(50).refine(value => value !== '', { message: "Kies uw type aansluiting" }),
   klantOpmerkingen: z.string().optional(), //YRS: text area waarin klant eventuele opmerkingen kan toevoegen
+  privacyAkkoord: z.boolean().refine(value => value, { message: "U moet akkoord gaan met de privacy policy" }),
 });
  
 export type FormSchema = typeof formSchema;

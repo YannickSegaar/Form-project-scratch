@@ -12,7 +12,8 @@
     } from "sveltekit-superforms";
     import { zodClient } from "sveltekit-superforms/adapters";
     import { toast } from "svelte-sonner"; // Import toast for notifications
-    import {Textarea} from "$lib/components/ui/textarea";
+    import { Textarea } from "$lib/components/ui/textarea";
+    import { Checkbox } from "$lib/components/ui/checkbox";
     import SuperDebug from "sveltekit-superforms";
 
 
@@ -138,9 +139,23 @@
         </Form.Control>
         <Form.FieldErrors />
     </Form.Field>
+
+<!-- Checkbox Component Privacyverklaring -->
+<Form.Field {form} name="privacyAkkoord">
+    <Form.Control let:attrs>
+            <Checkbox {...attrs} bind:checked={$formData.privacyAkkoord} />
+                <Form.Label>Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label>
+                <Form.Description style="font-size: 12px;">
+                    <!-- Wij gebruiken deze gegevens enkel om je van informatie over zakelijke zonnepanelen te voorzien. -->
+                    Voor meer informatie bekijk onze
+                    <a href="https://protium.nl/privacy-policy" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">privacyverklaring</a>.                </Form.Description>
+            <input name={attrs.name} value={$formData.privacyAkkoord} hidden />
+    </Form.Control>
+    <Form.FieldErrors />
+</Form.Field>
+
       
     <Form.Button>Submit</Form.Button>
 </form>
-
 
 
