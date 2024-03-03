@@ -127,3 +127,15 @@
 
   /* More specific or responsive utility classes can be added here */
 }
+
+/* YRS: SELECT DROPDOWN  */
+  /* New class for left-aligning text inside Select.Value */
+  .select-value-text-left {
+    @apply text-left; /* Aligns text to the left */
+  }
+
+  /* If you want to add specific margins, you can also create utility classes for that */
+  .select-value-margin {
+    margin-left: 1rem; /* Example: adjust the left margin */
+    /* Add margin-top, margin-right, and margin-bottom if needed */
+  }

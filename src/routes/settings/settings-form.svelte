@@ -17,6 +17,7 @@
     import SuperDebug from "sveltekit-superforms";
 
 
+
     export let data: SuperValidated<Infer<FormSchema>>;
 
     const form = superForm(data, {
@@ -59,6 +60,22 @@
         <Form.Description>Wat is uw naam?</Form.Description>
         <Form.FieldErrors />
     </Form.Field>
+
+        <!-- TELEFOONNUMMER -->
+
+        <Form.Field {form} name="telefoonNummer">
+            <Form.Control let:attrs>
+                <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                    <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                        <span class="material-symbols-outlined icon">call</span>
+                        <Form.Label>Telefoonnummer</Form.Label>
+                    </div>
+                    <Input {...attrs} type="naam" bind:value={$formData.telefoonNummer} placeholder="... " />
+                </div>
+            </Form.Control>
+            <Form.Description>Wat is uw telefoonnummer?</Form.Description>
+            <Form.FieldErrors />
+        </Form.Field>
     
     <!-- EMAIL -->
 
@@ -118,7 +135,7 @@
                     <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
                         <!-- Icon inside the select trigger -->
                         <span class="material-symbols-outlined icon">electrical_services</span>
-                        <Select.Value placeholder="Kies uw type stroomaansluiting" />
+                        <Select.Value placeholder="Kies uw type stroomaansluiting" style="text-align: left; padding-left: 1rem;" />
                     </Select.Trigger>
                     <Select.Content>
                         <Select.Item value="<630 KVA" label="< 630 KVA" />
@@ -231,3 +248,12 @@
         <Form.Description>You can manage email address in your email settings.</Form.Description>
         <Form.FieldErrors />
     </Form.Field> -->
+
+
+    <!-- TO DO:
+    - Placeholder text font color lichter maken
+    - Postcode restrictive input (dat je alleen cijfers en letters kan invoeren)
+    - Icon kleuren aanpassen
+    - Select dropdown menu's aanpassen (left alignment)
+    - Success message, spinners/loaders/toast notifications
+ -->
