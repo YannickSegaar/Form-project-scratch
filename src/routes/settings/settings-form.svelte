@@ -15,7 +15,6 @@
     import { Textarea } from "$lib/components/ui/textarea";
     import { Checkbox } from "$lib/components/ui/checkbox";
     import SuperDebug from "sveltekit-superforms";
-    const airtableApiKey = import.meta.env.VITE_AIRTABLE_API_KEY;
 
 
 
@@ -93,6 +92,22 @@
         <Form.Description>Wat is uw email?</Form.Description>
         <Form.FieldErrors />
     </Form.Field>
+
+        <!-- DAKOPPERVLAK -->
+
+        <Form.Field {form} name="dakOppervlak">
+            <Form.Control let:attrs>
+                <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                    <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                        <span class="material-symbols-outlined icon">fullscreen</span>
+                        <Form.Label>Dakoppervlak</Form.Label>
+                    </div>
+                    <Input {...attrs} type="dakOppervlak" bind:value={$formData.dakOppervlak} placeholder="2500 m²" />
+                </div>
+            </Form.Control>
+            <Form.Description>Wat is het dakoppervlak?</Form.Description>
+            <Form.FieldErrors />
+        </Form.Field>
 
 
         <!-- DAKTYPE -->
