@@ -76,3 +76,32 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* YRS: Hieronder staan CSS styling voor icons die gebruikt worden */
+@layer components {
+  .icon {
+    @apply inline-flex align-middle justify-center; /* Updated to use inline-flex for better control */
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    color: var(--primary-foreground); /* Adjust color as needed */
+    font-size: 1.5rem; /* Adjust size as needed */
+    margin-right: 0.5rem; /* Adds space between icon and text, adjust as needed */
+    vertical-align: middle; /* This will vertically align inline or inline-block elements */
+  }
+
+  .icon-large {
+    @apply .icon;
+    font-size: 2rem; /* Larger size */
+  }
+
+  .icon-primary {
+    @apply .icon;
+    color: var(--primary); /* Use primary color */
+  }
+
+  .icon-secondary {
+    @apply .icon;
+    color: var(--secondary); /* Use secondary color */
+  }
+
+  /* Add more specific styles or responsive variants as needed */
+}
