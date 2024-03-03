@@ -44,141 +44,169 @@
 
 <form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance>
 
+    <!-- NAAM -->
+
     <Form.Field {form} name="naam">
-                <Form.Control let:attrs>
-                    <div class="flex flex-col"> <!-- Changed to flex-col for vertical stacking -->
-                        <div class="flex items-center mb-2"> <!-- Added mb-2 for spacing between label/icon and input -->
-                            <span class="material-symbols-outlined icon">person</span>
-                            <Form.Label>Naam</Form.Label>
-                        </div>
-                        <div class="flex-1">
-                    <Input {...attrs} type="naam" bind:value={$formData.naam} placeholder="Jan Jansen" />
-                </Form.Control>
+        <Form.Control let:attrs>
+            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                    <span class="material-symbols-outlined icon" style="margin-bottom: 0.1rem; font-size: 1.55rem;">person</span> <!-- Inline style for vertical adjustment -->
+                    <Form.Label>Naam</Form.Label>
+                </div>
+                <Input {...attrs} type="naam" bind:value={$formData.naam} placeholder="Jan Jansen" />
+            </div>
+        </Form.Control>
         <Form.Description>Wat is uw naam?</Form.Description>
         <Form.FieldErrors />
     </Form.Field>
+    
+    <!-- EMAIL -->
 
     <Form.Field {form} name="email">
         <Form.Control let:attrs>
-            <div class="flex flex-col"> <!-- Changed to flex-col for vertical stacking -->
-                <div class="flex items-center mb-2"> <!-- Added mb-2 for spacing between label/icon and input -->
+            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
                     <span class="material-symbols-outlined icon">mail</span>
                     <Form.Label>Email</Form.Label>
                 </div>
-                <div class="flex-1">
-            <Input {...attrs} type="email" bind:value={$formData.email} placeholder="janjansen@email.nl" />
+                <Input {...attrs} type="email" bind:value={$formData.email} placeholder="janjansen@email.nl" />
+            </div>
         </Form.Control>
-<Form.Description>Wat is uw emailadres?</Form.Description>
-<Form.FieldErrors />
-</Form.Field>
-    
-    <!-- <Form.Field {form} name="email">
-        <Form.Control let:attrs>
-            <span class="material-symbols-outlined">mail</span>  
-            <Form.Label>Email</Form.Label>
-            <Input {...attrs} type="email" bind:value={$formData.email} placeholder="janjansen@email.nl" />
-        </Form.Control>
-        <Form.Description>Wat is uw emailadres?</Form.Description>
-        <Form.FieldErrors />
-    </Form.Field> -->
-
-    <!-- Select Component Integration for Roof Type -->
-    <Form.Field {form} name="dakType">
-        <Form.Control let:attrs>
-            <Form.Label>Daktype</Form.Label>
-            <Select.Root selected={selectedDakType} onSelectedChange={(v) => { v && ($formData.dakType = v.value); }} required>
-                <Select.Trigger {...attrs}>
-                    <!-- YRS: Hieronder wordt Google icon toegevoegd, zorg dat styling nog wordt aangepast -->
-                    <span class="material-symbols-outlined">roofing</span>  
-                    <Select.Value placeholder="Kies uw daktype" />
-                </Select.Trigger>
-                <Select.Content>
-                    <Select.Item value="Plat" label="Plat" />
-                    <Select.Item value="Schuin" label="Schuin" />
-                    <Select.Item value="Kas" label="Kas" />
-                </Select.Content>
-            </Select.Root>
-            <input hidden bind:value={$formData.dakType} name={attrs.name} />
-        </Form.Control>
-        <Form.Description>Kies uw daktype.</Form.Description>
+        <Form.Description>Wat is uw email?</Form.Description>
         <Form.FieldErrors />
     </Form.Field>
+
+
+        <!-- DAKTYPE -->
+        <Form.Field {form} name="dakType">
+            <Form.Control let:attrs>
+                <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                    <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                        <!-- Icon next to the label -->
+                        <span class="material-symbols-outlined icon">roofing</span>  
+                        <Form.Label>Daktype</Form.Label>
+                    </div>
+                    <Select.Root selected={selectedDakType} onSelectedChange={(v) => { v && ($formData.dakType = v.value); }} required>
+                        <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
+                            <!-- Icon inside the select trigger -->
+                            <span class="material-symbols-outlined icon">roofing</span>
+                            <Select.Value placeholder="Kies uw daktype" />
+                        </Select.Trigger>
+                        <Select.Content>
+                            <Select.Item value="Plat" label="Plat" />
+                            <Select.Item value="Schuin" label="Schuin" />
+                            <Select.Item value="Kas" label="Kas" />
+                        </Select.Content>
+                    </Select.Root>
+                    <input hidden bind:value={$formData.dakType} name={attrs.name} />
+                </div>
+            </Form.Control>
+            <Form.Description>Kies uw daktype.</Form.Description>
+            <Form.FieldErrors />
+        </Form.Field>
     
-    <!-- Select Component Integration for stroomAansluiting -->
+    <!-- STROOMAANSLUITING -->
     <Form.Field {form} name="stroomAansluiting">
         <Form.Control let:attrs>
-            <Form.Label>Stroomaansluiting</Form.Label>
-            <Select.Root selected={selectedStroomAansluiting} onSelectedChange={(v) => { v && ($formData.stroomAansluiting = v.value); }} required>
-                <Select.Trigger {...attrs}>
-                    <!-- YRS: Hieronder wordt Google icon toegevoegd, zorg dat styling nog wordt aangepast -->
-                    <span class="material-symbols-outlined">electrical_services</span>  
-                    <Select.Value placeholder="Kies uw type stroomaansluiting" />
-                </Select.Trigger>
-                <Select.Content>
-                    <Select.Item value="<630 KVA" label="< 630 KVA" />
-                    <Select.Item value="630 KVA" label="630 KVA" />
-                    <Select.Item value=">630 KVA" label="> 630 KVA" />
-                </Select.Content>
-            </Select.Root>
-            <input hidden bind:value={$formData.stroomAansluiting} name={attrs.name} />
+            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                    <!-- Icon next to the label -->
+                    <span class="material-symbols-outlined icon">electrical_services</span>  
+                    <Form.Label>Stroomaansluiting</Form.Label>
+                </div>
+                <Select.Root selected={selectedStroomAansluiting} onSelectedChange={(v) => { v && ($formData.stroomAansluiting = v.value); }} required>
+                    <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
+                        <!-- Icon inside the select trigger -->
+                        <span class="material-symbols-outlined icon">electrical_services</span>
+                        <Select.Value placeholder="Kies uw type stroomaansluiting" />
+                    </Select.Trigger>
+                    <Select.Content>
+                        <Select.Item value="<630 KVA" label="< 630 KVA" />
+                        <Select.Item value="630 KVA" label="630 KVA" />
+                        <Select.Item value=">630 KVA" label="> 630 KVA" />
+                    </Select.Content>
+                </Select.Root>
+                <input hidden bind:value={$formData.stroomAansluiting} name={attrs.name} />
+            </div>
         </Form.Control>
         <Form.Description>Kies uw stroomaansluiting.</Form.Description>
         <Form.FieldErrors />
     </Form.Field>
+    
+
+    <!-- POSTCODE -->
 
     <Form.Field {form} name="postcode">
         <Form.Control let:attrs>
-            <span class="material-symbols-outlined">home</span>  
-            <Form.Label>Postcode</Form.Label>
-            <Input {...attrs} type="postcode" bind:value={$formData.postcode} placeholder="1234 AA" />
+            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                    <span class="material-symbols-outlined icon">home</span>
+                    <Form.Label>Postcode</Form.Label>
+                </div>
+                <Input {...attrs} type="postcode" bind:value={$formData.postcode} placeholder="1234 AA" />
+            </div>
         </Form.Control>
         <Form.Description>Wat is uw postcode?</Form.Description>
         <Form.FieldErrors />
     </Form.Field>
 
+    <!-- HUISNUMMER -->
+
     <Form.Field {form} name="huisnummer">
         <Form.Control let:attrs>
-            <span class="material-symbols-outlined">tag</span>  
-            <Form.Label>Huisnummer</Form.Label>
-            <Input {...attrs} type="huisnummer" bind:value={$formData.huisnummer} placeholder="1 " />
+            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                    <span class="material-symbols-outlined icon">tag</span>
+                    <Form.Label>Huisnummer</Form.Label>
+                </div>
+                <Input {...attrs} type="huisnummer" bind:value={$formData.huisnummer} placeholder="1" />
+            </div>
         </Form.Control>
         <Form.Description>Wat is uw huisnummer?</Form.Description>
         <Form.FieldErrors />
     </Form.Field>
 
-    <!-- Klantopmerkingen text area box -->
-     <Form.Field {form} name="klantOpmerkingen">
+
+    <!-- KLANTVRAGEN EN/OF OPMERKINGEN TEXTAREA -->
+
+    <Form.Field {form} name="klantOpmerkingen">
         <Form.Control let:attrs>
-            <span class="material-symbols-outlined">description</span>  
-            <Form.Label>Klantvragen en/of opmerkingen</Form.Label>
-            <Textarea
-                {...attrs}
-                placeholder="Zijn er nog vragen of opmerkingen over uw Quickscan?"
-                class="resize-none h-32"
-                bind:value={$formData.klantOpmerkingen}
-            />
+            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                    <span class="material-symbols-outlined icon">description</span>
+                    <Form.Label>Klantvragen en/of opmerkingen</Form.Label>
+                </div>
+                <Textarea
+                    {...attrs}
+                    placeholder="Zijn er nog vragen of opmerkingen over uw Quickscan?"
+                    class="resize-none h-32"
+                    bind:value={$formData.klantOpmerkingen}
+                />
+            </div>
             <Form.Description>
-                Zijn er nog belangrijke dingen die wij weten moeten weten?
+                Zijn er nog belangrijke dingen die wij moeten weten?
             </Form.Description>
         </Form.Control>
         <Form.FieldErrors />
     </Form.Field>
+    
 
 <!-- Checkbox Component Privacyverklaring -->
 <Form.Field {form} name="privacyAkkoord">
     <Form.Control let:attrs>
-            <Checkbox {...attrs} bind:checked={$formData.privacyAkkoord} />
-                <Form.Label>Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label>
-                <Form.Description style="font-size: 12px;">
-                    <!-- Wij gebruiken deze gegevens enkel om je van informatie over zakelijke zonnepanelen te voorzien. -->
-                    Voor meer informatie bekijk onze
-                    <a href="https://protium.nl/privacy-policy" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">privacyverklaring</a>.                </Form.Description>
-            <input name={attrs.name} value={$formData.privacyAkkoord} hidden />
+        <Checkbox {...attrs} bind:checked={$formData.privacyAkkoord} />
+        <Form.Label style="font-size: 12px;">Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label>
+        <Form.Description style="font-size: 12px;">
+            <!-- Wij gebruiken deze gegevens enkel om je van informatie over zakelijke zonnepanelen te voorzien. -->
+            Voor meer informatie bekijk onze
+            <a href="https://protium.nl/privacy-policy" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">privacyverklaring</a>.
+        </Form.Description>
+        <input name={attrs.name} value={$formData.privacyAkkoord} hidden />
     </Form.Control>
     <Form.FieldErrors />
 </Form.Field>
 
-    <Form.Button>Submit</Form.Button>
+<Form.Button>Submit</Form.Button>
 </form>
 
 

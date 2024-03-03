@@ -80,12 +80,12 @@
 /* YRS: Hieronder staan CSS styling voor icons die gebruikt worden */
 @layer components {
   .icon {
-    @apply inline-flex align-middle justify-center; /* Updated to use inline-flex for better control */
+    @apply inline-flex align-middle justify-center; /* Existing flex and alignment styles */
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
     color: var(--primary-foreground); /* Adjust color as needed */
-    font-size: 1.5rem; /* Adjust size as needed */
-    margin-right: 0.5rem; /* Adds space between icon and text, adjust as needed */
-    vertical-align: middle; /* This will vertically align inline or inline-block elements */
+    font-size: 1.25rem; /* Adjust size as needed */
+    margin-right: 0.5rem; /* Default space between icon and text */
+    vertical-align: middle; /* Vertically aligns inline or inline-block elements */
   }
 
   .icon-large {
@@ -103,5 +103,27 @@
     color: var(--secondary); /* Use secondary color */
   }
 
-  /* Add more specific styles or responsive variants as needed */
+  /* Utility classes for individual margin adjustments */
+  .icon-margin-right {
+    margin-right: 0.5rem; /* Adjust right margin, can be overridden per use case */
+  }
+
+  .icon-margin-left {
+    margin-left: 0.5rem; /* Adjust left margin */
+  }
+
+  .icon-margin-top {
+    margin-top: 0.5rem; /* Adjust top margin */
+  }
+
+  .icon-margin-bottom {
+    margin-bottom: 0.5rem; /* Adjust bottom margin */
+  }
+
+  /* Utility class for bottom alignment */
+  .icon-align-bottom {
+    vertical-align: bottom; /* Align the bottom of the icon with the text baseline */
+  }
+
+  /* More specific or responsive utility classes can be added here */
 }
