@@ -15,6 +15,7 @@
     import { Textarea } from "$lib/components/ui/textarea";
     import { Checkbox } from "$lib/components/ui/checkbox";
     import SuperDebug from "sveltekit-superforms";
+    const airtableApiKey = import.meta.env.VITE_AIRTABLE_API_KEY;
 
 
 
