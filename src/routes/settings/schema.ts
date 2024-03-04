@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const postalCodeRegex = /^\d{4}\s[A-Z]{2}$/;
+const postalCodeRegex = /^\d{4}[A-Z]{2}$/;
 
 export const formSchema = z.object({
     naam: z.string().min(2, "Wat is uw naam?").max(50, "Naam mag maximaal 50 karakters bevatten"),
@@ -14,6 +14,7 @@ export const formSchema = z.object({
     postcode: z.string().refine(value => postalCodeRegex.test(value), { message: "Ongeldige postcode" }),
     // huisnummer: z.string().min(1).max(10),
     huisnummer: z.string().min(1, "Voer een geldig huisnummer in").max(10, "Voer een geldig huisnummer in"),
+    postalCode: z.string().refine(value => postalCodeRegex.test(value), { message: "Ongeldige postcode" }),
 
 });
 

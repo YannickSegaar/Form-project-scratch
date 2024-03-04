@@ -4,6 +4,7 @@
     import * as Form from "$lib/components/ui/form";
     import { Input } from "$lib/components/ui/input";
     import * as Select from "$lib/components/ui/select"; // Import Select from shadcn-svelte
+    import { PinInput } from "bits-ui" // Import PinInput from bits-ui
     import { formSchema, type FormSchema } from "./schema";
     import {
         type SuperValidated,
@@ -47,8 +48,26 @@
 <div class="mx-auto flex max-w-md flex-col">
     <SuperDebug data={$formData} />
 </div>
+  
 
 <form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance>
+
+        <!-- YRS: POSTAL CODE VALIDATION TRY OUT -->
+
+        <Form.Field {form} name="postalCode">
+            <Form.Control let:attrs>
+                <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                    <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                        <span class="material-symbols-outlined icon">warning</span>
+                        <Form.Label>Postal Code Restriction</Form.Label>
+                    </div>
+                    <Input {...attrs} class="placeholder-custom" type="postcode" bind:value={$formData.postalCode} placeholder="1234 AA" />
+                </div>
+            </Form.Control>
+            <!-- <Form.Description>Wat is uw postcode?</Form.Description>YRS: omschrijving is overbodig -->
+            <Form.FieldErrors /> 
+        </Form.Field>
+
 
     <!-- NAAM -->
 
