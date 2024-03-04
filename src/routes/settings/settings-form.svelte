@@ -132,7 +132,7 @@
             <Form.FieldErrors />
             </Form.Field>
 
-        <!-- DAKTYPE -->
+            <!-- DAKTYPE -->
         <Form.Field {form} name="dakType" class="form-field">
             <Form.Control let:attrs>
                 <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
@@ -145,7 +145,7 @@
                         <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
                             <!-- Icon inside the select trigger -->
                             <!-- <span class="material-symbols-outlined icon">roofing</span> -->
-                            <Select.Value placeholder="Kies uw daktype" />
+                            <Select.Value placeholder="Kies uw daktype" class="select-placeholder" />
                         </Select.Trigger>
                         <Select.Content>
                             <Select.Item value="Plat" label="Plat" />
@@ -246,12 +246,11 @@
         <Form.FieldErrors />
     </Form.Field>
     
-
 <!-- Checkbox Component Privacyverklaring -->
 <Form.Field {form} name="privacyAkkoord" class="form-field">
     <Form.Control let:attrs>
         <Checkbox {...attrs} bind:checked={$formData.privacyAkkoord} />
-        <Form.Label style="font-size: 12px;">Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label>
+        <Form.Label style="font-size: 12px;">&nbsp;&nbsp;Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label> 
         <Form.Description style="font-size: 12px;">
             <!-- Wij gebruiken deze gegevens enkel om je van informatie over zakelijke zonnepanelen te voorzien. -->
             Voor meer informatie bekijk onze
@@ -270,8 +269,6 @@
 
 </form>
 
-<!-- <Form.Button class="special-button">Verzenden</Form.Button>
- -->
 
 
 

@@ -134,6 +134,11 @@
     @apply text-left; /* Aligns text to the left */
   }
 
+  /* YRS: Styling voor font color van de placeholder select value form component */
+  .select-placeholder::placeholder {
+    color: #FFFF00; /* Replace with the color you want */
+  }
+
   /* If you want to add specific margins, you can also create utility classes for that */
   .select-value-margin {
     margin-left: 1rem; /* Example: adjust the left margin */
