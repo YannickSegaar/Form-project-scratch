@@ -144,7 +144,7 @@
 
     /* Placeholder Styles */
     .placeholder-custom::placeholder { /* Target the placeholder */
-      color: #0095ff; /* YRS: aanpassen van placeholder kleur werkt niet, de font size lukt wel! */ 
+      color: #9CA3AF; /* YRS: aanpassen van placeholder kleur werkt niet, de font size lukt wel! */ 
       font-size: .75rem; /* Default size, adjust as needed */
     }
     
@@ -152,4 +152,60 @@
       color: #6B7280; /* Darker gray when the input is focused */
     }
 
-    /* #9CA3AF */
+
+  /* YRS: FORM FIELD STYLING voor ruimte te creeren tussen elk form component */
+  .form-field {
+    margin-bottom: 15px; /* Adjust as needed */
+    margin-top: 15px; /* Adjust as needed */
+  }
+  /* YRS: BUTTON STYLING */
+  .form-button {
+    padding: 10px 20px; /* Adjust dimensions as needed */
+    border-radius: 5px; /* Adjust rounding as needed */
+    background: linear-gradient(to right, #FFD700, #FFA500); /* Adjust gradient colors as needed */
+    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5); /* Adjust glow color and intensity as needed */
+    color: #015257; /* Adjust text color as needed */
+    font-weight: bold; /* Adjust font weight as needed */
+  }
+  .form-button span {
+    color: #FFFFFF; /* Adjust text color inside the button as needed */
+  }
+
+  /* YRS: De special-button styling wordt gebruikt voor de "Verzenden" button aan het einde van de form  */
+  .special-button {
+    background: #015257; /* Replace with the color you want */
+    box-shadow: 0 0 10px rgba(#FFFFFF, 0.5); /* Replace newColor with the color you want */
+    border-radius: 50px; /* Adjust rounding as needed */
+    margin-bottom: 50px; /* Adjust as needed */
+    margin-top: 10px; /* Adjust as needed */
+    height: 4rem; /* Adjust as needed */
+    color: #FFFFFF; /* Replace with the color you want */
+    font-weight: bold; /* Adjust as needed */
+    font-size: 20px; /* Adjust as needed */
+    position: relative; /* Adjust as needed */
+  }
+
+  .special-button span {
+    color: #FFFFFF; /* Replace with the color you want */
+    font-weight: bold; /* Adjust as needed */
+    }
+
+/* YRS: Logo styling inside button voor Protium logo aan rechterzijde van de "Verzenden" tekst */
+.logo-inside-special-button-right {
+  height: 60%; /* Adjust as needed */
+  width: auto; /* Keeps the aspect ratio */
+  position: absolute;
+  right: 20px; /* Adjust as needed */
+  top: 50%;
+  transform: translateY(-50%); /* Centers the logo vertically */
+}
+
+/* YRS: Logo styling inside button voor Protium logo aan linkerzijde van de "Verzenden" tekst */
+.logo-inside-special-button-left {
+  height: 60%; /* Adjust as needed */
+  width: auto; /* Keeps the aspect ratio */
+  position: absolute;
+  left: 20px; /* Adjust as needed */
+  top: 50%;
+  transform: translateY(-50%); /* Centers the logo vertically */
+}

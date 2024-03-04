@@ -66,7 +66,7 @@
 
     <!-- NAAM -->
 
-    <Form.Field {form} name="naam">
+    <Form.Field {form} name="naam" class="form-field">
         <Form.Control let:attrs>
             <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                 <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
@@ -82,7 +82,7 @@
 
         <!-- TELEFOONNUMMER -->
 
-        <Form.Field {form} name="telefoonNummer">
+        <Form.Field {form} name="telefoonNummer" class="form-field">
             <Form.Control let:attrs>
                 <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                     <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
@@ -98,7 +98,7 @@
     
     <!-- EMAIL -->
 
-    <Form.Field {form} name="email">
+    <Form.Field {form} name="email" class="form-field">
         <Form.Control let:attrs>
             <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                 <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
@@ -115,12 +115,12 @@
 
         <!-- DAKOPPERVLAK -->            
 
-        <Form.Field {form} name="dakOppervlak">
+        <Form.Field {form} name="dakOppervlak" class="form-field">
             <Form.Control let:attrs>
                 <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                     <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                        <span class="material-symbols-outlined icon">fullscreen</span>
-                        <Form.Label>Dakoppervlak</Form.Label>
+                        <span class="material-symbols-outlined icon">format_shapes</span>
+                        <Form.Label>Dakoppervlak in m²</Form.Label>
                     </div>
                         <Input {...attrs} class="placeholder-custom" type="number" bind:value={dakOppervlakInput} placeholder="2500 m²" on:input={handleInput} />
                 </div>
@@ -133,7 +133,7 @@
             </Form.Field>
 
         <!-- DAKTYPE -->
-        <Form.Field {form} name="dakType">
+        <Form.Field {form} name="dakType" class="form-field">
             <Form.Control let:attrs>
                 <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                     <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
@@ -161,7 +161,7 @@
         </Form.Field>
     
     <!-- STROOMAANSLUITING -->
-    <Form.Field {form} name="stroomAansluiting">
+    <Form.Field {form} name="stroomAansluiting" class="form-field">
         <Form.Control let:attrs>
             <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                 <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
@@ -179,6 +179,7 @@
                         <Select.Item value="<630 KVA" label="< 630 KVA" />
                         <Select.Item value="630 KVA" label="630 KVA" />
                         <Select.Item value=">630 KVA" label="> 630 KVA" />
+                        <Select.Item value="Weet ik niet" label="Weet ik niet" />
                     </Select.Content>
                 </Select.Root>
                 <input hidden bind:value={$formData.stroomAansluiting} name={attrs.name} />
@@ -191,7 +192,7 @@
 
     <!-- POSTCODE -->
 
-    <Form.Field {form} name="postcode">
+    <Form.Field {form} name="postcode" class="form-field">
         <Form.Control let:attrs>
             <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                 <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
@@ -207,7 +208,7 @@
 
     <!-- HUISNUMMER -->
 
-    <Form.Field {form} name="huisnummer">
+    <Form.Field {form} name="huisnummer" class="form-field">
         <Form.Control let:attrs>
             <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                 <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
@@ -224,7 +225,7 @@
 
     <!-- KLANTVRAGEN EN/OF OPMERKINGEN TEXTAREA -->
 
-    <Form.Field {form} name="klantOpmerkingen">
+    <Form.Field {form} name="klantOpmerkingen" class="form-field">
         <Form.Control let:attrs>
             <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                 <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
@@ -247,7 +248,7 @@
     
 
 <!-- Checkbox Component Privacyverklaring -->
-<Form.Field {form} name="privacyAkkoord">
+<Form.Field {form} name="privacyAkkoord" class="form-field">
     <Form.Control let:attrs>
         <Checkbox {...attrs} bind:checked={$formData.privacyAkkoord} />
         <Form.Label style="font-size: 12px;">Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label>
@@ -261,8 +262,16 @@
     <!-- <Form.FieldErrors /> YRS: Default error messages uitgezet. NL foutmeldingen zijn gedefineerd in schema.ts file -->
 </Form.Field>
 
-<Form.Button>Submit</Form.Button>
+<Form.Button class="special-button">
+    Verzenden
+    <img src="/Protium_logo.png" alt="Protium Logo" class="logo-inside-special-button-right" />
+    <img src="/Protium_logo.png" alt="Protium Logo" class="logo-inside-special-button-left" />
+  </Form.Button>
+
 </form>
+
+<!-- <Form.Button class="special-button">Verzenden</Form.Button>
+ -->
 
 
 
