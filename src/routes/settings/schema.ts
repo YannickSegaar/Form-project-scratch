@@ -5,7 +5,7 @@ const postalCodeRegex = /^\d{4}\s[A-Z]{2}$/;
 export const formSchema = z.object({
     naam: z.string().min(2, "Wat is uw naam?").max(50, "Naam mag maximaal 50 karakters bevatten"),
     email: z.string().min(8, "Voer een geldig e-mailadres in"),
-    telefoonNummer: z.string().min(10, "Voer een geldig telefoonnummer in" ).max(15, "Telefoonnummer mag uit maximaal 15 karakters bestaan"),
+    telefoonNummer: z.string().min(9, "Voer een geldig telefoonnummer in" ).max(15, "Telefoonnummer mag uit maximaal 15 karakters bestaan"),
     dakOppervlak: z.number().min(2500, "Het dakoppervlak moet minimaal 2500m² zijn"),
     dakType: z.string().refine(value => value !== '', { message: "Kies uw daktype" }),
     stroomAansluiting: z.string().refine(value => value !== '', { message: "Kies uw type stroomaansluiting" }),

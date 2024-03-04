@@ -75,7 +75,7 @@
                         <span class="material-symbols-outlined icon">call</span>
                         <Form.Label>Telefoonnummer</Form.Label>
                     </div>
-                    <Input {...attrs} class="placeholder-custom" type="tel" bind:value={$formData.telefoonNummer} placeholder="... " />
+                    <Input {...attrs} class="placeholder-custom" type="tel" bind:value={$formData.telefoonNummer} placeholder=" " />
                 </div>
             </Form.Control>
             <!-- <Form.Description>Wat is uw telefoonnummer?</Form.Description> YRS: omschrijving is overbodig -->
