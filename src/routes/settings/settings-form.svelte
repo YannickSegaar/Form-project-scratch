@@ -50,6 +50,23 @@
 
 <form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance>
 
+        <!-- YRS: POSTAL CODE VALIDATION TRY OUT -->
+
+        <Form.Field {form} name="postalCode">
+            <Form.Control let:attrs>
+                <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                    <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                        <span class="material-symbols-outlined icon">home</span>
+                        <Form.Label>Postal Code Restriction</Form.Label>
+                    </div>
+                    <Input {...attrs} class="placeholder-custom" type="postcode" bind:value={$formData.postalCode} placeholder="1234 AA" />
+                </div>
+            </Form.Control>
+            <!-- <Form.Description>Wat is uw postcode?</Form.Description>YRS: omschrijving is overbodig -->
+            <Form.FieldErrors /> 
+        </Form.Field>
+
+
     <!-- NAAM -->
 
     <Form.Field {form} name="naam">
