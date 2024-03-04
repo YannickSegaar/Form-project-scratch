@@ -36,6 +36,11 @@
     $: selectedDakType = $formData.dakType ? { label: $formData.dakType, value: $formData.dakType } : undefined;
     $: selectedStroomAansluiting = $formData.stroomAansluiting ? { label: $formData.stroomAansluiting, value: $formData.stroomAansluiting } : undefined;
     
+    // YRS: zorg dat dakoppervlak input goed wordt gevalideerd
+
+    let dakOppervlakInput = '';
+            $: $formData.dakOppervlak = Number(dakOppervlakInput);
+
 </script>
 
 <!-- YRS: SuperDebug zorgt voor window met JSON formatting van display form input -->
@@ -57,7 +62,7 @@
                 <Input {...attrs} class="placeholder-custom" type="naam" bind:value={$formData.naam} placeholder="Jan Jansen" />
             </div>
         </Form.Control>
-        <Form.Description>Wat is uw naam?</Form.Description>
+        <!-- <Form.Description>Wat is uw naam?</Form.Description> YRS: omschrijving is overbodig -->
         <Form.FieldErrors />
     </Form.Field>
 
@@ -70,11 +75,11 @@
                         <span class="material-symbols-outlined icon">call</span>
                         <Form.Label>Telefoonnummer</Form.Label>
                     </div>
-                    <Input {...attrs} type="naam" bind:value={$formData.telefoonNummer} placeholder="... " />
+                    <Input {...attrs} class="placeholder-custom" type="tel" bind:value={$formData.telefoonNummer} placeholder="... " />
                 </div>
             </Form.Control>
-            <Form.Description>Wat is uw telefoonnummer?</Form.Description>
-            <Form.FieldErrors />
+            <!-- <Form.Description>Wat is uw telefoonnummer?</Form.Description> YRS: omschrijving is overbodig -->
+            <Form.FieldErrors /> 
         </Form.Field>
     
     <!-- EMAIL -->
@@ -84,16 +89,16 @@
             <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                 <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
                     <span class="material-symbols-outlined icon">mail</span>
-                    <Form.Label>Email</Form.Label>
+                    <Form.Label>E-mail</Form.Label>
                 </div>
-                <Input {...attrs} type="email" bind:value={$formData.email} placeholder="janjansen@email.nl" />
+                <Input {...attrs} class="placeholder-custom" type="email" bind:value={$formData.email} placeholder="janjansen@email.nl" />
             </div>
         </Form.Control>
-        <Form.Description>Wat is uw email?</Form.Description>
-        <Form.FieldErrors />
+        <!-- <Form.Description>Wat is uw email?</Form.Description> YRS: omschrijving is overbodig -->
+        <Form.FieldErrors /> 
     </Form.Field>
 
-        <!-- DAKOPPERVLAK -->
+        <!-- DAKOPPERVLAK -->            
 
         <Form.Field {form} name="dakOppervlak">
             <Form.Control let:attrs>
@@ -102,7 +107,7 @@
                         <span class="material-symbols-outlined icon">fullscreen</span>
                         <Form.Label>Dakoppervlak</Form.Label>
                     </div>
-                    <Input {...attrs} type="dakOppervlak" bind:value={$formData.dakOppervlak} placeholder="2500 m²" />
+                        <Input {...attrs} class="placeholder-custom" type="number" bind:value={dakOppervlakInput} placeholder="2500 m²" />
                 </div>
             </Form.Control>
             <Form.Description>Wat is het dakoppervlak?</Form.Description>
@@ -122,7 +127,7 @@
                     <Select.Root selected={selectedDakType} onSelectedChange={(v) => { v && ($formData.dakType = v.value); }} required>
                         <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
                             <!-- Icon inside the select trigger -->
-                            <span class="material-symbols-outlined icon">roofing</span>
+                            <!-- <span class="material-symbols-outlined icon">roofing</span> -->
                             <Select.Value placeholder="Kies uw daktype" />
                         </Select.Trigger>
                         <Select.Content>
@@ -134,7 +139,7 @@
                     <input hidden bind:value={$formData.dakType} name={attrs.name} />
                 </div>
             </Form.Control>
-            <Form.Description>Kies uw daktype.</Form.Description>
+            <!-- <Form.Description>Kies uw daktype.</Form.Description> YRS: omschrijving is overbodig -->
             <Form.FieldErrors />
         </Form.Field>
     
@@ -150,7 +155,7 @@
                 <Select.Root selected={selectedStroomAansluiting} onSelectedChange={(v) => { v && ($formData.stroomAansluiting = v.value); }} required>
                     <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
                         <!-- Icon inside the select trigger -->
-                        <span class="material-symbols-outlined icon">electrical_services</span>
+                        <!-- <span class="material-symbols-outlined icon">electrical_services</span> -->
                         <Select.Value placeholder="Kies uw type stroomaansluiting" style="text-align: left; padding-left: 1rem;" />
                     </Select.Trigger>
                     <Select.Content>
@@ -162,8 +167,8 @@
                 <input hidden bind:value={$formData.stroomAansluiting} name={attrs.name} />
             </div>
         </Form.Control>
-        <Form.Description>Kies uw stroomaansluiting.</Form.Description>
-        <Form.FieldErrors />
+        <!-- <Form.Description>Kies uw stroomaansluiting.</Form.Description> YRS: omschrijving is overbodig -->
+        <Form.FieldErrors /> 
     </Form.Field>
     
 
@@ -176,11 +181,11 @@
                     <span class="material-symbols-outlined icon">home</span>
                     <Form.Label>Postcode</Form.Label>
                 </div>
-                <Input {...attrs} type="postcode" bind:value={$formData.postcode} placeholder="1234 AA" />
+                <Input {...attrs} class="placeholder-custom" type="postcode" bind:value={$formData.postcode} placeholder="1234 AA" />
             </div>
         </Form.Control>
-        <Form.Description>Wat is uw postcode?</Form.Description>
-        <Form.FieldErrors />
+        <!-- <Form.Description>Wat is uw postcode?</Form.Description>YRS: omschrijving is overbodig -->
+        <Form.FieldErrors /> 
     </Form.Field>
 
     <!-- HUISNUMMER -->
@@ -192,10 +197,10 @@
                     <span class="material-symbols-outlined icon">tag</span>
                     <Form.Label>Huisnummer</Form.Label>
                 </div>
-                <Input {...attrs} type="huisnummer" bind:value={$formData.huisnummer} placeholder="1" />
+                <Input {...attrs} class="placeholder-custom" type="huisnummer" bind:value={$formData.huisnummer} placeholder="1 " />
             </div>
         </Form.Control>
-        <Form.Description>Wat is uw huisnummer?</Form.Description>
+        <!-- <Form.Description>Wat is uw huisnummer?</Form.Description>YRS: omschrijving is overbodig -->
         <Form.FieldErrors />
     </Form.Field>
 
@@ -212,13 +217,13 @@
                 <Textarea
                     {...attrs}
                     placeholder="Zijn er nog vragen of opmerkingen over uw Quickscan?"
-                    class="resize-none h-32"
+                    class="resize-none h-32 placeholder-custom"
                     bind:value={$formData.klantOpmerkingen}
                 />
             </div>
-            <Form.Description>
+            <!-- <Form.Description>
                 Zijn er nog belangrijke dingen die wij moeten weten?
-            </Form.Description>
+            </Form.Description> YRS: omschrijving is overbodig -->
         </Form.Control>
         <Form.FieldErrors />
     </Form.Field>
@@ -236,7 +241,7 @@
         </Form.Description>
         <input name={attrs.name} value={$formData.privacyAkkoord} hidden />
     </Form.Control>
-    <Form.FieldErrors />
+    <!-- <Form.FieldErrors /> YRS: Default error messages uitgezet. NL foutmeldingen zijn gedefineerd in schema.ts file -->
 </Form.Field>
 
 <Form.Button>Submit</Form.Button>
