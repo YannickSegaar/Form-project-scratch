@@ -47,6 +47,7 @@
 <div class="mx-auto flex max-w-md flex-col">
     <SuperDebug data={$formData} />
 </div>
+  
 
 <form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance>
 
@@ -56,7 +57,7 @@
             <Form.Control let:attrs>
                 <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                     <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                        <span class="material-symbols-outlined icon">home</span>
+                        <span class="material-symbols-outlined icon">warning</span>
                         <Form.Label>Postal Code Restriction</Form.Label>
                     </div>
                     <Input {...attrs} class="placeholder-custom" type="postcode" bind:value={$formData.postalCode} placeholder="1234 AA" />
