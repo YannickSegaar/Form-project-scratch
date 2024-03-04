@@ -15,6 +15,7 @@
     import { Textarea } from "$lib/components/ui/textarea";
     import { Checkbox } from "$lib/components/ui/checkbox";
     import SuperDebug from "sveltekit-superforms";
+    import { roofsizeDrawing } from "./TESTroofsizeDrawing"; // YRS: Import roofsizeDrawing.ts for dynamic roofSize
 
     export let data: SuperValidated<Infer<FormSchema>>;
 
@@ -34,11 +35,25 @@
     $: selectedDakType = $formData.dakType ? { label: $formData.dakType, value: $formData.dakType } : undefined;
     $: selectedStroomAansluiting = $formData.stroomAansluiting ? { label: $formData.stroomAansluiting, value: $formData.stroomAansluiting } : undefined;
     
-    // YRS: zorg dat dakoppervlak input goed wordt gevalideerd
-
+    // YRS: Zorg dat dakOppervlak goed gevalideerd wordt van string naar nummer en dat manual override mogelijk is
+    // dakOppervlakInput starts as a string for input binding
     let dakOppervlakInput = '';
-            $: $formData.dakOppervlak = Number(dakOppervlakInput);
+    let manualOverride = false;
 
+    // Function to handle manual input, converting input to number and setting manual override
+    function handleInput(event: InputEvent) {
+        let inputElement = event.target as HTMLInputElement;
+        dakOppervlakInput = inputElement.value;
+        manualOverride = true;
+    }
+
+    // Reactive statement for handling automatic updates or manual overrides
+    $: {
+        if (!manualOverride && roofsizeDrawing !== undefined) {
+            dakOppervlakInput = roofsizeDrawing.toString();
+        }
+        $formData.dakOppervlak = Number(dakOppervlakInput);
+    }
 </script>
 
 <!-- YRS: SuperDebug zorgt voor window met JSON formatting van display form input -->
@@ -97,6 +112,7 @@
         <Form.FieldErrors /> 
     </Form.Field>
 
+
         <!-- DAKOPPERVLAK -->            
 
         <Form.Field {form} name="dakOppervlak">
@@ -106,13 +122,15 @@
                         <span class="material-symbols-outlined icon">fullscreen</span>
                         <Form.Label>Dakoppervlak</Form.Label>
                     </div>
-                        <Input {...attrs} class="placeholder-custom" type="number" bind:value={dakOppervlakInput} placeholder="2500 m²" />
+                        <Input {...attrs} class="placeholder-custom" type="number" bind:value={dakOppervlakInput} placeholder="2500 m²" on:input={handleInput} />
                 </div>
             </Form.Control>
-            <Form.Description>Wat is het dakoppervlak?</Form.Description>
+            <Form.Description>
+                <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
+                <p>Klopt dit niet? Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
+            </Form.Description>
             <Form.FieldErrors />
-        </Form.Field>
-
+            </Form.Field>
 
         <!-- DAKTYPE -->
         <Form.Field {form} name="dakType">

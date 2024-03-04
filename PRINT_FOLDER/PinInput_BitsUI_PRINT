@@ -1,42 +1,59 @@
 <script lang="ts">
-  import { PinInput, Toggle } from "bits-ui";
-  import { Eye, EyeSlash } from "$icons/index.js";
+	import { superForm } from "sveltekit-superforms";
+	import {
+		Field,
+		Control,
+		Label,
+		Description,
+		FieldErrors,
+		Fieldset,
+		Legend,
+	} from "formsnap";
+	import { zodClient } from "sveltekit-superforms/adapters";
+	import type { PageData } from "./$types";
+	import { allergies, schema, themes } from "./schema.js";
+	import SuperDebug from "sveltekit-superforms";
+  import { roofSizeDrawing } from "./testDelete"; // Updated import path
+	export let data: PageData;
  
-  let value: string[] | undefined = [];
- 
-  let unlocked = true;
-  let pinInputType: "text" | "password" = "password";
-  $: pinInputType = unlocked ? "text" : "password";
+	const form = superForm(data.form, {
+		validators: zodClient(schema),
+	});
+	const { form: formData, enhance } = form;
+
+  // // Ensure roofSize is reactively updated YRS: deze optie werkt, maar niet heel gebruiksvriendelijk
+  // $: $formData.roofSize = $formData.roofSize || roofSizeDrawing;
+
+  // YRS: nieuwe optie om dynamic roofSizeDrawing en manual override voor roofSize te implementeren:
+
+    // Flag to track if user is manually overriding the roofSize
+    let manualOverride = false;
+
+// Reactive statement to update roofSize only if there's no manual override
+$: if (!manualOverride) {
+  $formData.roofSize = roofSizeDrawing;
+}
+
+// Function to handle user input and set manual override
+function handleInput() {
+  manualOverride = true;
+}
+
 </script>
  
-<PinInput.Root
-  bind:value
-  class="flex items-center gap-2"
-  type={pinInputType}
-  placeholder="0"
->
-  <PinInput.Input
-    class="flex h-input w-10 select-none rounded-input border border-foreground bg-background px-2 py-3 text-center font-alt text-[17px] tracking-[0.01em] text-foreground placeholder-shown:border-border-input focus-within:border-border-input-hover focus-within:shadow-date-field-focus hover:border-border-input-hover"
-  />
-  <PinInput.Input
-    class="flex h-input w-10 select-none rounded-input border border-foreground bg-background px-2 py-3 text-center font-alt text-[17px] tracking-[0.01em] text-foreground placeholder-shown:border-border-input focus-within:border-border-input-hover focus-within:shadow-date-field-focus hover:border-border-input-hover"
-  />
-  <PinInput.Input
-    class="flex h-input w-10 select-none rounded-input border border-foreground bg-background px-2 py-3 text-center font-alt text-[17px] tracking-[0.01em] text-foreground placeholder-shown:border-border-input focus-within:border-border-input-hover focus-within:shadow-date-field-focus hover:border-border-input-hover"
-  />
-  <PinInput.Input
-    class="flex h-input w-10 select-none rounded-input border border-foreground bg-background px-2 py-3 text-center font-alt text-[17px] tracking-[0.01em] text-foreground placeholder-shown:border-border-input focus-within:border-border-input-hover focus-within:shadow-date-field-focus hover:border-border-input-hover"
-  />
-  <PinInput.HiddenInput />
-  <Toggle.Root
-    aria-label="toggle code visibility"
-    class="inline-flex size-10 items-center justify-center rounded-[9px] text-foreground/40 transition-all hover:bg-muted active:scale-98 active:bg-dark-10 active:data-[state=on]:bg-dark-10"
-    bind:pressed={unlocked}
-  >
-    {#if unlocked}
-      <Eye class="size-5" />
-    {:else}
-      <EyeSlash class="size-5" />
-    {/if}
-  </Toggle.Root>
-</PinInput.Root>
+<!-- Start of the form -->
+<form use:enhance class="mx-auto flex max-w-md flex-col" method="POST">
+
+  <Field {form} name="roofSize">
+    <Control let:attrs>
+      <Label>Dakoppervlak</Label>
+      <input {...attrs} type="number" bind:value={$formData.roofSize} on:input={handleInput} />
+    </Control>
+    <Description>According to the drawing, the roof size is {roofSizeDrawing} m2, changing this value is optional.</Description>
+    <FieldErrors />
+  </Field>
+
+	<button>Submit</button>
+</form>
+<SuperDebug data={$formData} />
+
