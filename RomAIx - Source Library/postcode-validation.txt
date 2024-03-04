@@ -1,3 +1,73 @@
+<!-- YRS: postcode-validation.svelte is een aparte component gecreerd om de logica van postcode validation te managen.
+Dit component wordt geintegreerd met de settings-form.svelte code  -->
+
+YRS: Ik heb uiteindelijk deze pin input postcode validation niet toegepast omdat ik het niet mooi vond qua styling
+en user experience, maar de code werkt wel, dus ik laat het hier staan omdat ik het later misschien wel kan gebruiken.
+
+**LET OP**
+
+Vergeet niet ook je schema.ts aan te passen zodat de postal code validation wordt meegenomen in de form
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+<!-- START CODE VOOR postcode-validation.svelte -->
+
+<script lang="ts">
+  import { PinInput } from "bits-ui";
+
+  export let postalCode: string[] = ['', '', '', '', '', ''];
+
+  // Define placeholders for each input
+  const placeholders = ['1', '2', '3', '4', 'A', 'B'];
+
+  // Function to ensure input is correctly formatted
+  function formatInput(event: Event, index: number) {
+    const input = event.target as HTMLInputElement;
+    if (index < 4) { // First 4 inputs are numeric
+      input.value = input.value.replace(/\D/g, '');
+    } else { // Last 2 inputs are letters
+      input.value = input.value.toUpperCase().replace(/[^A-Z]/g, '');
+    }
+    postalCode[index] = input.value;
+  }
+</script>
+
+<PinInput.Root
+bind:value={postalCode}
+class="flex items-center gap-2"
+>
+{#each postalCode as _, index}
+  <PinInput.Input
+    class="flex h-input w-10 select-none rounded-input border border-foreground bg-background px-2 py-3 text-center font-alt text-[17px] tracking-[0.01em] text-foreground placeholder-shown:border-border-input focus-within:border-border-input-hover focus-within:shadow-date-field-focus hover:border-border-input-hover"
+    on:input={(event) => formatInput(event, index)}
+    maxlength={index < 4 ? 1 : 1}
+    placeholder={placeholders[index]} 
+    pattern={index < 4 ? '\\d' : '[A-Za-z]'}
+  />
+{/each}
+</PinInput.Root>
+
+<!-- EINDE CODE VOOR postcode-validation.svelte -->
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+<!-- START CODE VOOR settings-form.svelte met postcode validation en pin input styling -->
+
 <!-- YRS: shadcn-svelte docs form creation -->
 
 <script lang="ts">
@@ -15,6 +85,8 @@
     import { Textarea } from "$lib/components/ui/textarea";
     import { Checkbox } from "$lib/components/ui/checkbox";
     import SuperDebug from "sveltekit-superforms";
+    import PostcodeValidation from "./postcode-validation.txt"; // YRS: Import postcode-validation.svelte component in PascalCase format
+    let postalCode = ['', '', '', '', '', '']; // YRS: postalCode array for postcode validation
 
     export let data: SuperValidated<Infer<FormSchema>>;
 
@@ -48,6 +120,25 @@
   
 
 <form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance>
+
+        <!-- YRS: POSTAL CODE VALIDATION TRY OUT -->
+
+        <!-- <Input {...attrs} class="placeholder-custom" type="postcode" bind:value={$formData.postalCode} placeholder="1234 AA" /> -->
+
+        <Form.Field {form} name="postalCode">
+            <Form.Control let:attrs>
+                <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                    <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                        <span class="material-symbols-outlined icon">warning</span>
+                        <Form.Label>Postal Code Restriction</Form.Label>
+                    </div>
+                    <PostcodeValidation bind:postalCode={postalCode} />
+                </div>
+            </Form.Control>
+            <!-- <Form.Description>Wat is uw postcode?</Form.Description>YRS: omschrijving is overbodig -->
+            <Form.FieldErrors /> 
+        </Form.Field>
+
 
     <!-- NAAM -->
 
@@ -193,7 +284,7 @@
         <Form.Control let:attrs>
             <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                 <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                    <span class="material-symbols-outlined icon">pin</span>
+                    <span class="material-symbols-outlined icon">tag</span>
                     <Form.Label>Huisnummer</Form.Label>
                 </div>
                 <Input {...attrs} class="placeholder-custom" type="huisnummer" bind:value={$formData.huisnummer} placeholder="1 " />
@@ -247,33 +338,4 @@
 </form>
 
 
-
-    <!-- YRS: Deze code component is voor select dropdown menu voor email, ik heb deze gemute, maar gebruik hem als referentie -->
-    <!-- Select Component Integration for Email
-    <Form.Field {form} name="email">
-        <Form.Control let:attrs>
-            <Form.Label>Email</Form.Label>
-            <Select.Root selected={selectedEmail} onSelectedChange={(v) => { v && ($formData.email = v.value); }}>
-                <Select.Trigger {...attrs}>
-                    <Select.Value placeholder="Select a verified email to display" />
-                </Select.Trigger>
-                <Select.Content>
-                    <Select.Item value="m@example.com" label="m@example.com" />
-                    <Select.Item value="m@google.com" label="m@google.com" />
-                    <Select.Item value="m@support.com" label="m@support.com" />
-                </Select.Content>
-            </Select.Root>
-            <input hidden bind:value={$formData.email} name={attrs.name} />
-        </Form.Control>
-        <Form.Description>You can manage email address in your email settings.</Form.Description>
-        <Form.FieldErrors />
-    </Form.Field> -->
-
-
-    <!-- TO DO:
-    - Placeholder text font color lichter maken
-    - Postcode restrictive input (dat je alleen cijfers en letters kan invoeren)
-    - Icon kleuren aanpassen
-    - Select dropdown menu's aanpassen (left alignment)
-    - Success message, spinners/loaders/toast notifications
- -->
+<!-- EINDE CODE VOOR settings-form.svelte met postcode validation en pin input styling -->

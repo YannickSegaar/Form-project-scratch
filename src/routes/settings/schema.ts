@@ -12,10 +12,7 @@ export const formSchema = z.object({
     klantOpmerkingen: z.string().optional(),
     privacyAkkoord: z.boolean().refine(value => value),
     postcode: z.string().refine(value => postalCodeRegex.test(value), { message: "Ongeldige postcode" }),
-    // huisnummer: z.string().min(1).max(10),
     huisnummer: z.string().min(1, "Voer een geldig huisnummer in").max(10, "Voer een geldig huisnummer in"),
-    postalCode: z.string().refine(value => postalCodeRegex.test(value), { message: "Ongeldige postcode" }),
-
 });
 
 export type FormSchema = typeof formSchema;
