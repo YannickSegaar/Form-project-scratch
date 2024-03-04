@@ -6,6 +6,7 @@ export const formSchema = z.object({
     naam: z.string().min(2).max(50),
     email: z.string().email(),
     telefoonNummer: z.string().min(10).max(15).refine(value => value !== '', { message: "Voer een geldig telefoonnummer in" }),
+    dakOppervlak: z.number().min(2500, "Minimaal 2500 m2").optional(),
     dakType: z.string().min(1).max(50).refine(value => value !== '', { message: "Kies uw daktype" }),
     stroomAansluiting: z.string().min(1).max(50).refine(value => value !== '', { message: "Kies uw type aansluiting" }),
     klantOpmerkingen: z.string().optional(),

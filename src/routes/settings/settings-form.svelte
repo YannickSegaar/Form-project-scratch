@@ -54,7 +54,7 @@
                     <span class="material-symbols-outlined icon" style="margin-bottom: 0.1rem; font-size: 1.55rem;">person</span> <!-- Inline style for vertical adjustment -->
                     <Form.Label>Naam</Form.Label>
                 </div>
-                <Input {...attrs} type="naam" bind:value={$formData.naam} placeholder="Jan Jansen" />
+                <Input {...attrs} class="placeholder-custom" type="naam" bind:value={$formData.naam} placeholder="Jan Jansen" />
             </div>
         </Form.Control>
         <Form.Description>Wat is uw naam?</Form.Description>

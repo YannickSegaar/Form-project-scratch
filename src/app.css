@@ -139,3 +139,15 @@
     margin-left: 1rem; /* Example: adjust the left margin */
     /* Add margin-top, margin-right, and margin-bottom if needed */
   }
+
+  /* YRS: PLACEHOLDER STYLING */
+
+    /* Placeholder Styles */
+    .placeholder-custom::placeholder { /* Target the placeholder */
+      color: #9CA3AF; /* Light gray placeholder text */
+      font-size: 0.75rem; /* Default size, adjust as needed */
+    }
+    
+    .placeholder-custom:focus::placeholder { /* Change placeholder on focus */
+      color: #6B7280; /* Darker gray when the input is focused */
+    }

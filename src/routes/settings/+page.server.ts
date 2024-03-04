@@ -6,8 +6,6 @@ import { formSchema } from "./schema";
 
 // Assuming VITE_AIRTABLE_API_KEY is stored in your .env file
 const airtableApiKey = import.meta.env.VITE_AIRTABLE_API_KEY;
-const airtableBaseId = "appiUhN3UTNOzb1v3"; // Your Airtable Base ID
-const airtableTableName = encodeURIComponent("Svelte Contactform");
 
 export const load: PageServerLoad = async () => {
 	return {
