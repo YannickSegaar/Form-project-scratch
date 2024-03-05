@@ -20,14 +20,18 @@
     import  { message } from "sveltekit-superforms"; // YRS: Import message for success message
 
     export let data: SuperValidated<Infer<FormSchema>>;
+    
+        // YRS: Reactieve variabele toe om de form submission status bij te houden
+    let isSubmitted = false;
 
         const form = superForm(data, {
         validators: zodClient(formSchema),
-        delayMs: 500, // Start showing the loading spinner after ...ms, adjust to your needs
+        delayMs: 50, // Start showing the loading spinner after ...ms, adjust to your needs
         timeoutMs: 8000, // Consider as timeout after ...ms, adjust to your needs
         onUpdated: ({ form: f }) => {
             if (f.valid) {
                 toast.success("Form submission successful.");
+                isSubmitted = true; // YRS: Verander is submitted naar true
             } else {
                 toast.error("Please fix the errors in the form.");
             }
@@ -273,4 +277,12 @@
     <img src="/Protium_logo.png" alt="Protium Logo" class="logo-inside-special-button-right" />
     <img src="/Protium_logo.png" alt="Protium Logo" class="logo-inside-special-button-left" />
   </Form.Button>
+
+  <!-- Display success message after submission -->
+{#if isSubmitted}
+<div class="success-banner">
+    Uw Quickscan gegevens zijn succesvol opgeslagen, een expert van Protium neemt contact met u op ☀️
+</div>
+{/if}
+
 </form>

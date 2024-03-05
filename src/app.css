@@ -181,7 +181,7 @@
     background: #015257; /* Replace with the color you want */
     box-shadow: 0 0 10px rgba(#FFFFFF, 0.5); /* Replace newColor with the color you want */
     border-radius: 50px; /* Adjust rounding as needed */
-    margin-bottom: 50px; /* Adjust as needed */
+    margin-bottom: 30px; /* Adjust as needed */
     margin-top: 10px; /* Adjust as needed */
     height: 4rem; /* Adjust as needed */
     color: #FFFFFF; /* Replace with the color you want */
@@ -213,4 +213,29 @@
   left: 20px; /* Adjust as needed */
   top: 50%;
   transform: translateY(-50%); /* Centers the logo vertically */
+}
+
+/* YRS: Styling voor spinner animation na submit knop */
+.spinner {
+  display: block; /* Ensures the spinner is block-level for margin utilities to take effect */
+  margin: 2rem auto; /* Centers the spinner horizontally with a top and bottom margin */
+  width: 50px; /* Adjust the width as needed */
+  height: 50px; /* Adjust the height as needed */
+  border: 4px solid rgba(255, 255, 255, 0.2); /* Light grey border */
+  border-radius: 50%; /* Makes it circular */
+  border-top-color: #fff; /* Top border color */
+  animation: spin 1s infinite linear; /* Spin animation */
+}
+
+/* YRS: Toevoegen van een succes banner nadat form gesubmit is */
+.success-banner {
+  padding: 10px;
+  background-color: #84a98c; /* Background color */
+  color: white;
+  text-align: center;
+  margin-top: 0px; /* Add some space above the banner */
+  margin-bottom: 40px; /* Add some space below the banner */
+  border-radius: 20px; /* Adjust rounding as needed */
+  font-weight: bold; /* Adjust font weight as needed */
+  /* Add more styling as needed */
 }
