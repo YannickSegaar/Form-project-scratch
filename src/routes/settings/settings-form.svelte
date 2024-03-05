@@ -16,11 +16,15 @@
     import { Checkbox } from "$lib/components/ui/checkbox";
     import SuperDebug from "sveltekit-superforms";
     import { roofsizeDrawing } from "./TESTroofsizeDrawing"; // YRS: Import roofsizeDrawing.ts for dynamic roofSize
+    import spinner from '$lib/spinner.svg';
+    import  { message } from "sveltekit-superforms"; // YRS: Import message for success message
 
     export let data: SuperValidated<Infer<FormSchema>>;
 
-    const form = superForm(data, {
+        const form = superForm(data, {
         validators: zodClient(formSchema),
+        delayMs: 500, // Start showing the loading spinner after ...ms, adjust to your needs
+        timeoutMs: 8000, // Consider as timeout after ...ms, adjust to your needs
         onUpdated: ({ form: f }) => {
             if (f.valid) {
                 toast.success("Form submission successful.");
@@ -30,8 +34,7 @@
         },
     });
 
-    const { form: formData, enhance } = form;
-    // $: selectedEmail = $formData.email ? { label: $formData.email, value: $formData.email } : undefined; //YRS: email select heb ik gemute
+    const { form: formData, enhance, delayed } = form; // Add 'delayed' here
     $: selectedDakType = $formData.dakType ? { label: $formData.dakType, value: $formData.dakType } : undefined;
     $: selectedStroomAansluiting = $formData.stroomAansluiting ? { label: $formData.stroomAansluiting, value: $formData.stroomAansluiting } : undefined;
     
@@ -54,6 +57,7 @@
         }
         $formData.dakOppervlak = Number(dakOppervlakInput);
     }
+    
 </script>
 
 <!-- YRS: SuperDebug zorgt voor window met JSON formatting van display form input -->
@@ -261,43 +265,12 @@
     <!-- <Form.FieldErrors /> YRS: Default error messages uitgezet. NL foutmeldingen zijn gedefineerd in schema.ts file -->
 </Form.Field>
 
+<!-- loading spinner vlak voor submit button -->
+{#if $delayed}<img src={spinner} alt="Loading..." class="spinner" />{/if}
+
 <Form.Button class="special-button">
     Verzenden
     <img src="/Protium_logo.png" alt="Protium Logo" class="logo-inside-special-button-right" />
     <img src="/Protium_logo.png" alt="Protium Logo" class="logo-inside-special-button-left" />
   </Form.Button>
-
 </form>
-
-
-
-
-    <!-- YRS: Deze code component is voor select dropdown menu voor email, ik heb deze gemute, maar gebruik hem als referentie -->
-    <!-- Select Component Integration for Email
-    <Form.Field {form} name="email">
-        <Form.Control let:attrs>
-            <Form.Label>Email</Form.Label>
-            <Select.Root selected={selectedEmail} onSelectedChange={(v) => { v && ($formData.email = v.value); }}>
-                <Select.Trigger {...attrs}>
-                    <Select.Value placeholder="Select a verified email to display" />
-                </Select.Trigger>
-                <Select.Content>
-                    <Select.Item value="m@example.com" label="m@example.com" />
-                    <Select.Item value="m@google.com" label="m@google.com" />
-                    <Select.Item value="m@support.com" label="m@support.com" />
-                </Select.Content>
-            </Select.Root>
-            <input hidden bind:value={$formData.email} name={attrs.name} />
-        </Form.Control>
-        <Form.Description>You can manage email address in your email settings.</Form.Description>
-        <Form.FieldErrors />
-    </Form.Field> -->
-
-
-    <!-- TO DO:
-    - Placeholder text font color lichter maken
-    - Postcode restrictive input (dat je alleen cijfers en letters kan invoeren)
-    - Icon kleuren aanpassen
-    - Select dropdown menu's aanpassen (left alignment)
-    - Success message, spinners/loaders/toast notifications
- -->

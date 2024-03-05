@@ -1,6 +1,6 @@
 import type { PageServerLoad, Actions } from "./$types";
-import { fail, error } from "@sveltejs/kit";
-import { superValidate, message } from "sveltekit-superforms";
+import { fail } from "@sveltejs/kit";
+import { superValidate, message} from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
 import { formSchema } from "./schema";
 
@@ -68,6 +68,6 @@ export const actions: Actions = {
 		}
 
 		// If everything went well, send a success message
-		return message(form, 'Form posted successfully!');
+		return message(form, 'Gegevens succesvol ontvangen!');
 	}
 };
