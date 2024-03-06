@@ -1,10 +1,13 @@
-<!-- YRS: shadcn-svelte docs form creation -->
+<!-- YRS: LET OP DIT IS EEN PLAYGROUND FILE
+ -->
+<!-- YRS: Deze code gebruik ik om afzonderlijke form componenten te testen zonder de settings-form.svelte code
+te veranderen. Dit is een kopie van de settings-form.svelte code, maar dan met maar één enkele form component -->
 
 <script lang="ts">
     import * as Form from "$lib/components/ui/form";
     import { Input } from "$lib/components/ui/input";
     import * as Select from "$lib/components/ui/select"; // Import Select from shadcn-svelte
-    import { formSchema, type FormSchema } from "./schema";
+    import { formSchema, type FormSchema } from "../settings/schema";
     import {
         type SuperValidated,
         type Infer,
@@ -15,7 +18,7 @@
     import { Textarea } from "$lib/components/ui/textarea";
     import { Checkbox } from "$lib/components/ui/checkbox";
     import SuperDebug from "sveltekit-superforms";
-    import { roofsizeDrawing } from "./TESTroofsizeDrawing"; // YRS: Import roofsizeDrawing.ts for dynamic roofSize
+    import { roofsizeDrawing } from "../settings/TESTroofsizeDrawing"; // YRS: Import roofsizeDrawing.ts for dynamic roofSize
     import spinner from '$lib/spinner.svg';
     import  { message } from "sveltekit-superforms"; // YRS: Import message for success message
 
