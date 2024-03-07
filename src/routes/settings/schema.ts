@@ -8,7 +8,7 @@ export const formSchema = z.object({
     email: z.string().min(8, "Voer een geldig e-mailadres in"),
     telefoonNummer: z.string().min(9, "Voer een geldig telefoonnummer in" ).max(15, "Telefoonnummer mag uit maximaal 15 karakters bestaan"),
     dakOppervlak: z.number().min(2500, "Het dakoppervlak moet minimaal 2500 m² zijn"),
-    dakOppervlakMuted: z.number().min(2500, "Het dakoppervlak moet minimaal 2500 m² zijn"),
+    dakOppervlakMuted: z.number().optional(),
     dakType: z.string().refine(value => value !== '', { message: "Kies uw daktype" }),
     stroomAansluiting: z.string().refine(value => value !== '', { message: "Kies uw type stroomaansluiting" }),
     klantOpmerkingen: z.string().optional(),
@@ -20,3 +20,7 @@ export const formSchema = z.object({
 });
 
 export type FormSchema = typeof formSchema;
+
+// dakOppervlakMuted: z.number().min(2500, "Het dakoppervlak moet minimaal 2500 m² zijn"),
+
+// dakOppervlakMuted: z.number().optional(),
