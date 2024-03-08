@@ -1,67 +1,34 @@
-<form method="POST" action="?/switch" class="w-full space-y-6" use:enhance>
-    <Form.Field {form} name="username">
-        <Form.Control let:attrs>
-            <Form.Label>Username</Form.Label>
-            <Input {...attrs} bind:value={$formData.username} />
-        </Form.Control>
-        <Form.Description>This is your public display name.</Form.Description>
-        <Form.FieldErrors />
-    </Form.Field>
-
-    <fieldset>
-        <legend class="mb-4 text-lg font-medium"> Email Notifications </legend>
-    </fieldset>
-</form>
-    <Form.Field {form} name="username">
-        <Form.Control let:attrs>
-            <Form.Label>Username</Form.Label>
-            <Input {...attrs} bind:value={$formData.username} />
-        </Form.Control>
-        <Form.Description>This is your public display name.</Form.Description>
-        <Form.FieldErrors />
-    </Form.Field>
-
-    <fieldset>
-        <legend class="mb-4 text-lg font-medium"> Email Notifications </legend>
-        <div class="space-y-4">
-            <Form.Field {form} name="marketing_emails">
-                <Form.Control let:attrs>
-                    <div class="space-y-0.5">
-                        <Form.Label>Marketing emails</Form.Label>
-                        <Form.Description>
-                            Receive emails about new products, features, and more.
-                        </Form.Description>
-                    </div>
-                    <Switch
-                        includeInput
-                        {...attrs}
-                        bind:checked={$formData.marketing_emails}
-                    />
-                </Form.Control>
-            </Form.Field>
-
-            <Form.Field {form} name="security_emails">
-                <Form.Control let:attrs>
-                    <div class="space-y-0.5">
-                        <Form.Label>Security emails</Form.Label>
-                        <Form.Description>
-                            Receive emails about your account security.
-                        </Form.Description>
-                    </div>
-                    <Switch
-                        {...attrs}
-                        aria-readonly
-                        disabled
-                        includeInput
-                        bind:checked={$formData.security_emails}
-                    />
-                </Form.Control>
-            </Form.Field>
+<script lang="ts">
+    import Calendar from "svelte-radix/Calendar.svelte";
+    import * as Avatar from "$lib/components/ui/avatar";
+    import * as HoverCard from "$lib/components/ui/hover-card";
+  </script>
+   
+  <HoverCard.Root>
+    <HoverCard.Trigger
+      href="https://github.com/sveltejs"
+      target="_blank"
+      rel="noreferrer noopener"
+      class="rounded-sm underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-black"
+    >
+      @sveltejs
+    </HoverCard.Trigger>
+    <HoverCard.Content class="w-80">
+      <div class="flex justify-between space-x-4">
+        <Avatar.Root>
+          <Avatar.Image src="https://github.com/sveltejs.png" />
+          <Avatar.Fallback>SK</Avatar.Fallback>
+        </Avatar.Root>
+        <div class="space-y-1">
+          <h4 class="text-sm font-semibold">@sveltejs</h4>
+          <p class="text-sm">Cybernetically enhanced web apps.</p>
+          <div class="flex items-center pt-2">
+            <Calendar class="mr-2 h-4 w-4 opacity-70" />{" "}
+            <span class="text-xs text-muted-foreground">
+              Joined September 2022
+            </span>
+          </div>
         </div>
-    </fieldset>
-
-    <Form.Button>Submit</Form.Button>
-    {#if browser}
-        <SuperDebug data={$formData} />
-    {/if}
-</form>
+      </div>
+    </HoverCard.Content>
+  </HoverCard.Root>

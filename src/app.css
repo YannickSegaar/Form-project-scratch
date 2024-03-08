@@ -239,3 +239,70 @@
   font-weight: bold; /* Adjust font weight as needed */
   /* Add more styling as needed */
 }
+
+/* ////////////////////// YRS: PLAYGROUND FORM COMPONENT STYLES ////////////////////////////// */
+
+/* YRS: Styling voor flexbox container die dient als parent container */
+.parent-flex-container {
+  /* Add styles for the parent container (marketing emails) */
+  /* Example: */
+  display: flex;
+  flex-direction: column; /* stack children vertically */
+  justify-content: space-between; /* push children to start and end of container */
+  gap: 10px; /* space between children */
+  height: 100%; /* ensure the container takes up full height needed to allow justification */
+  border: 1px solid #ccc; /* example border */
+  border-radius: 8px; /* rounded corners */
+  padding: 10px; /* spacing inside */
+  /* margin-bottom: 16px; space between this and other elements */
+}
+
+/* YRS: Styling voor flexbox container die dient als child container */
+
+.child-flex-container {
+  display: flex;
+  flex-direction: row; /* Mimics 'flex-row': Children are laid out horizontally */
+  justify-content: space-between; /* Mimics 'justify-between': Distributes items evenly with the first item at the start and the last item at the end */
+  align-items: center; /* Mimics 'items-center': Vertically aligns items in the center */
+  border-radius: 0.5rem; /* Mimics 'rounded-lg': Applies large rounded corners */
+  /* border: 1px solid #e5e7eb; Mimics 'border': Adds a light border. Tailwind's default border color is a light gray, adjust as needed */
+  padding: 1rem; /* Mimics 'p-4': Adds padding of 1rem on all sides */
+}
+
+.locked-field-container {
+  /* Styles for the child container (locked field) */
+  /* Example: */
+  /* display: flex;
+  align-items: center; */
+  align-self: flex-start; /* align this child to the start of the cross axis */
+  margin-top: auto; /* push the child container to the bottom */
+  width: 100%; /* ensure the child container takes up full width of the parent */
+}
+
+.locked-input {
+  /* Styles for the locked input */
+  /* Example: */
+  flex-grow: 1; /* take up remaining space */
+  padding: 8px; /* spacing inside */
+  margin-right: 8px; /* space between input and lock icon */
+  border: 1px solid #ccc; /* example border */
+  border-radius: 4px; /* rounded corners */
+  background-color: #eee; /* muted background */
+  
+}
+
+.lock-icon {
+  /* Styles for the lock icon */
+  /* Example: */
+  font-size: 24px; /* icon size */
+  margin-right: 8px; /* space between icon and input */
+}
+
+.description {
+  /* Styles for descriptions */
+  /* Example: */
+  font-size: 14px;
+  color: #666; /* muted text color */
+}
+
+/* Add additional styles as needed */

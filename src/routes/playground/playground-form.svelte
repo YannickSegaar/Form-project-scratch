@@ -14,6 +14,7 @@
     import { page } from "$app/stores";
     import { Switch } from "$lib/components/ui/switch";
     import { toast } from "svelte-sonner";
+    import { roofsizeDrawing } from "./TESTroofsizeDrawing"; // YRS: Import roofsizeDrawing.ts voor invullen van locked input field
     // let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     // export { data as form };
 
@@ -34,21 +35,12 @@
     </script>
 
    <!-- YRS: SuperDebug zorgt voor window met JSON formatting van display form input -->
-<div class="mx-auto flex max-w-md flex-col">
-    <SuperDebug data={$formData} />
-</div>
 
-<!-- <form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance>
-    <Form.Field {form} name="username">
-      <Form.Control let:attrs>
-        <Form.Label>Username</Form.Label>
-        <Input {...attrs} bind:value={$formData.username} />
-      </Form.Control>
-      <Form.Description>This is your public display name.</Form.Description>
-      <Form.FieldErrors />
-    </Form.Field>
-    <Form.Button>Submit</Form.Button>
-  </form> -->
+<div class="mx-auto flex max-w-md flex-col">
+{#if browser}
+<SuperDebug data={$formData} />
+{/if}
+</div>
 
   <form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance>
     <fieldset>
@@ -64,9 +56,9 @@
             <Form.FieldErrors />
           </Form.Field>
           
-        <Form.Field
-          {form}
-          name="marketing_emails"
+        <!-- YRS: Originele marketing email form field: -->
+          <Form.Field {form}
+          name="dakoppervlak_toggle"
           class="flex flex-row items-center justify-between rounded-lg border p-4"
         >
           <Form.Control let:attrs>
@@ -79,12 +71,58 @@
             <Switch
               includeInput
               {...attrs}
-              bind:checked={$formData.marketing_emails}
+              bind:checked={$formData.dakoppervlak_toggle}
             />
           </Form.Control>
         </Form.Field>
-        <Form.Field
-          {form}
+        <!-- YRS: ^^^Originele marketing email form field:^^^ -->
+
+
+        <!-- YRS: TEST Marketing Emails met locked input field proberen -->
+
+
+<div class="parent-flex-container">
+    <Form.Field
+      {form}
+      name="dakoppervlak_toggle"
+      class="child-flex-container"
+    >
+      <Form.Control let:attrs>
+        <div class="space-y-0.5">
+          <Form.Label>Dakoppervlak</Form.Label>
+          <Form.Description>
+            <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
+            <p>Klopt dit niet?</p>
+            <p>Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
+          </Form.Description>
+        </div>
+        <Switch includeInput {...attrs} bind:checked={$formData.dakoppervlak_toggle} />
+      </Form.Control>
+    </Form.Field>
+  
+    <Form.Field {form} name="lockedField" class="form-field">
+      <Form.Control let:attrs>
+        <div class="flex flex-col">
+          <div class="flex items-center mb-2">
+            <span class="material-symbols-outlined icon">lock</span>
+            <Form.Label>Dakoppervlak in m²</Form.Label>
+          </div>
+          <Input {...attrs} class="placeholder-custom" type="number" placeholder="2500 m²" disabled />
+        </div>
+      </Form.Control>
+      <Form.Description>
+            Vul hier zelf uw dakoppervlak in
+      </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+  </div>
+
+
+        <!-- YRS: ^^^^^^TEST Marketing Emails met locked input field proberen^^^^^^^ -->
+
+
+        
+        <Form.Field {form}
           name="security_emails"
           class="flex flex-row items-center justify-between rounded-lg border p-4"
         >
@@ -104,10 +142,13 @@
             />
           </Form.Control>
         </Form.Field>
+
       </div>
     </fieldset>
-    <Form.Button>Submit</Form.Button>
-    {#if browser}
-      <SuperDebug data={$formData} />
-    {/if}
+
+    <Form.Button class="special-button">
+        Verzenden
+        <img src="/Protium_logo.png" alt="Protium Logo" class="logo-inside-special-button-right" />
+        <img src="/Protium_logo.png" alt="Protium Logo" class="logo-inside-special-button-left" />
+      </Form.Button>
   </form>
