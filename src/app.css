@@ -306,3 +306,16 @@
 }
 
 /* Add additional styles as needed */
+
+
+/* YRS: CSS styling voor hovercard. Here's an example that positions the hovercard at the bottom right of the form, with some padding and margins: */
+
+.hovercard-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+  margin: 0px;
+  width: 500px; /* adjust as needed */
+  height: 500px; /* adjust as needed */
+}

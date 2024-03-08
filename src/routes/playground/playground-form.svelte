@@ -15,6 +15,7 @@
     import { Switch } from "$lib/components/ui/switch";
     import { toast } from "svelte-sonner";
     import { roofsizeDrawing } from "./TESTroofsizeDrawing"; // YRS: Import roofsizeDrawing.ts voor invullen van locked input field
+    import HoverCard from './hovercard.svelte'; // YRS: Import HoverCard from hovercard.svelte voor testen van hovercard in form
     // let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     // export { data as form };
 
@@ -152,3 +153,8 @@
         <img src="/Protium_logo.png" alt="Protium Logo" class="logo-inside-special-button-left" />
       </Form.Button>
   </form>
+
+        <!-- YRS: Hovercard van Protium -->
+        <div class="hovercard-container">
+            <HoverCard />
+          </div>
