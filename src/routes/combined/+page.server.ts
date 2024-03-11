@@ -5,6 +5,7 @@ import { fail } from "@sveltejs/kit";
 import { superValidate, message} from "sveltekit-superforms";
 import { zod } from "sveltekit-superforms/adapters";
 import { formSchema } from "./schema";
+import { roofsizeDrawing } from "./TESTroofsizeDrawing"; // YRS: Import roofsizeDrawing.ts for dynamic roofSize
 
 // Assuming VITE_AIRTABLE_API_KEY is stored in your .env file
 const airtableApiKey = import.meta.env.VITE_AIRTABLE_API_KEY;

@@ -47,26 +47,37 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     const { form: formData, enhance, delayed } = form; // Add 'delayed' here
     $: selectedDakType = $formData.dakType ? { label: $formData.dakType, value: $formData.dakType } : undefined;
     $: selectedStroomAansluiting = $formData.stroomAansluiting ? { label: $formData.stroomAansluiting, value: $formData.stroomAansluiting } : undefined;
-    
-    // YRS: Zorg dat dakOppervlak goed gevalideerd wordt van string naar nummer en dat manual override mogelijk is
-    // dakOppervlakInput starts as a string for input binding
-    let dakOppervlakInput = '';
-    let manualOverride = false;
-
-    // Function to handle manual input, converting input to number and setting manual override
-    function handleInput(event: InputEvent) {
-        let inputElement = event.target as HTMLInputElement;
-        dakOppervlakInput = inputElement.value;
-        manualOverride = true;
+        
+    // Reactive assignment based on toggle and manual input
+        $: if ($formData.dakoppervlak_toggle && $formData.dakoppervlakManual !== undefined) {
+        // If toggle is enabled and manual input is provided, use it
+        $formData.dakOppervlak = $formData.dakoppervlakManual;
+    } else {
+        // Otherwise, fallback to the roofsizeDrawing value
+        $formData.dakOppervlak = roofsizeDrawing;
     }
 
-    // Reactive statement for handling automatic updates or manual overrides
-    $: {
-        if (!manualOverride && roofsizeDrawing !== undefined) {
-            dakOppervlakInput = roofsizeDrawing.toString();
-        }
-        $formData.dakOppervlak = Number(dakOppervlakInput);
-    }
+
+
+    // // YRS: Zorg dat dakOppervlak goed gevalideerd wordt van string naar nummer en dat manual override mogelijk is
+    // // dakOppervlakInput starts as a string for input binding
+    // let dakOppervlakInput = '';
+    // let manualOverride = false;
+
+    // // Function to handle manual input, converting input to number and setting manual override
+    // function handleInput(event: InputEvent) {
+    //     let inputElement = event.target as HTMLInputElement;
+    //     dakOppervlakInput = inputElement.value;
+    //     manualOverride = true;
+    // }
+
+    // // Reactive statement for handling automatic updates or manual overrides
+    // $: {
+    //     if (!manualOverride && roofsizeDrawing !== undefined) {
+    //         dakOppervlakInput = roofsizeDrawing.toString();
+    //     }
+    //     $formData.dakOppervlak = Number(dakOppervlakInput);
+    // }
     
 </script>
   
@@ -112,43 +123,6 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
             <Form.FieldErrors /> 
         </Form.Field>
 
-        <!-- YRS: Dakoppervlak met toggle action ge-merged van playground directory -->
-
-        <!-- Insert this block after the email input field component in combined-form.svelte -->
-<div class="parent-flex-container">
-    <Form.Field {form} name="dakoppervlak_toggle" class="child-flex-container">
-      <Form.Control let:attrs>
-        <div class="space-y-0.5">
-          <Form.Label>Dakoppervlak</Form.Label>
-          <Form.Description>
-            <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
-            <p>Klopt dit niet?</p>
-            <p>Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
-          </Form.Description>
-        </div>
-        <Switch includeInput {...attrs} bind:checked={$formData.dakoppervlak_toggle} />
-      </Form.Control>
-    </Form.Field>
-  
-    <Form.Field {form} name="lockedField" class="form-field">
-      <Form.Control let:attrs>
-        <div class="flex flex-col">
-          <div class="flex items-center mb-2">
-            <span class="material-symbols-outlined icon">
-              {$formData.dakoppervlak_toggle ? 'lock_open' : 'lock'}
-            </span>
-            <Form.Label>Dakoppervlak in m²</Form.Label>
-          </div>
-          <Input {...attrs} class="placeholder-custom" type="number" placeholder="2500 m²" disabled={!$formData.dakoppervlak_toggle} />
-        </div>
-      </Form.Control>
-      <Form.Description>
-        Vul hier zelf uw dakoppervlak in
-      </Form.Description>
-      <Form.FieldErrors />
-    </Form.Field>
-</div>
-
     
     <!-- EMAIL -->
 
@@ -167,25 +141,6 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     </Form.Field>
 
 
-        <!-- DAKOPPERVLAK -->            
-
-        <Form.Field {form} name="dakOppervlak" class="form-field">
-            <Form.Control let:attrs>
-                <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
-                    <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                        <span class="material-symbols-outlined icon">format_shapes</span>
-                        <Form.Label>Dakoppervlak in m²</Form.Label>
-                    </div>
-                        <Input {...attrs} class="placeholder-custom" type="number" bind:value={dakOppervlakInput} placeholder="2500 m²" on:input={handleInput} />
-                </div>
-            </Form.Control>
-            <Form.Description>
-                <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
-                <p>Klopt dit niet? Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
-            </Form.Description>
-            <Form.FieldErrors />
-            </Form.Field>
-
                     <!-- YRS DAKOPPERVLAK MUTED (TEST OF DIT LUKT) -->            
 
         <Form.Field {form} name="dakOppervlak" class="form-field">
@@ -195,7 +150,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
                         <span class="material-symbols-outlined icon">lock</span>
                         <Form.Label>Dakoppervlak in m²</Form.Label>
                     </div>
-                        <Input {...attrs} class="placeholder-custom" type="number" bind:value={dakOppervlakInput} placeholder="2500 m²" on:input={handleInput} disabled />
+                    <Input {...attrs} class="placeholder-custom" type="number" value={roofsizeDrawing.toString()} disabled />
                 </div>
             </Form.Control>
             <Form.Description>
@@ -204,6 +159,44 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
             </Form.Description>
             <Form.FieldErrors />
             </Form.Field>
+
+                    <!-- YRS: Dakoppervlak met toggle action ge-merged van playground directory -->
+
+        <!-- Insert this block after the email input field component in combined-form.svelte -->
+<div class="parent-flex-container">
+    <Form.Field {form} name="dakoppervlak_toggle" class="child-flex-container">
+      <Form.Control let:attrs>
+        <div class="space-y-0.5">
+          <Form.Label>Dakoppervlak</Form.Label>
+          <Form.Description>
+            <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
+            <p>Klopt dit niet?</p>
+            <p>Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
+          </Form.Description>
+        </div>
+        <Switch includeInput {...attrs} bind:checked={$formData.dakoppervlak_toggle} />
+      </Form.Control>
+    </Form.Field>
+  
+    <Form.Field {form} name="dakoppervlakManual" class="form-field">
+      <Form.Control let:attrs>
+        <div class="flex flex-col">
+          <div class="flex items-center mb-2">
+            <span class="material-symbols-outlined icon">
+              {$formData.dakoppervlak_toggle ? 'lock_open' : 'lock'}
+            </span>
+            <Form.Label>Dakoppervlak in m²</Form.Label>
+          </div>
+          <Input {...attrs} class="placeholder-custom" type="number" placeholder="2500 m²" value={roofsizeDrawing} disabled={!$formData.dakoppervlak_toggle} />
+        </div>
+      </Form.Control>
+      <Form.Description>
+        Vul hier zelf uw dakoppervlak in
+      </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+</div>
+
 
             
             <!-- DAKTYPE -->
