@@ -18,8 +18,14 @@
     import { roofsizeDrawing } from "./TESTroofsizeDrawing"; // YRS: Import roofsizeDrawing.ts for dynamic roofSize
     import spinner from '$lib/spinner.svg';
     import  { message } from "sveltekit-superforms"; // YRS: Import message for success message
+    import { Switch } from "$lib/components/ui/switch"; // YRS: Import Switch from shadcn-svelte
+    import HoverCard from './hovercard.svelte'; // YRS: Import HoverCard from hovercard.svelte voor testen van hovercard in form
+    import { browser } from "$app/environment";
+    import { page } from "$app/stores";
 
-    export let data: SuperValidated<Infer<FormSchema>>;
+export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
+    
+    // export let data: SuperValidated<Infer<FormSchema>>;
     
         // YRS: Reactieve variabele toe om de form submission status bij te houden
     let isSubmitted = false;
@@ -63,12 +69,14 @@
     }
     
 </script>
-
-<!-- YRS: SuperDebug zorgt voor window met JSON formatting van display form input -->
-<div class="mx-auto flex max-w-md flex-col">
-    <SuperDebug data={$formData} />
-</div>
   
+   <!-- YRS: SuperDebug zorgt voor window met JSON formatting van display form input -->
+
+   <div class="mx-auto flex max-w-md flex-col">
+    {#if browser}
+    <SuperDebug data={$formData} />
+    {/if}
+</div>
 
 <form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance>
 
@@ -103,6 +111,44 @@
             <!-- <Form.Description>Wat is uw telefoonnummer?</Form.Description> YRS: omschrijving is overbodig -->
             <Form.FieldErrors /> 
         </Form.Field>
+
+        <!-- YRS: Dakoppervlak met toggle action ge-merged van playground directory -->
+
+        <!-- Insert this block after the email input field component in combined-form.svelte -->
+<div class="parent-flex-container">
+    <Form.Field {form} name="dakoppervlak_toggle" class="child-flex-container">
+      <Form.Control let:attrs>
+        <div class="space-y-0.5">
+          <Form.Label>Dakoppervlak</Form.Label>
+          <Form.Description>
+            <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
+            <p>Klopt dit niet?</p>
+            <p>Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
+          </Form.Description>
+        </div>
+        <Switch includeInput {...attrs} bind:checked={$formData.dakoppervlak_toggle} />
+      </Form.Control>
+    </Form.Field>
+  
+    <Form.Field {form} name="lockedField" class="form-field">
+      <Form.Control let:attrs>
+        <div class="flex flex-col">
+          <div class="flex items-center mb-2">
+            <span class="material-symbols-outlined icon">
+              {$formData.dakoppervlak_toggle ? 'lock_open' : 'lock'}
+            </span>
+            <Form.Label>Dakoppervlak in m²</Form.Label>
+          </div>
+          <Input {...attrs} class="placeholder-custom" type="number" placeholder="2500 m²" disabled={!$formData.dakoppervlak_toggle} />
+        </div>
+      </Form.Control>
+      <Form.Description>
+        Vul hier zelf uw dakoppervlak in
+      </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+</div>
+
     
     <!-- EMAIL -->
 
@@ -306,3 +352,8 @@
 {/if}
 
 </form>
+
+        <!-- YRS: Hovercard van Protium -->
+        <div class="hovercard-container">
+            <HoverCard />
+          </div>

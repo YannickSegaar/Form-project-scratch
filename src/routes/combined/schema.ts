@@ -19,6 +19,10 @@ export const formSchema = z.object({
     huisnummer: z.string().min(1, "Voer een geldig huisnummer in").max(10, "Voer een geldig huisnummer in"),
     roofsizeSwitch: z.boolean().refine(value => value), //YRS: This is the switch that will be used to determine if the roofsize is drawn or not
     roofsizeManual: z.number().min(2500, "Het dakoppervlak moet minimaal 2500 m² zijn"), //YRS: Dit is de manual input voor de dakgrootte
+    // Add these lines to the existing schema in combined/schema.ts
+    dakoppervlak_toggle: z.boolean().default(false).optional(),
+    lockedField: z.number().default(5).optional(),
+
 });
 
 export type FormSchema = typeof formSchema;
