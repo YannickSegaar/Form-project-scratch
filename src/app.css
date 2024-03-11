@@ -330,3 +330,56 @@
   width: 500px; /* adjust as needed */
   height: 500px; /* adjust as needed */
 }
+
+/* YRS: CSS styling voor tooltip icon */
+  /* Style for the tooltip icon */
+  .tooltip-icon {
+    font-size: 15px; /* Change this value to increase or decrease the icon size */
+    color: #666; /* Set your desired color */
+    vertical-align: middle; /* Aligns the icon with the middle of the text line */
+    cursor: help; /* Shows a help cursor when hovered */
+    margin-left: 4px; /* Adjust spacing to the left of the icon if needed */
+    margin-bottom: 2px; /* Adjust spacing to the bottom of the icon if needed */
+}
+
+/* New style for the tooltip content */
+.tooltip-content {
+  font-size: 14px;
+  color: #333333;
+  background-color: #a74141;
+  padding: 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  z-index: 10;
+  position: absolute; /* This positions the tooltip content absolutely within its container */
+  top: 100%; /* Adjust as necessary to position below the trigger */
+  left: 50%;
+  transform: translateX(-50%);
+  display: none; /* Hide the tooltip content by default */
+}
+
+/* Position the container of the tooltip relative to the trigger */
+.tooltip-trigger-container {
+  position: relative; /* This container must be positioned relatively */
+  display: inline-block; /* Adjust as necessary */
+}
+
+/* Additional styles for visibility and positioning */
+.tooltip-content::before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #333333; /* Match with the background color of the tooltip */
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Show the tooltip content when the trigger is hovered */
+.tooltip-trigger-container:hover .tooltip-content {
+  display: block !important; /* Force the tooltip to show on hover */
+}

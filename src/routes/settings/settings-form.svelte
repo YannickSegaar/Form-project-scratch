@@ -213,7 +213,7 @@
                 <input hidden bind:value={$formData.stroomAansluiting} name={attrs.name} />
             </div>
         </Form.Control>
-        <!-- <Form.Description>Kies uw stroomaansluiting.</Form.Description> YRS: omschrijving is overbodig -->
+        <Form.Description>Kies uw stroomaansluiting.</Form.Description>
         <Form.FieldErrors /> 
     </Form.Field>
     
