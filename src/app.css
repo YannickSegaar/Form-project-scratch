@@ -125,8 +125,19 @@
     vertical-align: bottom; /* Align the bottom of the icon with the text baseline */
   }
 
+  .hovercard-icon {
+    @apply inline-block align-middle; /* Inline-block for icons next to text */
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    color: #015257; /* You can change this per icon if needed */
+    font-size: 1rem; /* Default size, adjust as needed */
+    margin-right: 0.5rem; /* Space between icon and text */
+    vertical-align: middle; /* Aligns with text */
+}
+
   /* More specific or responsive utility classes can be added here */
 }
+
+
 
 /* YRS: SELECT DROPDOWN  */
   /* New class for left-aligning text inside Select.Value */
