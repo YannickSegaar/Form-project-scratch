@@ -121,7 +121,45 @@
 
         <!-- YRS: ^^^^^^TEST Marketing Emails met locked input field proberen^^^^^^^ -->
 
+<!-- YRS: NIEUWE LOCKED INPUTFIELD MET TOGGLE ACTION -->
 
+<!-- Adjusted dakoppervlak_toggle and lockedField integration -->
+<div class="parent-flex-container">
+    <Form.Field {form} name="dakoppervlak_toggle" class="child-flex-container">
+      <Form.Control let:attrs>
+        <div class="space-y-0.5">
+          <Form.Label>Dakoppervlak</Form.Label>
+          <Form.Description>
+            <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
+            <p>Klopt dit niet?</p>
+            <p>Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
+          </Form.Description>
+        </div>
+        <Switch includeInput {...attrs} bind:checked={$formData.dakoppervlak_toggle} />
+      </Form.Control>
+    </Form.Field>
+  
+    <Form.Field {form} name="lockedField" class="form-field">
+      <Form.Control let:attrs>
+        <div class="flex flex-col">
+          <div class="flex items-center mb-2">
+            <span class="material-symbols-outlined icon">
+              {$formData.dakoppervlak_toggle ? 'lock_open' : 'lock'}
+            </span>
+            <Form.Label>Dakoppervlak in m²</Form.Label>
+          </div>
+          <Input {...attrs} class="placeholder-custom" type="number" placeholder="2500 m²" disabled={!$formData.dakoppervlak_toggle} />
+        </div>
+      </Form.Control>
+      <Form.Description>
+        Vul hier zelf uw dakoppervlak in
+      </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+  </div>
+
+  <!-- ^^^^^^YRS: TOGGLE SWITCH ACTION ^^^^ -->
+  
         
         <Form.Field {form}
           name="security_emails"

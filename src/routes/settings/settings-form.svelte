@@ -294,8 +294,8 @@
 
 <Form.Button class="special-button">
     Verzenden
-    <img src="/Protium_logo.png" alt="Protium Logo" class="logo-inside-special-button-right" />
-    <img src="/Protium_logo.png" alt="Protium Logo" class="logo-inside-special-button-left" />
+    <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-right" />
+    <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-left" />
   </Form.Button>
 
   <!-- Display success message after submission -->
