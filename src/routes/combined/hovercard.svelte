@@ -1,5 +1,5 @@
 <!-- In deze file ga ik proberen een hover card te maken voor Protium zoals deze ook
-in de Shadcn-Svelte docs wordt gemaakt -->
+in de Shadcn-Svelte docs wordt gemaakt, uiteindelijk Calendly NIET als Modal toegevoegd -->
     
 
 <script lang="ts">
