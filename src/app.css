@@ -1,385 +1,393 @@
+/* Write your global styles here, in PostCSS syntax */
+
+@tailwind base;
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
- 
+
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
- 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
- 
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
- 
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
- 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
- 
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
- 
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
- 
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
- 
-    --destructive: 0 72.2% 50.6%;
-    --destructive-foreground: 0 0% 98%;
- 
-    --ring: 240 10% 3.9%;
- 
-    --radius: 0.5rem;
-  }
- 
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
- 
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
- 
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
- 
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
- 
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
- 
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
- 
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
- 
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
- 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
- 
-    --ring: 240 4.9% 83.9%;
-  }
+	:root {
+		--background: 0 0% 100%;
+		--foreground: 240 10% 3.9%;
+
+		--muted: 240 4.8% 95.9%;
+		--muted-foreground: 240 3.8% 46.1%;
+
+		--popover: 0 0% 100%;
+		--popover-foreground: 240 10% 3.9%;
+
+		--card: 0 0% 100%;
+		--card-foreground: 240 10% 3.9%;
+
+		--border: 240 5.9% 90%;
+		--input: 240 5.9% 90%;
+
+		--primary: 240 5.9% 10%;
+		--primary-foreground: 0 0% 98%;
+
+		--secondary: 240 4.8% 95.9%;
+		--secondary-foreground: 240 5.9% 10%;
+
+		--accent: 240 4.8% 95.9%;
+		--accent-foreground: 240 5.9% 10%;
+
+		--destructive: 0 72.2% 50.6%;
+		--destructive-foreground: 0 0% 98%;
+
+		--ring: 240 10% 3.9%;
+
+		--radius: 0.5rem;
+	}
+
+	.dark {
+		--background: 240 10% 3.9%;
+		--foreground: 0 0% 98%;
+
+		--muted: 240 3.7% 15.9%;
+		--muted-foreground: 240 5% 64.9%;
+
+		--popover: 240 10% 3.9%;
+		--popover-foreground: 0 0% 98%;
+
+		--card: 240 10% 3.9%;
+		--card-foreground: 0 0% 98%;
+
+		--border: 240 3.7% 15.9%;
+		--input: 240 3.7% 15.9%;
+
+		--primary: 0 0% 98%;
+		--primary-foreground: 240 5.9% 10%;
+
+		--secondary: 240 3.7% 15.9%;
+		--secondary-foreground: 0 0% 98%;
+
+		--accent: 240 3.7% 15.9%;
+		--accent-foreground: 0 0% 98%;
+
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 0 0% 98%;
+
+		--ring: 240 4.9% 83.9%;
+	}
 }
- 
+
 @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
 }
 
 /* YRS: Hieronder staan CSS styling voor icons die gebruikt worden */
 @layer components {
-  .icon {
-    @apply inline-flex align-middle justify-center; /* Existing flex and alignment styles */
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    color: var(--primary-foreground); /* Adjust color as needed */
-    font-size: 1.25rem; /* Adjust size as needed */
-    margin-right: 0.5rem; /* Default space between icon and text */
-    vertical-align: middle; /* Vertically aligns inline or inline-block elements */
-  }
+	.icon {
+		@apply inline-flex justify-center align-middle; /* Existing flex and alignment styles */
+		font-variation-settings:
+			'FILL' 0,
+			'wght' 400,
+			'GRAD' 0,
+			'opsz' 24;
+		color: var(--primary-foreground); /* Adjust color as needed */
+		font-size: 1.25rem; /* Adjust size as needed */
+		margin-right: 0.5rem; /* Default space between icon and text */
+		vertical-align: middle; /* Vertically aligns inline or inline-block elements */
+	}
 
-  .icon-large {
-    @apply .icon;
-    font-size: 2rem; /* Larger size */
-  }
+	.icon-large {
+		@apply .icon;
+		font-size: 2rem; /* Larger size */
+	}
 
-  .icon-primary {
-    @apply .icon;
-    color: var(--primary); /* Use primary color */
-  }
+	.icon-primary {
+		@apply .icon;
+		color: var(--primary); /* Use primary color */
+	}
 
-  .icon-secondary {
-    @apply .icon;
-    color: var(--secondary); /* Use secondary color */
-  }
+	.icon-secondary {
+		@apply .icon;
+		color: var(--secondary); /* Use secondary color */
+	}
 
-  /* Utility classes for individual margin adjustments */
-  .icon-margin-right {
-    margin-right: 0.5rem; /* Adjust right margin, can be overridden per use case */
-  }
+	/* Utility classes for individual margin adjustments */
+	.icon-margin-right {
+		margin-right: 0.5rem; /* Adjust right margin, can be overridden per use case */
+	}
 
-  .icon-margin-left {
-    margin-left: 0.5rem; /* Adjust left margin */
-  }
+	.icon-margin-left {
+		margin-left: 0.5rem; /* Adjust left margin */
+	}
 
-  .icon-margin-top {
-    margin-top: 0.5rem; /* Adjust top margin */
-  }
+	.icon-margin-top {
+		margin-top: 0.5rem; /* Adjust top margin */
+	}
 
-  .icon-margin-bottom {
-    margin-bottom: 0.5rem; /* Adjust bottom margin */
-  }
+	.icon-margin-bottom {
+		margin-bottom: 0.5rem; /* Adjust bottom margin */
+	}
 
-  /* Utility class for bottom alignment */
-  .icon-align-bottom {
-    vertical-align: bottom; /* Align the bottom of the icon with the text baseline */
-  }
+	/* Utility class for bottom alignment */
+	.icon-align-bottom {
+		vertical-align: bottom; /* Align the bottom of the icon with the text baseline */
+	}
 
-  .hovercard-icon {
-    @apply inline-block align-middle; /* Inline-block for icons next to text */
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-    color: #015257; /* You can change this per icon if needed */
-    font-size: 1rem; /* Default size, adjust as needed */
-    margin-right: 0.5rem; /* Space between icon and text */
-    vertical-align: middle; /* Aligns with text */
+	.hovercard-icon {
+		@apply inline-block align-middle; /* Inline-block for icons next to text */
+		font-variation-settings:
+			'FILL' 0,
+			'wght' 400,
+			'GRAD' 0,
+			'opsz' 24;
+		color: #015257; /* You can change this per icon if needed */
+		font-size: 1rem; /* Default size, adjust as needed */
+		margin-right: 0.5rem; /* Space between icon and text */
+		vertical-align: middle; /* Aligns with text */
+	}
+
+	/* More specific or responsive utility classes can be added here */
 }
-
-  /* More specific or responsive utility classes can be added here */
-}
-
-
 
 /* YRS: SELECT DROPDOWN  */
-  /* New class for left-aligning text inside Select.Value */
-  .select-value-text-left {
-    @apply text-left; /* Aligns text to the left */
-  }
+/* New class for left-aligning text inside Select.Value */
+.select-value-text-left {
+	@apply text-left; /* Aligns text to the left */
+}
 
-  /* YRS: Styling voor font color van de placeholder select value form component */
-  .select-placeholder::placeholder {
-    color: #FFFF00; /* Replace with the color you want */
-  }
+/* YRS: Styling voor font color van de placeholder select value form component */
+.select-placeholder::placeholder {
+	color: #ffff00; /* Replace with the color you want */
+}
 
-  /* If you want to add specific margins, you can also create utility classes for that */
-  .select-value-margin {
-    margin-left: 1rem; /* Example: adjust the left margin */
-    /* Add margin-top, margin-right, and margin-bottom if needed */
-  }
+/* If you want to add specific margins, you can also create utility classes for that */
+.select-value-margin {
+	margin-left: 1rem; /* Example: adjust the left margin */
+	/* Add margin-top, margin-right, and margin-bottom if needed */
+}
 
-  /* YRS: PLACEHOLDER STYLING */
+/* YRS: PLACEHOLDER STYLING */
 
-    /* Placeholder Styles */
-    .placeholder-custom::placeholder { /* Target the placeholder */
-      color: #9CA3AF; /* YRS: aanpassen van placeholder kleur werkt niet, de font size lukt wel! */ 
-      font-size: .75rem; /* Default size, adjust as needed */
-    }
-    
-    .placeholder-custom:focus::placeholder { /* Change placeholder on focus */
-      color: #6B7280; /* Darker gray when the input is focused */
-    }
+/* Placeholder Styles */
+.placeholder-custom::placeholder {
+	/* Target the placeholder */
+	color: #9ca3af; /* YRS: aanpassen van placeholder kleur werkt niet, de font size lukt wel! */
+	font-size: 0.75rem; /* Default size, adjust as needed */
+}
 
+.placeholder-custom:focus::placeholder {
+	/* Change placeholder on focus */
+	color: #6b7280; /* Darker gray when the input is focused */
+}
 
-  /* YRS: FORM FIELD STYLING voor ruimte te creeren tussen elk form component */
-  .form-field {
-    margin-bottom: 15px; /* Adjust as needed */
-    margin-top: 15px; /* Adjust as needed */
-  }
-  /* YRS: BUTTON STYLING */
-  .form-button {
-    padding: 10px 20px; /* Adjust dimensions as needed */
-    border-radius: 5px; /* Adjust rounding as needed */
-    background: linear-gradient(to right, #FFD700, #FFA500); /* Adjust gradient colors as needed */
-    box-shadow: 0 0 10px rgba(255, 165, 0, 0.5); /* Adjust glow color and intensity as needed */
-    color: #015257; /* Adjust text color as needed */
-    font-weight: bold; /* Adjust font weight as needed */
-  }
-  .form-button span {
-    color: #FFFFFF; /* Adjust text color inside the button as needed */
-  }
+/* YRS: FORM FIELD STYLING voor ruimte te creeren tussen elk form component */
+.form-field {
+	margin-bottom: 15px; /* Adjust as needed */
+	margin-top: 15px; /* Adjust as needed */
+}
+/* YRS: BUTTON STYLING */
+.form-button {
+	padding: 10px 20px; /* Adjust dimensions as needed */
+	border-radius: 5px; /* Adjust rounding as needed */
+	background: linear-gradient(to right, #ffd700, #ffa500); /* Adjust gradient colors as needed */
+	box-shadow: 0 0 10px rgba(255, 165, 0, 0.5); /* Adjust glow color and intensity as needed */
+	color: #015257; /* Adjust text color as needed */
+	font-weight: bold; /* Adjust font weight as needed */
+}
+.form-button span {
+	color: #ffffff; /* Adjust text color inside the button as needed */
+}
 
-  /* YRS: De special-button styling wordt gebruikt voor de "Verzenden" button aan het einde van de form  */
-  .special-button {
-    background: #015257; /* Replace with the color you want */
-    box-shadow: 0 0 10px rgba(#FFFFFF, 0.5); /* Replace newColor with the color you want */
-    border-radius: 50px; /* Adjust rounding as needed */
-    margin-bottom: 30px; /* Adjust as needed */
-    margin-top: 10px; /* Adjust as needed */
-    height: 4rem; /* Adjust as needed */
-    color: #FFFFFF; /* Replace with the color you want */
-    font-weight: bold; /* Adjust as needed */
-    font-size: 20px; /* Adjust as needed */
-    position: relative; /* Adjust as needed */
-  }
+/* YRS: De special-button styling wordt gebruikt voor de "Verzenden" button aan het einde van de form  */
+.special-button {
+	background: #015257; /* Replace with the color you want */
+	box-shadow: 0 0 10px rgba(#ffffff, 0.5); /* Replace newColor with the color you want */
+	border-radius: 50px; /* Adjust rounding as needed */
+	margin-bottom: 30px; /* Adjust as needed */
+	margin-top: 10px; /* Adjust as needed */
+	height: 4rem; /* Adjust as needed */
+	color: #ffffff; /* Replace with the color you want */
+	font-weight: bold; /* Adjust as needed */
+	font-size: 20px; /* Adjust as needed */
+	position: relative; /* Adjust as needed */
+}
 
-  .special-button span {
-    color: #FFFFFF; /* Replace with the color you want */
-    font-weight: bold; /* Adjust as needed */
-    }
+.special-button span {
+	color: #ffffff; /* Replace with the color you want */
+	font-weight: bold; /* Adjust as needed */
+}
 
 /* YRS: Logo styling inside button voor Protium logo aan rechterzijde van de "Verzenden" tekst */
 .logo-inside-special-button-right {
-  height: 60%; /* Adjust as needed */
-  width: auto; /* Keeps the aspect ratio */
-  position: absolute;
-  right: 20px; /* Adjust as needed */
-  top: 50%;
-  transform: translateY(-50%); /* Centers the logo vertically */
+	height: 60%; /* Adjust as needed */
+	width: auto; /* Keeps the aspect ratio */
+	position: absolute;
+	right: 20px; /* Adjust as needed */
+	top: 50%;
+	transform: translateY(-50%); /* Centers the logo vertically */
 }
 
 /* YRS: Logo styling inside button voor Protium logo aan linkerzijde van de "Verzenden" tekst */
 .logo-inside-special-button-left {
-  height: 60%; /* Adjust as needed */
-  width: auto; /* Keeps the aspect ratio */
-  position: absolute;
-  left: 20px; /* Adjust as needed */
-  top: 50%;
-  transform: translateY(-50%); /* Centers the logo vertically */
+	height: 60%; /* Adjust as needed */
+	width: auto; /* Keeps the aspect ratio */
+	position: absolute;
+	left: 20px; /* Adjust as needed */
+	top: 50%;
+	transform: translateY(-50%); /* Centers the logo vertically */
 }
 
 /* YRS: Styling voor spinner animation na submit knop */
 .spinner {
-  display: block; /* Ensures the spinner is block-level for margin utilities to take effect */
-  margin: 2rem auto; /* Centers the spinner horizontally with a top and bottom margin */
-  width: 50px; /* Adjust the width as needed */
-  height: 50px; /* Adjust the height as needed */
-  border: 4px solid rgba(255, 255, 255, 0.2); /* Light grey border */
-  border-radius: 50%; /* Makes it circular */
-  border-top-color: #fff; /* Top border color */
-  animation: spin 1s infinite linear; /* Spin animation */
+	display: block; /* Ensures the spinner is block-level for margin utilities to take effect */
+	margin: 2rem auto; /* Centers the spinner horizontally with a top and bottom margin */
+	width: 50px; /* Adjust the width as needed */
+	height: 50px; /* Adjust the height as needed */
+	border: 4px solid rgba(255, 255, 255, 0.2); /* Light grey border */
+	border-radius: 50%; /* Makes it circular */
+	border-top-color: #fff; /* Top border color */
+	animation: spin 1s infinite linear; /* Spin animation */
 }
 
 /* YRS: Toevoegen van een succes banner nadat form gesubmit is */
 .success-banner {
-  padding: 10px;
-  background-color: #84a98c; /* Background color */
-  color: white;
-  text-align: center;
-  margin-top: 0px; /* Add some space above the banner */
-  margin-bottom: 40px; /* Add some space below the banner */
-  border-radius: 20px; /* Adjust rounding as needed */
-  font-weight: bold; /* Adjust font weight as needed */
-  /* Add more styling as needed */
+	padding: 10px;
+	background-color: #84a98c; /* Background color */
+	color: white;
+	text-align: center;
+	margin-top: 0px; /* Add some space above the banner */
+	margin-bottom: 40px; /* Add some space below the banner */
+	border-radius: 20px; /* Adjust rounding as needed */
+	font-weight: bold; /* Adjust font weight as needed */
+	/* Add more styling as needed */
 }
 
 /* ////////////////////// YRS: PLAYGROUND FORM COMPONENT STYLES ////////////////////////////// */
 
 /* YRS: Styling voor flexbox container die dient als parent container */
 .parent-flex-container {
-  /* Add styles for the parent container (marketing emails) */
-  /* Example: */
-  display: flex;
-  flex-direction: column; /* stack children vertically */
-  justify-content: space-between; /* push children to start and end of container */
-  gap: 10px; /* space between children */
-  height: 100%; /* ensure the container takes up full height needed to allow justification */
-  border: 1px solid #ccc; /* example border */
-  border-radius: 8px; /* rounded corners */
-  padding: 10px; /* spacing inside */
-  /* margin-bottom: 16px; space between this and other elements */
+	/* Add styles for the parent container (marketing emails) */
+	/* Example: */
+	display: flex;
+	flex-direction: column; /* stack children vertically */
+	justify-content: space-between; /* push children to start and end of container */
+	gap: 10px; /* space between children */
+	height: 100%; /* ensure the container takes up full height needed to allow justification */
+	border: 1px solid #ccc; /* example border */
+	border-radius: 8px; /* rounded corners */
+	padding: 10px; /* spacing inside */
+	/* margin-bottom: 16px; space between this and other elements */
 }
 
 /* YRS: Styling voor flexbox container die dient als child container */
 
 .child-flex-container {
-  display: flex;
-  flex-direction: row; /* Mimics 'flex-row': Children are laid out horizontally */
-  justify-content: space-between; /* Mimics 'justify-between': Distributes items evenly with the first item at the start and the last item at the end */
-  align-items: center; /* Mimics 'items-center': Vertically aligns items in the center */
-  border-radius: 0.5rem; /* Mimics 'rounded-lg': Applies large rounded corners */
-  /* border: 1px solid #e5e7eb; Mimics 'border': Adds a light border. Tailwind's default border color is a light gray, adjust as needed */
-  padding: 1rem; /* Mimics 'p-4': Adds padding of 1rem on all sides */
+	display: flex;
+	flex-direction: row; /* Mimics 'flex-row': Children are laid out horizontally */
+	justify-content: space-between; /* Mimics 'justify-between': Distributes items evenly with the first item at the start and the last item at the end */
+	align-items: center; /* Mimics 'items-center': Vertically aligns items in the center */
+	border-radius: 0.5rem; /* Mimics 'rounded-lg': Applies large rounded corners */
+	/* border: 1px solid #e5e7eb; Mimics 'border': Adds a light border. Tailwind's default border color is a light gray, adjust as needed */
+	padding: 1rem; /* Mimics 'p-4': Adds padding of 1rem on all sides */
 }
 
 .locked-field-container {
-  /* Styles for the child container (locked field) */
-  /* Example: */
-  /* display: flex;
+	/* Styles for the child container (locked field) */
+	/* Example: */
+	/* display: flex;
   align-items: center; */
-  align-self: flex-start; /* align this child to the start of the cross axis */
-  margin-top: auto; /* push the child container to the bottom */
-  width: 100%; /* ensure the child container takes up full width of the parent */
+	align-self: flex-start; /* align this child to the start of the cross axis */
+	margin-top: auto; /* push the child container to the bottom */
+	width: 100%; /* ensure the child container takes up full width of the parent */
 }
 
 .locked-input {
-  /* Styles for the locked input */
-  /* Example: */
-  flex-grow: 1; /* take up remaining space */
-  padding: 8px; /* spacing inside */
-  margin-right: 8px; /* space between input and lock icon */
-  border: 1px solid #ccc; /* example border */
-  border-radius: 4px; /* rounded corners */
-  background-color: #eee; /* muted background */
-  
+	/* Styles for the locked input */
+	/* Example: */
+	flex-grow: 1; /* take up remaining space */
+	padding: 8px; /* spacing inside */
+	margin-right: 8px; /* space between input and lock icon */
+	border: 1px solid #ccc; /* example border */
+	border-radius: 4px; /* rounded corners */
+	background-color: #eee; /* muted background */
 }
 
 .lock-icon {
-  /* Styles for the lock icon */
-  /* Example: */
-  font-size: 24px; /* icon size */
-  margin-right: 8px; /* space between icon and input */
+	/* Styles for the lock icon */
+	/* Example: */
+	font-size: 24px; /* icon size */
+	margin-right: 8px; /* space between icon and input */
 }
 
 .description {
-  /* Styles for descriptions */
-  /* Example: */
-  font-size: 14px;
-  color: #666; /* muted text color */
+	/* Styles for descriptions */
+	/* Example: */
+	font-size: 14px;
+	color: #666; /* muted text color */
 }
 
 /* Add additional styles as needed */
 
-
 /* YRS: CSS styling voor hovercard. Here's an example that positions the hovercard at the bottom right of the form, with some padding and margins: */
 
 .hovercard-container {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  padding: 10px;
-  margin: 0px;
-  width: 500px; /* adjust as needed */
-  height: 500px; /* adjust as needed */
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 10px;
+	margin: 0px;
+	width: 500px; /* adjust as needed */
+	height: 500px; /* adjust as needed */
 }
 
 /* YRS: CSS styling voor tooltip icon */
-  /* Style for the tooltip icon */
-  .tooltip-icon {
-    font-size: 15px; /* Change this value to increase or decrease the icon size */
-    color: #666; /* Set your desired color */
-    vertical-align: middle; /* Aligns the icon with the middle of the text line */
-    cursor: help; /* Shows a help cursor when hovered */
-    margin-left: 4px; /* Adjust spacing to the left of the icon if needed */
-    margin-bottom: 2px; /* Adjust spacing to the bottom of the icon if needed */
+/* Style for the tooltip icon */
+.tooltip-icon {
+	font-size: 15px; /* Change this value to increase or decrease the icon size */
+	color: #666; /* Set your desired color */
+	vertical-align: middle; /* Aligns the icon with the middle of the text line */
+	cursor: help; /* Shows a help cursor when hovered */
+	margin-left: 4px; /* Adjust spacing to the left of the icon if needed */
+	margin-bottom: 2px; /* Adjust spacing to the bottom of the icon if needed */
 }
 
 /* New style for the tooltip content */
 .tooltip-content {
-  font-size: 14px;
-  color: #333333;
-  background-color: #a74141;
-  padding: 8px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  max-width: 300px;
-  z-index: 10;
-  position: absolute; /* This positions the tooltip content absolutely within its container */
-  top: 100%; /* Adjust as necessary to position below the trigger */
-  left: 50%;
-  transform: translateX(-50%);
-  display: none; /* Hide the tooltip content by default */
+	font-size: 14px;
+	color: #333333;
+	background-color: #a74141;
+	padding: 8px;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	max-width: 300px;
+	z-index: 10;
+	position: absolute; /* This positions the tooltip content absolutely within its container */
+	top: 100%; /* Adjust as necessary to position below the trigger */
+	left: 50%;
+	transform: translateX(-50%);
+	display: none; /* Hide the tooltip content by default */
 }
 
 /* Position the container of the tooltip relative to the trigger */
 .tooltip-trigger-container {
-  position: relative; /* This container must be positioned relatively */
-  display: inline-block; /* Adjust as necessary */
+	position: relative; /* This container must be positioned relatively */
+	display: inline-block; /* Adjust as necessary */
 }
 
 /* Additional styles for visibility and positioning */
 .tooltip-content::before {
-  content: '';
-  width: 0;
-  height: 0;
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-bottom: 5px solid #333333; /* Match with the background color of the tooltip */
-  position: absolute;
-  top: -5px;
-  left: 50%;
-  transform: translateX(-50%);
+	content: '';
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid #333333; /* Match with the background color of the tooltip */
+	position: absolute;
+	top: -5px;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 /* Show the tooltip content when the trigger is hovered */
 .tooltip-trigger-container:hover .tooltip-content {
-  display: block !important; /* Force the tooltip to show on hover */
+	display: block !important; /* Force the tooltip to show on hover */
 }
