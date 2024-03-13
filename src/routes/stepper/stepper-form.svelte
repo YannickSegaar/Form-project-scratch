@@ -24,6 +24,7 @@
     import HoverCard from './hovercard.svelte'; // YRS: Import HoverCard from hovercard.svelte voor testen van hovercard in form
     import { browser } from "$app/environment";
     import { page } from "$app/stores";
+    import { Stepper, Step } from '@skeletonlabs/skeleton'; //YRS: Stepper importeren van Skeletonlabs
 
 export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     
@@ -80,6 +81,8 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     //     }
     //     $formData.dakOppervlak = Number(dakOppervlakInput);
     // }
+
+    let locked = true; //YRS: Stepper locked op true zetten
     
 </script>
   
@@ -92,263 +95,276 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
 </div>
 
 <form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance>
-
-    <!-- NAAM -->
-
-    <Form.Field {form} name="naam" class="form-field">
-        <Form.Control let:attrs>
-            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
-                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                    <span class="material-symbols-outlined icon" style="margin-bottom: 0.1rem; font-size: 1.55rem;">person</span> <!-- Inline style for vertical adjustment -->
-                    <Form.Label>Naam</Form.Label>
-                </div>
-                <Input {...attrs} class="placeholder-custom" type="naam" bind:value={$formData.naam} placeholder="Protium NL" />
-            </div>
-        </Form.Control>
-        <!-- <Form.Description>Wat is uw naam?</Form.Description> YRS: omschrijving is overbodig -->
-        <Form.FieldErrors />
-    </Form.Field>
-
-        <!-- TELEFOONNUMMER -->
-
-        <Form.Field {form} name="telefoonNummer" class="form-field">
+    <Stepper>
+      <!-- Step 1: Postcode, Huisnummer -->
+      <Step>
+        <svelte:fragment slot="header">Step 1: Location Details</svelte:fragment>
+        <!-- Postcode -->
+        <Form.Field {form} name="postcode" class="form-field">
             <Form.Control let:attrs>
-                <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
-                    <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                        <span class="material-symbols-outlined icon">call</span>
-                        <Form.Label>Telefoonnummer</Form.Label>
+                <div class="flex flex-col"> 
+                    <div class="flex items-center mb-2">
+                        <span class="material-symbols-outlined icon">home</span>
+                        <Form.Label>Postcode</Form.Label>
                     </div>
-                    <Input {...attrs} class="placeholder-custom" type="tel" bind:value={$formData.telefoonNummer} placeholder=" " />
+                    <Input {...attrs} class="placeholder-custom" type="postcode" bind:value={$formData.postcode} placeholder="1234 AA" />
                 </div>
             </Form.Control>
-            <!-- <Form.Description>Wat is uw telefoonnummer?</Form.Description> YRS: omschrijving is overbodig -->
             <Form.FieldErrors /> 
         </Form.Field>
-
-    
-    <!-- EMAIL -->
-
-    <Form.Field {form} name="email" class="form-field">
-        <Form.Control let:attrs>
-            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
-                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                    <span class="material-symbols-outlined icon">mail</span>
-                    <Form.Label>E-mail</Form.Label>
-                </div>
-                <Input {...attrs} class="placeholder-custom" type="email" bind:value={$formData.email} placeholder="hallo@protium.nl" />
-            </div>
-        </Form.Control>
-        <!-- <Form.Description>Wat is uw email?</Form.Description> YRS: omschrijving is overbodig -->
-        <Form.FieldErrors /> 
-    </Form.Field>
-
-
-                    <!-- YRS DAKOPPERVLAK MUTED (TEST OF DIT LUKT) -->            
-
-        <Form.Field {form} name="dakOppervlak" class="form-field">
+        <!-- Huisnummer -->
+        <Form.Field {form} name="huisnummer" class="form-field">
             <Form.Control let:attrs>
-                <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
-                    <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                        <span class="material-symbols-outlined icon">lock</span>
-                        <Form.Label>Dakoppervlak in m²</Form.Label>
+                <div class="flex flex-col"> 
+                    <div class="flex items-center mb-2">
+                        <span class="material-symbols-outlined icon">pin</span>
+                        <Form.Label>Huisnummer</Form.Label>
                     </div>
-                    <Input {...attrs} class="placeholder-custom" type="number" value={roofsizeDrawing.toString()} disabled />
+                    <Input {...attrs} class="placeholder-custom" type="huisnummer" bind:value={$formData.huisnummer} placeholder="1 " />
                 </div>
             </Form.Control>
-            <Form.Description>
-                <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
-                <p>Klopt dit niet? Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
-            </Form.Description>
-            <Form.FieldErrors />
-            </Form.Field>
-
-                    <!-- YRS: Dakoppervlak met toggle action ge-merged van playground directory -->
-
-        <!-- Insert this block after the email input field component in combined-form.svelte -->
-<div class="parent-flex-container">
-    <Form.Field {form} name="dakoppervlak_toggle" class="child-flex-container">
-      <Form.Control let:attrs>
-        <div class="space-y-0.5">
-          <Form.Label>Dakoppervlak</Form.Label>
-          <Form.Description>
-            <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
-            <p>Klopt dit niet?</p>
-            <p>Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
-          </Form.Description>
-        </div>
-        <Switch includeInput {...attrs} bind:checked={$formData.dakoppervlak_toggle} />
-      </Form.Control>
-    </Form.Field>
-  
-    <Form.Field {form} name="dakoppervlakManual" class="form-field">
-      <Form.Control let:attrs>
-        <div class="flex flex-col">
-          <div class="flex items-center mb-2">
-            <span class="material-symbols-outlined icon">
-              {$formData.dakoppervlak_toggle ? 'lock_open' : 'lock'}
-            </span>
-            <Form.Label>Dakoppervlak in m²</Form.Label>
-          </div>
-          <Input {...attrs} class="placeholder-custom" type="number" placeholder="2500 m²" value={roofsizeDrawing} disabled={!$formData.dakoppervlak_toggle} />
-        </div>
-      </Form.Control>
-      <Form.Description>
-        Vul hier zelf uw dakoppervlak in
-      </Form.Description>
-      <Form.FieldErrors />
-    </Form.Field>
-</div>
-
-
-            
-            <!-- DAKTYPE -->
-        <Form.Field {form} name="dakType" class="form-field">
-            <Form.Control let:attrs>
-                <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
-                    <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                        <!-- Icon next to the label -->
-                        <span class="material-symbols-outlined icon">roofing</span>  
-                        <Form.Label>Daktype</Form.Label>
-                    </div>
-                    <Select.Root selected={selectedDakType} onSelectedChange={(v) => { v && ($formData.dakType = v.value); }} required>
-                        <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
-                            <!-- Icon inside the select trigger -->
-                            <!-- <span class="material-symbols-outlined icon">roofing</span> -->
-                            <Select.Value placeholder="Kies uw daktype" class="select-placeholder" />
-                        </Select.Trigger>
-                        <Select.Content>
-                            <Select.Item value="Plat" label="Plat" />
-                            <Select.Item value="Schuin" label="Schuin" />
-                            <Select.Item value="Kas" label="Kas" />
-                        </Select.Content>
-                    </Select.Root>
-                    <input hidden bind:value={$formData.dakType} name={attrs.name} />
-                </div>
-            </Form.Control>
-            <!-- <Form.Description>Kies uw daktype.</Form.Description> YRS: omschrijving is overbodig -->
             <Form.FieldErrors />
         </Form.Field>
-    
-    <!-- STROOMAANSLUITING -->
-    <Form.Field {form} name="stroomAansluiting" class="form-field">
+      </Step>
+      <!-- The rest of your Steps go here -->
+  
+    <!-- Step 2: Dakoppervlak, Stroomaansluiting, Daktype -->
+      <Step>
+        <svelte:fragment slot="header">Step 2: Property Details</svelte:fragment>
+        <!-- Include Muted dakoppervlak, Dakoppervlak with action toggle switch, Stroomaansluiting, and Daktype fields here -->
+  
+                    <!-- YRS DAKOPPERVLAK MUTED -->            
+  
+          <Form.Field {form} name="dakOppervlak" class="form-field">
+              <Form.Control let:attrs>
+                  <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                      <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                          <span class="material-symbols-outlined icon">lock</span>
+                          <Form.Label>Dakoppervlak in m²</Form.Label>
+                      </div>
+                      <Input {...attrs} class="placeholder-custom" type="number" value={roofsizeDrawing.toString()} disabled />
+                  </div>
+              </Form.Control>
+              <Form.Description>
+                  <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
+                  <p>Klopt dit niet? Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
+              </Form.Description>
+              <Form.FieldErrors />
+              </Form.Field>
+  
+                      <!-- YRS: DAKOPPERVLAK MET TOGGLE SWITCH ACTION -->
+  
+  <div class="parent-flex-container">
+      <Form.Field {form} name="dakoppervlak_toggle" class="child-flex-container">
         <Form.Control let:attrs>
-            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
-                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                    <!-- Icon next to the label -->
-                    <span class="material-symbols-outlined icon">electrical_services</span>  
-                    <Form.Label>Stroomaansluiting</Form.Label>
-                </div>
-                <Select.Root selected={selectedStroomAansluiting} onSelectedChange={(v) => { v && ($formData.stroomAansluiting = v.value); }} required>
-                    <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
-                        <!-- Icon inside the select trigger -->
-                        <!-- <span class="material-symbols-outlined icon">electrical_services</span> -->
-                        <Select.Value placeholder="Kies uw type stroomaansluiting" style="text-align: left; padding-left: 1rem;" />
-                    </Select.Trigger>
-                    <Select.Content>
-                        <Select.Item value="<630 KVA" label="< 630 KVA" />
-                        <Select.Item value="630 KVA" label="630 KVA" />
-                        <Select.Item value=">630 KVA" label="> 630 KVA" />
-                        <Select.Item value="Weet ik niet" label="Weet ik niet" />
-                    </Select.Content>
-                </Select.Root>
-                <input hidden bind:value={$formData.stroomAansluiting} name={attrs.name} />
-            </div>
-        </Form.Control>
-        <Form.Description>Kies uw stroomaansluiting.</Form.Description>
-        <Form.FieldErrors /> 
-    </Form.Field>
-    
-
-    <!-- POSTCODE -->
-
-    <Form.Field {form} name="postcode" class="form-field">
-        <Form.Control let:attrs>
-            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
-                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                    <span class="material-symbols-outlined icon">home</span>
-                    <Form.Label>Postcode</Form.Label>
-                </div>
-                <Input {...attrs} class="placeholder-custom" type="postcode" bind:value={$formData.postcode} placeholder="1234 AA" />
-            </div>
-        </Form.Control>
-        <!-- <Form.Description>Wat is uw postcode?</Form.Description>YRS: omschrijving is overbodig -->
-        <Form.FieldErrors /> 
-    </Form.Field>
-
-    <!-- HUISNUMMER -->
-
-    <Form.Field {form} name="huisnummer" class="form-field">
-        <Form.Control let:attrs>
-            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
-                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                    <span class="material-symbols-outlined icon">pin</span>
-                    <Form.Label>Huisnummer</Form.Label>
-                </div>
-                <Input {...attrs} class="placeholder-custom" type="huisnummer" bind:value={$formData.huisnummer} placeholder="1 " />
-            </div>
-        </Form.Control>
-        <!-- <Form.Description>Wat is uw huisnummer?</Form.Description>YRS: omschrijving is overbodig -->
-        <Form.FieldErrors />
-    </Form.Field>
-
-
-    <!-- KLANTVRAGEN EN/OF OPMERKINGEN TEXTAREA -->
-
-    <Form.Field {form} name="klantOpmerkingen" class="form-field">
-        <Form.Control let:attrs>
-            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
-                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                    <span class="material-symbols-outlined icon">description</span>
-                    <Form.Label>Klantvragen en/of opmerkingen</Form.Label>
-                </div>
-                <Textarea
-                    {...attrs}
-                    placeholder="Zijn er nog vragen of opmerkingen over uw Quickscan?"
-                    class="resize-none h-32 placeholder-custom"
-                    bind:value={$formData.klantOpmerkingen}
-                />
-            </div>
-            <!-- <Form.Description>
-                Zijn er nog belangrijke dingen die wij moeten weten?
-            </Form.Description> YRS: omschrijving is overbodig -->
-        </Form.Control>
-        <Form.FieldErrors />
-    </Form.Field>
-    
-<!-- Checkbox Component Privacyverklaring -->
-<Form.Field {form} name="privacyAkkoord" class="form-field">
-    <Form.Control let:attrs>
-        <Checkbox {...attrs} bind:checked={$formData.privacyAkkoord} />
-        <Form.Label style="font-size: 12px;">&nbsp;&nbsp;Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label> 
-        <Form.Description style="font-size: 12px;">
-            <!-- Wij gebruiken deze gegevens enkel om je van informatie over zakelijke zonnepanelen te voorzien. -->
-            Voor meer informatie bekijk onze
-            <a href="https://protium.nl/privacy-policy" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">privacyverklaring</a>.
-        </Form.Description>
-        <input name={attrs.name} value={$formData.privacyAkkoord} hidden />
-    </Form.Control>
-    <!-- <Form.FieldErrors /> YRS: Default error messages uitgezet. NL foutmeldingen zijn gedefineerd in schema.ts file -->
-</Form.Field>
-
-<!-- loading spinner vlak voor submit button -->
-{#if $delayed}<img src={spinner} alt="Loading..." class="spinner" />{/if}
-
-<Form.Button class="special-button">
-    Verzenden
-    <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-right" />
-    <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-left" />
-  </Form.Button>
-
-  <!-- Display success message after submission -->
-{#if isSubmitted}
-<div class="success-banner">
-    Uw Quickscan gegevens zijn succesvol opgeslagen, een expert van Protium neemt contact met u op ☀️
-</div>
-{/if}
-
-</form>
-
-        <!-- YRS: Hovercard van Protium -->
-        <div class="hovercard-container">
-            <HoverCard />
+          <div class="space-y-0.5">
+            <Form.Label>Dakoppervlak</Form.Label>
+            <Form.Description>
+              <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
+              <p>Klopt dit niet?</p>
+              <p>Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
+            </Form.Description>
           </div>
+          <Switch includeInput {...attrs} bind:checked={$formData.dakoppervlak_toggle} />
+        </Form.Control>
+      </Form.Field>
+    
+      <Form.Field {form} name="dakoppervlakManual" class="form-field">
+        <Form.Control let:attrs>
+          <div class="flex flex-col">
+            <div class="flex items-center mb-2">
+              <span class="material-symbols-outlined icon">
+                {$formData.dakoppervlak_toggle ? 'lock_open' : 'lock'}
+              </span>
+              <Form.Label>Dakoppervlak in m²</Form.Label>
+            </div>
+            <Input {...attrs} class="placeholder-custom" type="number" placeholder="2500 m²" value={roofsizeDrawing} disabled={!$formData.dakoppervlak_toggle} />
+          </div>
+        </Form.Control>
+        <Form.Description>
+          Vul hier zelf uw dakoppervlak in
+        </Form.Description>
+        <Form.FieldErrors />
+      </Form.Field>
+  </div>
+  
+  
+              
+              <!-- DAKTYPE -->
+          <Form.Field {form} name="dakType" class="form-field">
+              <Form.Control let:attrs>
+                  <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                      <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                          <!-- Icon next to the label -->
+                          <span class="material-symbols-outlined icon">roofing</span>  
+                          <Form.Label>Daktype</Form.Label>
+                      </div>
+                      <Select.Root selected={selectedDakType} onSelectedChange={(v) => { v && ($formData.dakType = v.value); }} required>
+                          <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
+                              <!-- Icon inside the select trigger -->
+                              <!-- <span class="material-symbols-outlined icon">roofing</span> -->
+                              <Select.Value placeholder="Kies uw daktype" class="select-placeholder" />
+                          </Select.Trigger>
+                          <Select.Content>
+                              <Select.Item value="Plat" label="Plat" />
+                              <Select.Item value="Schuin" label="Schuin" />
+                              <Select.Item value="Kas" label="Kas" />
+                          </Select.Content>
+                      </Select.Root>
+                      <input hidden bind:value={$formData.dakType} name={attrs.name} />
+                  </div>
+              </Form.Control>
+              <!-- <Form.Description>Kies uw daktype.</Form.Description> YRS: omschrijving is overbodig -->
+              <Form.FieldErrors />
+          </Form.Field>
+      
+      <!-- STROOMAANSLUITING -->
+      <Form.Field {form} name="stroomAansluiting" class="form-field">
+          <Form.Control let:attrs>
+              <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                  <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                      <!-- Icon next to the label -->
+                      <span class="material-symbols-outlined icon">electrical_services</span>  
+                      <Form.Label>Stroomaansluiting</Form.Label>
+                  </div>
+                  <Select.Root selected={selectedStroomAansluiting} onSelectedChange={(v) => { v && ($formData.stroomAansluiting = v.value); }} required>
+                      <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
+                          <!-- Icon inside the select trigger -->
+                          <!-- <span class="material-symbols-outlined icon">electrical_services</span> -->
+                          <Select.Value placeholder="Kies uw type stroomaansluiting" style="text-align: left; padding-left: 1rem;" />
+                      </Select.Trigger>
+                      <Select.Content>
+                          <Select.Item value="<630 KVA" label="< 630 KVA" />
+                          <Select.Item value="630 KVA" label="630 KVA" />
+                          <Select.Item value=">630 KVA" label="> 630 KVA" />
+                          <Select.Item value="Weet ik niet" label="Weet ik niet" />
+                      </Select.Content>
+                  </Select.Root>
+                  <input hidden bind:value={$formData.stroomAansluiting} name={attrs.name} />
+              </div>
+          </Form.Control>
+          <Form.Description>Kies uw stroomaansluiting.</Form.Description>
+          <Form.FieldErrors /> 
+      </Form.Field>
+  
+      </Step>
+  
+      <!-- Step 3: Personal Information -->
+      <Step>
+        <svelte:fragment slot="header">Step 3: Personal Information</svelte:fragment>
+        <!-- Include Naam, Telefoonnummer, Email, Klantopmerkingen textarea, PrivacyAkkoord checkbox, and Submit button here -->
+  
+     <!-- NAAM -->
+  
+      <Form.Field {form} name="naam" class="form-field">
+          <Form.Control let:attrs>
+              <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                  <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                      <span class="material-symbols-outlined icon" style="margin-bottom: 0.1rem; font-size: 1.55rem;">person</span> <!-- Inline style for vertical adjustment -->
+                      <Form.Label>Naam</Form.Label>
+                  </div>
+                  <Input {...attrs} class="placeholder-custom" type="naam" bind:value={$formData.naam} placeholder="Protium NL" />
+              </div>
+          </Form.Control>
+          <!-- <Form.Description>Wat is uw naam?</Form.Description> YRS: omschrijving is overbodig -->
+          <Form.FieldErrors />
+      </Form.Field>
+  
+          <!-- TELEFOONNUMMER -->
+  
+          <Form.Field {form} name="telefoonNummer" class="form-field">
+              <Form.Control let:attrs>
+                  <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                      <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                          <span class="material-symbols-outlined icon">call</span>
+                          <Form.Label>Telefoonnummer</Form.Label>
+                      </div>
+                      <Input {...attrs} class="placeholder-custom" type="tel" bind:value={$formData.telefoonNummer} placeholder=" " />
+                  </div>
+              </Form.Control>
+              <!-- <Form.Description>Wat is uw telefoonnummer?</Form.Description> YRS: omschrijving is overbodig -->
+              <Form.FieldErrors /> 
+          </Form.Field>
+  
+      
+      <!-- EMAIL -->
+  
+      <Form.Field {form} name="email" class="form-field">
+          <Form.Control let:attrs>
+              <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                  <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                      <span class="material-symbols-outlined icon">mail</span>
+                      <Form.Label>E-mail</Form.Label>
+                  </div>
+                  <Input {...attrs} class="placeholder-custom" type="email" bind:value={$formData.email} placeholder="hallo@protium.nl" />
+              </div>
+          </Form.Control>
+          <!-- <Form.Description>Wat is uw email?</Form.Description> YRS: omschrijving is overbodig -->
+          <Form.FieldErrors /> 
+      </Form.Field>
+  
+      <!-- KLANTVRAGEN EN/OF OPMERKINGEN TEXTAREA -->
+  
+      <Form.Field {form} name="klantOpmerkingen" class="form-field">
+          <Form.Control let:attrs>
+              <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                  <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                      <span class="material-symbols-outlined icon">description</span>
+                      <Form.Label>Klantvragen en/of opmerkingen</Form.Label>
+                  </div>
+                  <Textarea
+                      {...attrs}
+                      placeholder="Zijn er nog vragen of opmerkingen over uw Quickscan?"
+                      class="resize-none h-32 placeholder-custom"
+                      bind:value={$formData.klantOpmerkingen}
+                  />
+              </div>
+              <!-- <Form.Description>
+                  Zijn er nog belangrijke dingen die wij moeten weten?
+              </Form.Description> YRS: omschrijving is overbodig -->
+          </Form.Control>
+          <Form.FieldErrors />
+      </Form.Field>
+      
+  <!-- CHECKBOX COMPONENT PRIVACY VERKLARING -->
+  
+  <Form.Field {form} name="privacyAkkoord" class="form-field">
+      <Form.Control let:attrs>
+          <Checkbox {...attrs} bind:checked={$formData.privacyAkkoord} />
+          <Form.Label style="font-size: 12px;">&nbsp;&nbsp;Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label> 
+          <Form.Description style="font-size: 12px;">
+              <!-- Wij gebruiken deze gegevens enkel om je van informatie over zakelijke zonnepanelen te voorzien. -->
+              Voor meer informatie bekijk onze
+              <a href="https://protium.nl/privacy-policy" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">privacyverklaring</a>.
+          </Form.Description>
+          <input name={attrs.name} value={$formData.privacyAkkoord} hidden />
+      </Form.Control>
+      <!-- <Form.FieldErrors /> YRS: Default error messages uitgezet. NL foutmeldingen zijn gedefineerd in schema.ts file -->
+  </Form.Field>
+  
+  <!-- loading spinner vlak voor submit button -->
+  {#if $delayed}<img src={spinner} alt="Loading..." class="spinner" />{/if}
+  
+  <Form.Button class="special-button">
+      Verzenden
+      <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-right" />
+      <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-left" />
+    </Form.Button>
+  
+    <!-- Display success message after submission -->
+  {#if isSubmitted}
+  <div class="success-banner">
+      Uw Quickscan gegevens zijn succesvol opgeslagen, een expert van Protium neemt contact met u op ☀️
+  </div>
+  {/if}
+  
+          <!-- YRS: Hovercard van Protium -->
+          <div class="hovercard-container">
+              <HoverCard />
+            </div>
+  
+  
+      </Step>
+    </Stepper>
+  </form>
+  
