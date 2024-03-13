@@ -1,0 +1,1523 @@
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/package.json ---
+
+{
+	"name": "form-project-scratch",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"test": "npm run test:integration && npm run test:unit",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write .",
+		"test:integration": "playwright test",
+		"test:unit": "vitest"
+	},
+	"devDependencies": {
+		"@playwright/test": "^1.28.1",
+		"@skeletonlabs/skeleton": "^2.9.0",
+		"@skeletonlabs/tw-plugin": "^0.3.1",
+		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"@tailwindcss/forms": "^0.5.7",
+		"@tailwindcss/typography": "^0.5.10",
+		"@types/eslint": "^8.56.0",
+		"@types/node": "^20.11.27",
+		"@typescript-eslint/eslint-plugin": "^7.0.0",
+		"@typescript-eslint/parser": "^7.0.0",
+		"autoprefixer": "^10.4.16",
+		"eslint": "^8.56.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-svelte": "^2.35.1",
+		"postcss": "^8.4.32",
+		"postcss-load-config": "^5.0.2",
+		"postcss-nesting": "^12.0.4",
+		"prettier": "^3.1.1",
+		"prettier-plugin-svelte": "^3.1.2",
+		"prettier-plugin-tailwindcss": "^0.5.9",
+		"svelte": "^4.2.7",
+		"svelte-check": "^3.6.0",
+		"tailwindcss": "^3.3.6",
+		"tslib": "^2.4.1",
+		"typescript": "^5.0.0",
+		"vite": "^5.0.3",
+		"vitest": "^1.2.0"
+	},
+	"type": "module",
+	"dependencies": {
+		"@internationalized/date": "^3.5.2",
+		"bits-ui": "^0.18.6",
+		"clsx": "^2.1.0",
+		"cmdk-sv": "^0.0.13",
+		"embla-carousel-svelte": "^8.0.0",
+		"formsnap": "^0.5.1",
+		"mode-watcher": "^0.2.1",
+		"paneforge": "^0.0.2",
+		"svelte-radix": "^1.0.3",
+		"svelte-sonner": "^0.3.19",
+		"sveltekit-superforms": "^2.6.2",
+		"tailwind-merge": "^2.2.1",
+		"tailwind-variants": "^0.2.0",
+		"vaul-svelte": "^0.2.4",
+		"zod": "^3.22.4"
+	}
+}
+
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/svelte.config.js ---
+
+import adapter from '@sveltejs/adapter-auto';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
+	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
+	// for more information about preprocessors
+	preprocess: [vitePreprocess({})],
+
+	kit: {
+		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
+		// If your environment is not supported or you settled on a specific environment, switch out the adapter.
+		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
+		adapter: adapter(),
+		alias: {
+			'@/*': './path/to/lib/*'
+		}
+	}
+};
+
+export default config;
+
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/playwright.config.ts ---
+
+import type { PlaywrightTestConfig } from '@playwright/test';
+
+const config: PlaywrightTestConfig = {
+	webServer: {
+		command: 'npm run build && npm run preview',
+		port: 4173
+	},
+	testDir: 'tests',
+	testMatch: /(.+\.)?(test|spec)\.[jt]s/
+};
+
+export default config;
+
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/postcss.config.cjs ---
+
+const tailwindcss = require('tailwindcss');
+const autoprefixer = require('autoprefixer');
+const postcssNesting = require('postcss-nesting');
+
+const config = {
+    plugins: [
+        // Include postcss-nesting before Tailwind CSS for nesting support
+        postcssNesting(),
+        // Other plugins like autoprefixer can follow after
+        autoprefixer(),
+        tailwindcss(),
+    ],
+};
+
+module.exports = config;
+
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/tailwind.config.js ---
+
+import { fontFamily } from "tailwindcss/defaultTheme";
+
+/** @type {import('tailwindcss').Config} */
+const config = {
+	darkMode: ["class"],
+	content: ["./src/**/*.{html,js,svelte,ts}"],
+  safelist: ["dark"],
+	theme: {
+		container: {
+			center: true,
+			padding: "2rem",
+			screens: {
+				"2xl": "1400px"
+			}
+		},
+		extend: {
+			colors: {
+				border: "hsl(var(--border) / <alpha-value>)",
+				input: "hsl(var(--input) / <alpha-value>)",
+				ring: "hsl(var(--ring) / <alpha-value>)",
+				background: "hsl(var(--background) / <alpha-value>)",
+				foreground: "hsl(var(--foreground) / <alpha-value>)",
+				primary: {
+					DEFAULT: "hsl(var(--primary) / <alpha-value>)",
+					foreground: "hsl(var(--primary-foreground) / <alpha-value>)"
+				},
+				secondary: {
+					DEFAULT: "hsl(var(--secondary) / <alpha-value>)",
+					foreground: "hsl(var(--secondary-foreground) / <alpha-value>)"
+				},
+				destructive: {
+					DEFAULT: "hsl(var(--destructive) / <alpha-value>)",
+					foreground: "hsl(var(--destructive-foreground) / <alpha-value>)"
+				},
+				muted: {
+					DEFAULT: "hsl(var(--muted) / <alpha-value>)",
+					foreground: "hsl(var(--muted-foreground) / <alpha-value>)"
+				},
+				accent: {
+					DEFAULT: "hsl(var(--accent) / <alpha-value>)",
+					foreground: "hsl(var(--accent-foreground) / <alpha-value>)"
+				},
+				popover: {
+					DEFAULT: "hsl(var(--popover) / <alpha-value>)",
+					foreground: "hsl(var(--popover-foreground) / <alpha-value>)"
+				},
+				card: {
+					DEFAULT: "hsl(var(--card) / <alpha-value>)",
+					foreground: "hsl(var(--card-foreground) / <alpha-value>)"
+				}
+			},
+			borderRadius: {
+				lg: "var(--radius)",
+				md: "calc(var(--radius) - 2px)",
+				sm: "calc(var(--radius) - 4px)"
+			},
+			fontFamily: {
+				sans: [...fontFamily.sans]
+			}
+		}
+	},
+};
+
+export default config;
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/tsconfig.json ---
+
+{
+	"extends": "./.svelte-kit/tsconfig.json",
+	"compilerOptions": {
+		"allowJs": true,
+		"checkJs": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"strict": true,
+		"moduleResolution": "bundler"
+	}
+	// Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
+	//
+	// If you want to overwrite includes/excludes, make sure to copy over the relevant includes/excludes
+	// from the referenced tsconfig.json - TypeScript does not merge them in
+}
+
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/.svelte-kit/tsconfig.json ---
+
+{
+	"compilerOptions": {
+		"paths": {
+			"@/*": [
+				"../path/to/lib/*"
+			],
+			"$lib": [
+				"../src/lib"
+			],
+			"$lib/*": [
+				"../src/lib/*"
+			]
+		},
+		"rootDirs": [
+			"..",
+			"./types"
+		],
+		"verbatimModuleSyntax": true,
+		"isolatedModules": true,
+		"lib": [
+			"esnext",
+			"DOM",
+			"DOM.Iterable"
+		],
+		"moduleResolution": "bundler",
+		"module": "esnext",
+		"noEmit": true,
+		"target": "esnext"
+	},
+	"include": [
+		"ambient.d.ts",
+		"non-ambient.d.ts",
+		"./types/**/$types.d.ts",
+		"../svelte.config.js",
+		"../vite.config.js",
+		"../vite.config.ts",
+		"../src/**/*.js",
+		"../src/**/*.ts",
+		"../src/**/*.svelte",
+		"../tests/**/*.js",
+		"../tests/**/*.ts",
+		"../tests/**/*.svelte"
+	],
+	"exclude": [
+		"../node_modules/**"
+	]
+}
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/components.json ---
+
+{
+  "$schema": "https://shadcn-svelte.com/schema.json",
+  "style": "new-york",
+  "tailwind": {
+    "config": "tailwind.config.js",
+    "css": "src/app.pcss",
+    "baseColor": "zinc"
+  },
+  "aliases": {
+    "components": "$lib/components",
+    "utils": "$lib/utils"
+  },
+  "typescript": true
+}
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/vite.config.ts ---
+
+import { sveltekit } from '@sveltejs/kit/vite';
+import { defineConfig } from 'vitest/config';
+
+export default defineConfig({
+	plugins: [sveltekit()],
+	test: {
+		include: ['src/**/*.{test,spec}.{js,ts}']
+	}
+});
+
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/README.md ---
+
+# create-svelte
+
+Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+
+## Creating a project
+
+If you're seeing this, you've probably already done this step. Congrats!
+
+```bash
+# create a new project in the current directory
+npm create svelte@latest
+
+# create a new project in my-app
+npm create svelte@latest my-app
+```
+
+## Developing
+
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+
+```bash
+npm run dev
+
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
+
+## Building
+
+To create a production version of your app:
+
+```bash
+npm run build
+```
+
+You can preview the production build with `npm run preview`.
+
+> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/src/app.postcss ---
+
+/* Write your global styles here, in PostCSS syntax */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+	@apply h-full overflow-hidden;
+}
+
+@layer base {
+	:root {
+		--background: 0 0% 100%;
+		--foreground: 240 10% 3.9%;
+
+		--muted: 240 4.8% 95.9%;
+		--muted-foreground: 240 3.8% 46.1%;
+
+		--popover: 0 0% 100%;
+		--popover-foreground: 240 10% 3.9%;
+
+		--card: 0 0% 100%;
+		--card-foreground: 240 10% 3.9%;
+
+		--border: 240 5.9% 90%;
+		--input: 240 5.9% 90%;
+
+		--primary: 240 5.9% 10%;
+		--primary-foreground: 0 0% 98%;
+
+		--secondary: 240 4.8% 95.9%;
+		--secondary-foreground: 240 5.9% 10%;
+
+		--accent: 240 4.8% 95.9%;
+		--accent-foreground: 240 5.9% 10%;
+
+		--destructive: 0 72.2% 50.6%;
+		--destructive-foreground: 0 0% 98%;
+
+		--ring: 240 10% 3.9%;
+
+		--radius: 0.5rem;
+	}
+
+	.dark {
+		--background: 240 10% 3.9%;
+		--foreground: 0 0% 98%;
+
+		--muted: 240 3.7% 15.9%;
+		--muted-foreground: 240 5% 64.9%;
+
+		--popover: 240 10% 3.9%;
+		--popover-foreground: 0 0% 98%;
+
+		--card: 240 10% 3.9%;
+		--card-foreground: 0 0% 98%;
+
+		--border: 240 3.7% 15.9%;
+		--input: 240 3.7% 15.9%;
+
+		--primary: 0 0% 98%;
+		--primary-foreground: 240 5.9% 10%;
+
+		--secondary: 240 3.7% 15.9%;
+		--secondary-foreground: 0 0% 98%;
+
+		--accent: 240 3.7% 15.9%;
+		--accent-foreground: 0 0% 98%;
+
+		--destructive: 0 62.8% 30.6%;
+		--destructive-foreground: 0 0% 98%;
+
+		--ring: 240 4.9% 83.9%;
+	}
+}
+
+@layer base {
+	* {
+		@apply border-border;
+	}
+	body {
+		@apply bg-background text-foreground;
+	}
+}
+
+/* YRS: Hieronder staan CSS styling voor icons die gebruikt worden */
+@layer components {
+	.icon {
+		@apply inline-flex align-middle justify-center; /* Existing flex and alignment styles */
+		font-variation-settings:
+			'FILL' 0,
+			'wght' 400,
+			'GRAD' 0,
+			'opsz' 24;
+		color: var(--primary-foreground); /* Adjust color as needed */
+		font-size: 1.25rem; /* Adjust size as needed */
+		margin-right: 0.5rem; /* Default space between icon and text */
+		vertical-align: middle; /* Vertically aligns inline or inline-block elements */
+	}
+
+	.icon-large {
+		@apply .icon;
+		font-size: 2rem; /* Larger size */
+	}
+
+	.icon-primary {
+		@apply .icon;
+		color: var(--primary); /* Use primary color */
+	}
+
+	.icon-secondary {
+		@apply .icon;
+		color: var(--secondary); /* Use secondary color */
+	}
+
+	/* Utility classes for individual margin adjustments */
+	.icon-margin-right {
+		margin-right: 0.5rem; /* Adjust right margin, can be overridden per use case */
+	}
+
+	.icon-margin-left {
+		margin-left: 0.5rem; /* Adjust left margin */
+	}
+
+	.icon-margin-top {
+		margin-top: 0.5rem; /* Adjust top margin */
+	}
+
+	.icon-margin-bottom {
+		margin-bottom: 0.5rem; /* Adjust bottom margin */
+	}
+
+	/* Utility class for bottom alignment */
+	.icon-align-bottom {
+		vertical-align: bottom; /* Align the bottom of the icon with the text baseline */
+	}
+
+	.hovercard-icon {
+		@apply inline-block align-middle; /* Inline-block for icons next to text */
+		font-variation-settings:
+			'FILL' 0,
+			'wght' 400,
+			'GRAD' 0,
+			'opsz' 24;
+		color: #015257; /* You can change this per icon if needed */
+		font-size: 1rem; /* Default size, adjust as needed */
+		margin-right: 0.5rem; /* Space between icon and text */
+		vertical-align: middle; /* Aligns with text */
+	}
+
+	/* More specific or responsive utility classes can be added here */
+}
+
+/* YRS: SELECT DROPDOWN  */
+/* New class for left-aligning text inside Select.Value */
+.select-value-text-left {
+	@apply text-left; /* Aligns text to the left */
+}
+
+/* YRS: Styling voor font color van de placeholder select value form component */
+.select-placeholder::placeholder {
+	color: #ffff00; /* Replace with the color you want */
+}
+
+/* If you want to add specific margins, you can also create utility classes for that */
+.select-value-margin {
+	margin-left: 1rem; /* Example: adjust the left margin */
+	/* Add margin-top, margin-right, and margin-bottom if needed */
+}
+
+/* YRS: PLACEHOLDER STYLING */
+
+/* Placeholder Styles */
+.placeholder-custom::placeholder {
+	/* Target the placeholder */
+	color: #9ca3af; /* YRS: aanpassen van placeholder kleur werkt niet, de font size lukt wel! */
+	font-size: 0.75rem; /* Default size, adjust as needed */
+}
+
+.placeholder-custom:focus::placeholder {
+	/* Change placeholder on focus */
+	color: #6b7280; /* Darker gray when the input is focused */
+}
+
+/* YRS: FORM FIELD STYLING voor ruimte te creeren tussen elk form component */
+.form-field {
+	margin-bottom: 15px; /* Adjust as needed */
+	margin-top: 15px; /* Adjust as needed */
+}
+/* YRS: BUTTON STYLING */
+.form-button {
+	padding: 10px 20px; /* Adjust dimensions as needed */
+	border-radius: 5px; /* Adjust rounding as needed */
+	background: linear-gradient(to right, #ffd700, #ffa500); /* Adjust gradient colors as needed */
+	box-shadow: 0 0 10px rgba(255, 165, 0, 0.5); /* Adjust glow color and intensity as needed */
+	color: #015257; /* Adjust text color as needed */
+	font-weight: bold; /* Adjust font weight as needed */
+}
+.form-button span {
+	color: #ffffff; /* Adjust text color inside the button as needed */
+}
+
+/* YRS: De special-button styling wordt gebruikt voor de "Verzenden" button aan het einde van de form  */
+.special-button {
+	background: #015257; /* Replace with the color you want */
+	box-shadow: 0 0 10px rgba(#ffffff, 0.5); /* Replace newColor with the color you want */
+	border-radius: 50px; /* Adjust rounding as needed */
+	margin-bottom: 30px; /* Adjust as needed */
+	margin-top: 10px; /* Adjust as needed */
+	height: 4rem; /* Adjust as needed */
+	color: #ffffff; /* Replace with the color you want */
+	font-weight: bold; /* Adjust as needed */
+	font-size: 20px; /* Adjust as needed */
+	position: relative; /* Adjust as needed */
+}
+
+.special-button span {
+	color: #ffffff; /* Replace with the color you want */
+	font-weight: bold; /* Adjust as needed */
+}
+
+/* YRS: Logo styling inside button voor Protium logo aan rechterzijde van de "Verzenden" tekst */
+.logo-inside-special-button-right {
+	height: 60%; /* Adjust as needed */
+	width: auto; /* Keeps the aspect ratio */
+	position: absolute;
+	right: 20px; /* Adjust as needed */
+	top: 50%;
+	transform: translateY(-50%); /* Centers the logo vertically */
+}
+
+/* YRS: Logo styling inside button voor Protium logo aan linkerzijde van de "Verzenden" tekst */
+.logo-inside-special-button-left {
+	height: 60%; /* Adjust as needed */
+	width: auto; /* Keeps the aspect ratio */
+	position: absolute;
+	left: 20px; /* Adjust as needed */
+	top: 50%;
+	transform: translateY(-50%); /* Centers the logo vertically */
+}
+
+/* YRS: Styling voor spinner animation na submit knop */
+.spinner {
+	display: block; /* Ensures the spinner is block-level for margin utilities to take effect */
+	margin: 2rem auto; /* Centers the spinner horizontally with a top and bottom margin */
+	width: 50px; /* Adjust the width as needed */
+	height: 50px; /* Adjust the height as needed */
+	border: 4px solid rgba(255, 255, 255, 0.2); /* Light grey border */
+	border-radius: 50%; /* Makes it circular */
+	border-top-color: #fff; /* Top border color */
+	animation: spin 1s infinite linear; /* Spin animation */
+}
+
+/* YRS: Toevoegen van een succes banner nadat form gesubmit is */
+.success-banner {
+	padding: 10px;
+	background-color: #84a98c; /* Background color */
+	color: white;
+	text-align: center;
+	margin-top: 0px; /* Add some space above the banner */
+	margin-bottom: 40px; /* Add some space below the banner */
+	border-radius: 20px; /* Adjust rounding as needed */
+	font-weight: bold; /* Adjust font weight as needed */
+	/* Add more styling as needed */
+}
+
+/* ////////////////////// YRS: PLAYGROUND FORM COMPONENT STYLES ////////////////////////////// */
+
+/* YRS: Styling voor flexbox container die dient als parent container */
+.parent-flex-container {
+	/* Add styles for the parent container (marketing emails) */
+	/* Example: */
+	display: flex;
+	flex-direction: column; /* stack children vertically */
+	justify-content: space-between; /* push children to start and end of container */
+	gap: 10px; /* space between children */
+	height: 100%; /* ensure the container takes up full height needed to allow justification */
+	border: 1px solid #ccc; /* example border */
+	border-radius: 8px; /* rounded corners */
+	padding: 10px; /* spacing inside */
+	/* margin-bottom: 16px; space between this and other elements */
+}
+
+/* YRS: Styling voor flexbox container die dient als child container */
+
+.child-flex-container {
+	display: flex;
+	flex-direction: row; /* Mimics 'flex-row': Children are laid out horizontally */
+	justify-content: space-between; /* Mimics 'justify-between': Distributes items evenly with the first item at the start and the last item at the end */
+	align-items: center; /* Mimics 'items-center': Vertically aligns items in the center */
+	border-radius: 0.5rem; /* Mimics 'rounded-lg': Applies large rounded corners */
+	/* border: 1px solid #e5e7eb; Mimics 'border': Adds a light border. Tailwind's default border color is a light gray, adjust as needed */
+	padding: 1rem; /* Mimics 'p-4': Adds padding of 1rem on all sides */
+}
+
+.locked-field-container {
+	/* Styles for the child container (locked field) */
+	/* Example: */
+	/* display: flex;
+  align-items: center; */
+	align-self: flex-start; /* align this child to the start of the cross axis */
+	margin-top: auto; /* push the child container to the bottom */
+	width: 100%; /* ensure the child container takes up full width of the parent */
+}
+
+.locked-input {
+	/* Styles for the locked input */
+	/* Example: */
+	flex-grow: 1; /* take up remaining space */
+	padding: 8px; /* spacing inside */
+	margin-right: 8px; /* space between input and lock icon */
+	border: 1px solid #ccc; /* example border */
+	border-radius: 4px; /* rounded corners */
+	background-color: #eee; /* muted background */
+}
+
+.lock-icon {
+	/* Styles for the lock icon */
+	/* Example: */
+	font-size: 24px; /* icon size */
+	margin-right: 8px; /* space between icon and input */
+}
+
+.description {
+	/* Styles for descriptions */
+	/* Example: */
+	font-size: 14px;
+	color: #666; /* muted text color */
+}
+
+/* Add additional styles as needed */
+
+/* YRS: CSS styling voor hovercard. Here's an example that positions the hovercard at the bottom right of the form, with some padding and margins: */
+
+.hovercard-container {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	padding: 10px;
+	margin: 0px;
+	width: 500px; /* adjust as needed */
+	height: 500px; /* adjust as needed */
+}
+
+/* YRS: CSS styling voor tooltip icon */
+/* Style for the tooltip icon */
+.tooltip-icon {
+	font-size: 15px; /* Change this value to increase or decrease the icon size */
+	color: #666; /* Set your desired color */
+	vertical-align: middle; /* Aligns the icon with the middle of the text line */
+	cursor: help; /* Shows a help cursor when hovered */
+	margin-left: 4px; /* Adjust spacing to the left of the icon if needed */
+	margin-bottom: 2px; /* Adjust spacing to the bottom of the icon if needed */
+}
+
+/* New style for the tooltip content */
+.tooltip-content {
+	font-size: 14px;
+	color: #333333;
+	background-color: #a74141;
+	padding: 8px;
+	border-radius: 4px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	max-width: 300px;
+	z-index: 10;
+	position: absolute; /* This positions the tooltip content absolutely within its container */
+	top: 100%; /* Adjust as necessary to position below the trigger */
+	left: 50%;
+	transform: translateX(-50%);
+	display: none; /* Hide the tooltip content by default */
+}
+
+/* Position the container of the tooltip relative to the trigger */
+.tooltip-trigger-container {
+	position: relative; /* This container must be positioned relatively */
+	display: inline-block; /* Adjust as necessary */
+}
+
+/* Additional styles for visibility and positioning */
+.tooltip-content::before {
+	content: '';
+	width: 0;
+	height: 0;
+	border-left: 5px solid transparent;
+	border-right: 5px solid transparent;
+	border-bottom: 5px solid #333333; /* Match with the background color of the tooltip */
+	position: absolute;
+	top: -5px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+/* Show the tooltip content when the trigger is hovered */
+.tooltip-trigger-container:hover .tooltip-content {
+	display: block !important; /* Force the tooltip to show on hover */
+}
+@tailwind components;
+@tailwind utilities;
+
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/src/app.html ---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+			rel="stylesheet" 
+		/>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		%sveltekit.head%
+	</head>
+	<body data-sveltekit-preload-data="hover" data-theme="my-custom-theme">
+		<div style="display: contents" class="h-full overflow-hidden">%sveltekit.body%</div>
+	</body>
+	<body>
+	</body>
+</html>
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/src/routes/+layout.svelte ---
+
+<script>
+	import '../app.postcss';
+	import { AppBar, AppShell, Stepper, Step } from '@skeletonlabs/skeleton';
+</script>
+
+<AppShell>
+	<svelte:fragment slot="header">
+		<AppBar>Skeleton</AppBar>
+	</svelte:fragment>
+	<!-- (sidebarLeft) -->
+	<!-- (sidebarRight) -->
+	<svelte:fragment slot="pageHeader">Page Header</svelte:fragment>
+	<!-- Router Slot -->
+	<slot />
+	<!-- ---- / ---- -->
+	<svelte:fragment slot="pageFooter">Page Footer</svelte:fragment>
+	<svelte:fragment slot="footer">Footer</svelte:fragment>
+	<slot />
+</AppShell>
+
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/tailwind.config.ts ---
+
+// YRS: Dit is een nieuwe file aangemaakt nadat Skeleton docs stappen zijn gevolgd:
+
+import { join } from 'path';
+import { myCustomTheme } from './my-custom-theme'; // YRS: Import custom theme (theme.ts
+import type { Config } from 'tailwindcss';
+
+// 1. Import the Skeleton plugin
+import { skeleton } from '@skeletonlabs/tw-plugin';
+
+const config = {
+	// 2. Opt for dark mode to be handled via the class method
+	darkMode: 'class',
+	content: [
+		'./src/**/*.{html,js,svelte,ts}',
+		// 3. Append the path to the Skeleton package
+		join(require.resolve(
+			'@skeletonlabs/skeleton'),
+			'../**/*.{html,js,svelte,ts}'
+		)
+	],
+	theme: {
+		extend: {},
+	},
+	plugins: [
+		skeleton({
+			themes: {
+				custom: [
+					myCustomTheme
+				]
+			}
+		})
+	]
+} satisfies Config;
+
+export default config;
+						
+
+// YRS: Hieronder stond de basis code die nadat Skeleton packages waren geinstalleerd zijn gevormd (toen heette deze file nog tailwind.config.cjs)
+
+// /** @type {import('tailwindcss').Config}*/
+// /** @type {import('tailwindcss').Config}*/
+// const config = {
+// 	content: ['./src/**/*.{html,js,svelte,ts}'],
+
+// 	theme: {
+// 		extend: {}
+// 	},
+
+// 	plugins: []
+// };
+
+// module.exports = config;
+
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/my-custom-theme.ts ---
+
+
+import type { CustomThemeConfig } from '@skeletonlabs/tw-plugin';
+
+export const myCustomTheme: CustomThemeConfig = {
+    name: 'my-custom-theme',
+    properties: {
+		// =~= Theme Properties =~=
+		"--theme-font-family-base": `system-ui`,
+		"--theme-font-family-heading": `system-ui`,
+		"--theme-font-color-base": "0 0 0",
+		"--theme-font-color-dark": "255 255 255",
+		"--theme-rounded-base": "9999px",
+		"--theme-rounded-container": "8px",
+		"--theme-border-base": "1px",
+		// =~= Theme On-X Colors =~=
+		"--on-primary": "255 255 255",
+		"--on-secondary": "0 0 0",
+		"--on-tertiary": "0 0 0",
+		"--on-success": "0 0 0",
+		"--on-warning": "255 255 255",
+		"--on-error": "255 255 255",
+		"--on-surface": "0 0 0",
+		// =~= Theme Colors  =~=
+		// primary | #015257 
+		"--color-primary-50": "217 229 230", // #d9e5e6
+		"--color-primary-100": "204 220 221", // #ccdcdd
+		"--color-primary-200": "192 212 213", // #c0d4d5
+		"--color-primary-300": "153 186 188", // #99babc
+		"--color-primary-400": "77 134 137", // #4d8689
+		"--color-primary-500": "1 82 87", // #015257
+		"--color-primary-600": "1 74 78", // #014a4e
+		"--color-primary-700": "1 62 65", // #013e41
+		"--color-primary-800": "1 49 52", // #013134
+		"--color-primary-900": "0 40 43", // #00282b
+		// secondary | #75c8d8 
+		"--color-secondary-50": "234 247 249", // #eaf7f9
+		"--color-secondary-100": "227 244 247", // #e3f4f7
+		"--color-secondary-200": "221 241 245", // #ddf1f5
+		"--color-secondary-300": "200 233 239", // #c8e9ef
+		"--color-secondary-400": "158 217 228", // #9ed9e4
+		"--color-secondary-500": "117 200 216", // #75c8d8
+		"--color-secondary-600": "105 180 194", // #69b4c2
+		"--color-secondary-700": "88 150 162", // #5896a2
+		"--color-secondary-800": "70 120 130", // #467882
+		"--color-secondary-900": "57 98 106", // #39626a
+		// tertiary | #fff59d 
+		"--color-tertiary-50": "255 254 240", // #fffef0
+		"--color-tertiary-100": "255 253 235", // #fffdeb
+		"--color-tertiary-200": "255 253 231", // #fffde7
+		"--color-tertiary-300": "255 251 216", // #fffbd8
+		"--color-tertiary-400": "255 248 186", // #fff8ba
+		"--color-tertiary-500": "255 245 157", // #fff59d
+		"--color-tertiary-600": "230 221 141", // #e6dd8d
+		"--color-tertiary-700": "191 184 118", // #bfb876
+		"--color-tertiary-800": "153 147 94", // #99935e
+		"--color-tertiary-900": "125 120 77", // #7d784d
+		// success | #52b788 
+		"--color-success-50": "229 244 237", // #e5f4ed
+		"--color-success-100": "220 241 231", // #dcf1e7
+		"--color-success-200": "212 237 225", // #d4ede1
+		"--color-success-300": "186 226 207", // #bae2cf
+		"--color-success-400": "134 205 172", // #86cdac
+		"--color-success-500": "82 183 136", // #52b788
+		"--color-success-600": "74 165 122", // #4aa57a
+		"--color-success-700": "62 137 102", // #3e8966
+		"--color-success-800": "49 110 82", // #316e52
+		"--color-success-900": "40 90 67", // #285a43
+		// warning | #d62828 
+		"--color-warning-50": "249 223 223", // #f9dfdf
+		"--color-warning-100": "247 212 212", // #f7d4d4
+		"--color-warning-200": "245 201 201", // #f5c9c9
+		"--color-warning-300": "239 169 169", // #efa9a9
+		"--color-warning-400": "226 105 105", // #e26969
+		"--color-warning-500": "214 40 40", // #d62828
+		"--color-warning-600": "193 36 36", // #c12424
+		"--color-warning-700": "161 30 30", // #a11e1e
+		"--color-warning-800": "128 24 24", // #801818
+		"--color-warning-900": "105 20 20", // #691414
+		// error | #d62828 
+		"--color-error-50": "249 223 223", // #f9dfdf
+		"--color-error-100": "247 212 212", // #f7d4d4
+		"--color-error-200": "245 201 201", // #f5c9c9
+		"--color-error-300": "239 169 169", // #efa9a9
+		"--color-error-400": "226 105 105", // #e26969
+		"--color-error-500": "214 40 40", // #d62828
+		"--color-error-600": "193 36 36", // #c12424
+		"--color-error-700": "161 30 30", // #a11e1e
+		"--color-error-800": "128 24 24", // #801818
+		"--color-error-900": "105 20 20", // #691414
+		// surface | #e9ecef 
+		"--color-surface-50": "252 252 253", // #fcfcfd
+		"--color-surface-100": "251 251 252", // #fbfbfc
+		"--color-surface-200": "250 250 251", // #fafafb
+		"--color-surface-300": "246 247 249", // #f6f7f9
+		"--color-surface-400": "240 242 244", // #f0f2f4
+		"--color-surface-500": "233 236 239", // #e9ecef
+		"--color-surface-600": "210 212 215", // #d2d4d7
+		"--color-surface-700": "175 177 179", // #afb1b3
+		"--color-surface-800": "140 142 143", // #8c8e8f
+		"--color-surface-900": "114 116 117", // #727475
+		
+	}
+}
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/src/routes/combined/+page.server.ts ---
+
+// YRS: LET OP DIT IS EEN COMBINED SCHEMA
+
+import type { PageServerLoad, Actions } from "./$types";
+import { fail } from "@sveltejs/kit";
+import { superValidate, message} from "sveltekit-superforms";
+import { zod } from "sveltekit-superforms/adapters";
+import { formSchema } from "./schema";
+import { roofsizeDrawing } from "./TESTroofsizeDrawing"; // YRS: Import roofsizeDrawing.ts for dynamic roofSize
+
+// Assuming VITE_AIRTABLE_API_KEY is stored in your .env file
+const airtableApiKey = import.meta.env.VITE_AIRTABLE_API_KEY;
+
+export const load: PageServerLoad = async () => {
+	return {
+		form: await superValidate(zod(formSchema)),
+	};
+};
+
+export const actions: Actions = {
+	default: async (event) => {
+		const form = await superValidate(event, zod(formSchema));
+
+		if (!form.valid) return fail(400, { form });
+
+		// Prepare the data for Airtable
+		const airtableData = {
+			records: [
+				{
+					fields: {
+						"First Name": form.data.naam,
+						"Telefoon": form.data.telefoonNummer,
+						"Postcode": form.data.postcode,
+						"Huisnummer": form.data.huisnummer,
+						"Email": form.data.email,
+						"Dakoppervlak": form.data.dakOppervlak,
+						"Daktype": form.data.dakType,
+						"Stroomaansluiting": form.data.stroomAansluiting,
+						"Klantvragen": form.data.klantOpmerkingen,
+						"Privacy": form.data.privacyAkkoord, // Use straight quotes
+					},
+				},
+			],
+		};
+
+		// Send the data to Airtable
+		try {
+			const response = await fetch('https://api.airtable.com/v0/appiUhN3UTNOzb1v3/Svelte%20Contactform', {
+				method: "POST",
+				headers: {
+					Authorization: `Bearer ${airtableApiKey}`,
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(airtableData),
+			});
+
+			if (!response.ok) {
+				// If the request failed, throw to catch block
+				throw new Error(`Airtable API request failed: ${response.status}`);
+			}
+
+			// You can do something with the response if needed
+			const responseData = await response.json();
+			console.log(responseData);
+
+			// Log all form fields
+			console.log(form);
+		} catch (error) {
+			console.error("Failed to send data to Airtable", error);
+			// Handle the error appropriately in your application
+			return fail(500, { error: "Failed to send data to Airtable" });
+		}
+
+		// If everything went well, send a success message
+		return message(form, 'Gegevens succesvol ontvangen!');
+	}
+};
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/src/routes/combined/+page.svelte ---
+
+<!-- YRS: LET OP DIT IS EEN COMBINED FILE -->
+
+<script lang="ts">
+    import type { PageData } from "./$types";
+    import CombinedForm from "./combined-form.svelte";
+    export let data: PageData;
+  </script>
+   
+  <CombinedForm data={data.form} />
+
+
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/src/routes/combined/TESTroofsizeDrawing.ts ---
+
+// YRS: LET OP DIT IS EEN COMBINED SCHEMA
+
+// Deze file is alleen om te demonstreren hoe op een reactieve/dynamische wijze de dakgrootte in 
+// de form kan worden aangepast op basis van de getekende of door de klant ingevoerde dakgrootte.
+
+export const roofsizeDrawing = 6500;
+
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/src/routes/combined/combined-form.svelte ---
+
+<!-- YRS: shadcn-svelte docs form creation -->
+
+<script lang="ts">
+    import * as Form from "$lib/components/ui/form";
+    import { Input } from "$lib/components/ui/input";
+    import * as Select from "$lib/components/ui/select"; // Import Select from shadcn-svelte
+    import { formSchema, type FormSchema } from "./schema";
+    import {
+        type SuperValidated,
+        type Infer,
+        superForm,
+    } from "sveltekit-superforms";
+    import { zodClient } from "sveltekit-superforms/adapters";
+    import { toast } from "svelte-sonner"; // Import toast for notifications
+    import { Textarea } from "$lib/components/ui/textarea";
+    import { Checkbox } from "$lib/components/ui/checkbox";
+    import SuperDebug from "sveltekit-superforms";
+    import { roofsizeDrawing } from "./TESTroofsizeDrawing"; // YRS: Import roofsizeDrawing.ts for dynamic roofSize
+    import spinner from '$lib/spinner.svg';
+    import  { message } from "sveltekit-superforms"; // YRS: Import message for success message
+    import { Switch } from "$lib/components/ui/switch"; // YRS: Import Switch from shadcn-svelte
+    import HoverCard from './hovercard.svelte'; // YRS: Import HoverCard from hovercard.svelte voor testen van hovercard in form
+    import { browser } from "$app/environment";
+    import { page } from "$app/stores";
+
+export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
+    
+    // export let data: SuperValidated<Infer<FormSchema>>;
+    
+        // YRS: Reactieve variabele toe om de form submission status bij te houden
+    let isSubmitted = false;
+
+        const form = superForm(data, {
+        validators: zodClient(formSchema),
+        delayMs: 50, // Start showing the loading spinner after ...ms, adjust to your needs
+        timeoutMs: 8000, // Consider as timeout after ...ms, adjust to your needs
+        onUpdated: ({ form: f }) => {
+            if (f.valid) {
+                toast.success("Form submission successful.");
+                isSubmitted = true; // YRS: Verander is submitted naar true
+            } else {
+                toast.error("Please fix the errors in the form.");
+            }
+        },
+    });
+
+    const { form: formData, enhance, delayed } = form; // Add 'delayed' here
+    $: selectedDakType = $formData.dakType ? { label: $formData.dakType, value: $formData.dakType } : undefined;
+    $: selectedStroomAansluiting = $formData.stroomAansluiting ? { label: $formData.stroomAansluiting, value: $formData.stroomAansluiting } : undefined;
+        
+    // Reactive assignment based on toggle and manual input
+        $: if ($formData.dakoppervlak_toggle && $formData.dakoppervlakManual !== undefined) {
+        // If toggle is enabled and manual input is provided, use it
+        $formData.dakOppervlak = $formData.dakoppervlakManual;
+    } else {
+        // Otherwise, fallback to the roofsizeDrawing value
+        $formData.dakOppervlak = roofsizeDrawing;
+    }
+
+
+
+    // // YRS: Zorg dat dakOppervlak goed gevalideerd wordt van string naar nummer en dat manual override mogelijk is
+    // // dakOppervlakInput starts as a string for input binding
+    // let dakOppervlakInput = '';
+    // let manualOverride = false;
+
+    // // Function to handle manual input, converting input to number and setting manual override
+    // function handleInput(event: InputEvent) {
+    //     let inputElement = event.target as HTMLInputElement;
+    //     dakOppervlakInput = inputElement.value;
+    //     manualOverride = true;
+    // }
+
+    // // Reactive statement for handling automatic updates or manual overrides
+    // $: {
+    //     if (!manualOverride && roofsizeDrawing !== undefined) {
+    //         dakOppervlakInput = roofsizeDrawing.toString();
+    //     }
+    //     $formData.dakOppervlak = Number(dakOppervlakInput);
+    // }
+    
+</script>
+  
+   <!-- YRS: SuperDebug zorgt voor window met JSON formatting van display form input -->
+
+   <div class="mx-auto flex max-w-md flex-col">
+    {#if browser}
+    <SuperDebug data={$formData} />
+    {/if}
+</div>
+
+<form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance>
+
+    <!-- NAAM -->
+
+    <Form.Field {form} name="naam" class="form-field">
+        <Form.Control let:attrs>
+            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                    <span class="material-symbols-outlined icon" style="margin-bottom: 0.1rem; font-size: 1.55rem;">person</span> <!-- Inline style for vertical adjustment -->
+                    <Form.Label>Naam</Form.Label>
+                </div>
+                <Input {...attrs} class="placeholder-custom" type="naam" bind:value={$formData.naam} placeholder="Protium NL" />
+            </div>
+        </Form.Control>
+        <!-- <Form.Description>Wat is uw naam?</Form.Description> YRS: omschrijving is overbodig -->
+        <Form.FieldErrors />
+    </Form.Field>
+
+        <!-- TELEFOONNUMMER -->
+
+        <Form.Field {form} name="telefoonNummer" class="form-field">
+            <Form.Control let:attrs>
+                <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                    <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                        <span class="material-symbols-outlined icon">call</span>
+                        <Form.Label>Telefoonnummer</Form.Label>
+                    </div>
+                    <Input {...attrs} class="placeholder-custom" type="tel" bind:value={$formData.telefoonNummer} placeholder=" " />
+                </div>
+            </Form.Control>
+            <!-- <Form.Description>Wat is uw telefoonnummer?</Form.Description> YRS: omschrijving is overbodig -->
+            <Form.FieldErrors /> 
+        </Form.Field>
+
+    
+    <!-- EMAIL -->
+
+    <Form.Field {form} name="email" class="form-field">
+        <Form.Control let:attrs>
+            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                    <span class="material-symbols-outlined icon">mail</span>
+                    <Form.Label>E-mail</Form.Label>
+                </div>
+                <Input {...attrs} class="placeholder-custom" type="email" bind:value={$formData.email} placeholder="hallo@protium.nl" />
+            </div>
+        </Form.Control>
+        <!-- <Form.Description>Wat is uw email?</Form.Description> YRS: omschrijving is overbodig -->
+        <Form.FieldErrors /> 
+    </Form.Field>
+
+
+                    <!-- YRS DAKOPPERVLAK MUTED (TEST OF DIT LUKT) -->            
+
+        <Form.Field {form} name="dakOppervlak" class="form-field">
+            <Form.Control let:attrs>
+                <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                    <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                        <span class="material-symbols-outlined icon">lock</span>
+                        <Form.Label>Dakoppervlak in m²</Form.Label>
+                    </div>
+                    <Input {...attrs} class="placeholder-custom" type="number" value={roofsizeDrawing.toString()} disabled />
+                </div>
+            </Form.Control>
+            <Form.Description>
+                <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
+                <p>Klopt dit niet? Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
+            </Form.Description>
+            <Form.FieldErrors />
+            </Form.Field>
+
+                    <!-- YRS: Dakoppervlak met toggle action ge-merged van playground directory -->
+
+        <!-- Insert this block after the email input field component in combined-form.svelte -->
+<div class="parent-flex-container">
+    <Form.Field {form} name="dakoppervlak_toggle" class="child-flex-container">
+      <Form.Control let:attrs>
+        <div class="space-y-0.5">
+          <Form.Label>Dakoppervlak</Form.Label>
+          <Form.Description>
+            <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
+            <p>Klopt dit niet?</p>
+            <p>Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
+          </Form.Description>
+        </div>
+        <Switch includeInput {...attrs} bind:checked={$formData.dakoppervlak_toggle} />
+      </Form.Control>
+    </Form.Field>
+  
+    <Form.Field {form} name="dakoppervlakManual" class="form-field">
+      <Form.Control let:attrs>
+        <div class="flex flex-col">
+          <div class="flex items-center mb-2">
+            <span class="material-symbols-outlined icon">
+              {$formData.dakoppervlak_toggle ? 'lock_open' : 'lock'}
+            </span>
+            <Form.Label>Dakoppervlak in m²</Form.Label>
+          </div>
+          <Input {...attrs} class="placeholder-custom" type="number" placeholder="2500 m²" value={roofsizeDrawing} disabled={!$formData.dakoppervlak_toggle} />
+        </div>
+      </Form.Control>
+      <Form.Description>
+        Vul hier zelf uw dakoppervlak in
+      </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
+</div>
+
+
+            
+            <!-- DAKTYPE -->
+        <Form.Field {form} name="dakType" class="form-field">
+            <Form.Control let:attrs>
+                <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                    <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                        <!-- Icon next to the label -->
+                        <span class="material-symbols-outlined icon">roofing</span>  
+                        <Form.Label>Daktype</Form.Label>
+                    </div>
+                    <Select.Root selected={selectedDakType} onSelectedChange={(v) => { v && ($formData.dakType = v.value); }} required>
+                        <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
+                            <!-- Icon inside the select trigger -->
+                            <!-- <span class="material-symbols-outlined icon">roofing</span> -->
+                            <Select.Value placeholder="Kies uw daktype" class="select-placeholder" />
+                        </Select.Trigger>
+                        <Select.Content>
+                            <Select.Item value="Plat" label="Plat" />
+                            <Select.Item value="Schuin" label="Schuin" />
+                            <Select.Item value="Kas" label="Kas" />
+                        </Select.Content>
+                    </Select.Root>
+                    <input hidden bind:value={$formData.dakType} name={attrs.name} />
+                </div>
+            </Form.Control>
+            <!-- <Form.Description>Kies uw daktype.</Form.Description> YRS: omschrijving is overbodig -->
+            <Form.FieldErrors />
+        </Form.Field>
+    
+    <!-- STROOMAANSLUITING -->
+    <Form.Field {form} name="stroomAansluiting" class="form-field">
+        <Form.Control let:attrs>
+            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                    <!-- Icon next to the label -->
+                    <span class="material-symbols-outlined icon">electrical_services</span>  
+                    <Form.Label>Stroomaansluiting</Form.Label>
+                </div>
+                <Select.Root selected={selectedStroomAansluiting} onSelectedChange={(v) => { v && ($formData.stroomAansluiting = v.value); }} required>
+                    <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
+                        <!-- Icon inside the select trigger -->
+                        <!-- <span class="material-symbols-outlined icon">electrical_services</span> -->
+                        <Select.Value placeholder="Kies uw type stroomaansluiting" style="text-align: left; padding-left: 1rem;" />
+                    </Select.Trigger>
+                    <Select.Content>
+                        <Select.Item value="<630 KVA" label="< 630 KVA" />
+                        <Select.Item value="630 KVA" label="630 KVA" />
+                        <Select.Item value=">630 KVA" label="> 630 KVA" />
+                        <Select.Item value="Weet ik niet" label="Weet ik niet" />
+                    </Select.Content>
+                </Select.Root>
+                <input hidden bind:value={$formData.stroomAansluiting} name={attrs.name} />
+            </div>
+        </Form.Control>
+        <Form.Description>Kies uw stroomaansluiting.</Form.Description>
+        <Form.FieldErrors /> 
+    </Form.Field>
+    
+
+    <!-- POSTCODE -->
+
+    <Form.Field {form} name="postcode" class="form-field">
+        <Form.Control let:attrs>
+            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                    <span class="material-symbols-outlined icon">home</span>
+                    <Form.Label>Postcode</Form.Label>
+                </div>
+                <Input {...attrs} class="placeholder-custom" type="postcode" bind:value={$formData.postcode} placeholder="1234 AA" />
+            </div>
+        </Form.Control>
+        <!-- <Form.Description>Wat is uw postcode?</Form.Description>YRS: omschrijving is overbodig -->
+        <Form.FieldErrors /> 
+    </Form.Field>
+
+    <!-- HUISNUMMER -->
+
+    <Form.Field {form} name="huisnummer" class="form-field">
+        <Form.Control let:attrs>
+            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                    <span class="material-symbols-outlined icon">pin</span>
+                    <Form.Label>Huisnummer</Form.Label>
+                </div>
+                <Input {...attrs} class="placeholder-custom" type="huisnummer" bind:value={$formData.huisnummer} placeholder="1 " />
+            </div>
+        </Form.Control>
+        <!-- <Form.Description>Wat is uw huisnummer?</Form.Description>YRS: omschrijving is overbodig -->
+        <Form.FieldErrors />
+    </Form.Field>
+
+
+    <!-- KLANTVRAGEN EN/OF OPMERKINGEN TEXTAREA -->
+
+    <Form.Field {form} name="klantOpmerkingen" class="form-field">
+        <Form.Control let:attrs>
+            <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
+                <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
+                    <span class="material-symbols-outlined icon">description</span>
+                    <Form.Label>Klantvragen en/of opmerkingen</Form.Label>
+                </div>
+                <Textarea
+                    {...attrs}
+                    placeholder="Zijn er nog vragen of opmerkingen over uw Quickscan?"
+                    class="resize-none h-32 placeholder-custom"
+                    bind:value={$formData.klantOpmerkingen}
+                />
+            </div>
+            <!-- <Form.Description>
+                Zijn er nog belangrijke dingen die wij moeten weten?
+            </Form.Description> YRS: omschrijving is overbodig -->
+        </Form.Control>
+        <Form.FieldErrors />
+    </Form.Field>
+    
+<!-- Checkbox Component Privacyverklaring -->
+<Form.Field {form} name="privacyAkkoord" class="form-field">
+    <Form.Control let:attrs>
+        <Checkbox {...attrs} bind:checked={$formData.privacyAkkoord} />
+        <Form.Label style="font-size: 12px;">&nbsp;&nbsp;Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label> 
+        <Form.Description style="font-size: 12px;">
+            <!-- Wij gebruiken deze gegevens enkel om je van informatie over zakelijke zonnepanelen te voorzien. -->
+            Voor meer informatie bekijk onze
+            <a href="https://protium.nl/privacy-policy" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">privacyverklaring</a>.
+        </Form.Description>
+        <input name={attrs.name} value={$formData.privacyAkkoord} hidden />
+    </Form.Control>
+    <!-- <Form.FieldErrors /> YRS: Default error messages uitgezet. NL foutmeldingen zijn gedefineerd in schema.ts file -->
+</Form.Field>
+
+<!-- loading spinner vlak voor submit button -->
+{#if $delayed}<img src={spinner} alt="Loading..." class="spinner" />{/if}
+
+<Form.Button class="special-button">
+    Verzenden
+    <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-right" />
+    <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-left" />
+  </Form.Button>
+
+  <!-- Display success message after submission -->
+{#if isSubmitted}
+<div class="success-banner">
+    Uw Quickscan gegevens zijn succesvol opgeslagen, een expert van Protium neemt contact met u op ☀️
+</div>
+{/if}
+
+</form>
+
+        <!-- YRS: Hovercard van Protium -->
+        <div class="hovercard-container">
+            <HoverCard />
+          </div>
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/src/routes/combined/hovercard.svelte ---
+
+<!-- In deze file ga ik proberen een hover card te maken voor Protium zoals deze ook
+in de Shadcn-Svelte docs wordt gemaakt, uiteindelijk Calendly NIET als Modal toegevoegd -->
+    
+
+<script lang="ts">
+    import * as Avatar from "$lib/components/ui/avatar";
+    import * as HoverCard from "$lib/components/ui/hover-card";
+  </script>
+  
+  <HoverCard.Root>
+    <HoverCard.Trigger
+      href="https://protium.nl/contact/"
+      target="_blank"
+      rel="noreferrer noopener"
+      class="rounded-sm text-blue-600 underline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-black"
+    >
+      @protium.nl
+    </HoverCard.Trigger>
+    <HoverCard.Content class="w-auto">
+      <div class="flex justify-between space-x-4">
+        <Avatar.Root>
+          <Avatar.Image src="/Protium Favicon Blue.png" />
+          <Avatar.Fallback>SK</Avatar.Fallback>
+        </Avatar.Root>
+        <div class="space-y-1">
+          <h4 class="text-sm font-semibold">@protium.nl</h4>
+          <p class="text-sm italic">Je bent een bron van energie.</p>
+          <div class="space-y-1 pt-2">
+            <a href="https://maps.google.com/?q=Schweitzerlaan+12,+9728NP+Groningen" target="_blank" class="block hover:underline text-xs">
+              <span class="material-symbols-outlined hovercard-icon">place</span>
+              Schweitzerlaan 12, 9728NP Groningen
+            </a>
+            <a href="tel:050-5535052" class="block hover:underline text-xs">
+              <span class="material-symbols-outlined hovercard-icon">phone</span>
+              050 - 553 50 52
+            </a>
+            <a href="mailto:hallo@protium.nl" target="_blank" class="block hover:underline text-xs">
+              <span class="material-symbols-outlined hovercard-icon">email</span>
+              hallo@protium.nl
+            </a>
+            <a href="https://calendly.com/solarbotproject/solar-advisory-call" target="_blank" class="block hover:underline text-xs">
+              <span class="material-symbols-outlined hovercard-icon">calendar_month</span>
+              Afspraak maken? Klik hier!
+            </a>
+          </div>
+        </div>
+      </div>
+    </HoverCard.Content>
+  </HoverCard.Root>
+  
+
+
+
+--- File: /Users/yannickromainsegaar/Desktop/RomAIx - Form from scratch/Form-project-scratch/src/routes/combined/schema.ts ---
+
+// YRS: LET OP DIT IS EEN COMBINED SCHEMA
+
+import { z } from "zod";
+
+// YRS: postalCodeRegex staat 1234 AB, 1234AB, 1234 ab, 1234 ab, 1234  ab, 1234  AB toe
+const postalCodeRegex = /^\d{4}\s*[A-Za-z]{2}\s*$/; 
+
+export const formSchema = z.object({
+    naam: z.string().min(2, "Wat is uw naam?").max(50, "Naam mag maximaal 50 karakters bevatten"),
+    email: z.string().min(8, "Voer een geldig e-mailadres in"),
+    telefoonNummer: z.string().min(9, "Voer een geldig telefoonnummer in" ).max(15, "Telefoonnummer mag uit maximaal 15 karakters bestaan"),
+    dakOppervlak: z.number().optional(),
+    dakType: z.string().refine(value => value !== '', { message: "Kies uw daktype" }),
+    stroomAansluiting: z.string().refine(value => value !== '', { message: "Kies uw type stroomaansluiting" }),
+    klantOpmerkingen: z.string().optional(),
+    privacyAkkoord: z.boolean().refine(value => value),
+    postcode: z.string().refine(value => postalCodeRegex.test(value), { message: "Ongeldige postcode" }),
+    huisnummer: z.string().min(1, "Voer een geldig huisnummer in").max(10, "Voer een geldig huisnummer in"),
+    // Add these lines to the existing schema in combined/schema.ts
+    dakoppervlak_toggle: z.boolean().default(false).optional(),
+    dakoppervlakManual: z.number().optional(),
+
+});
+
+export type FormSchema = typeof formSchema;
+// dakOppervlak: z.number().min(2500, "Het dakoppervlak moet minimaal 2500 m² zijn"),
+
+
+// YRS: HIERONDER VIND JE DE ORIGINELE COMBINED SCHEMA.TS CODE:
+
+// import { z } from "zod";
+
+// // YRS: postalCodeRegex staat 1234 AB, 1234AB, 1234 ab, 1234 ab, 1234  ab, 1234  AB toe
+// const postalCodeRegex = /^\d{4}\s*[A-Za-z]{2}\s*$/; 
+
+// export const formSchema = z.object({
+//     naam: z.string().min(2, "Wat is uw naam?").max(50, "Naam mag maximaal 50 karakters bevatten"),
+//     email: z.string().min(8, "Voer een geldig e-mailadres in"),
+//     telefoonNummer: z.string().min(9, "Voer een geldig telefoonnummer in" ).max(15, "Telefoonnummer mag uit maximaal 15 karakters bestaan"),
+//     dakOppervlak: z.number().min(2500, "Het dakoppervlak moet minimaal 2500 m² zijn"),
+//     dakOppervlakMuted: z.number().optional(),
+//     dakType: z.string().refine(value => value !== '', { message: "Kies uw daktype" }),
+//     stroomAansluiting: z.string().refine(value => value !== '', { message: "Kies uw type stroomaansluiting" }),
+//     klantOpmerkingen: z.string().optional(),
+//     privacyAkkoord: z.boolean().refine(value => value),
+//     postcode: z.string().refine(value => postalCodeRegex.test(value), { message: "Ongeldige postcode" }),
+//     huisnummer: z.string().min(1, "Voer een geldig huisnummer in").max(10, "Voer een geldig huisnummer in"),
+//     roofsizeSwitch: z.boolean().refine(value => value), //YRS: This is the switch that will be used to determine if the roofsize is drawn or not
+//     roofsizeManual: z.number().min(2500, "Het dakoppervlak moet minimaal 2500 m² zijn"), //YRS: Dit is de manual input voor de dakgrootte
+//     // Add these lines to the existing schema in combined/schema.ts
+//     dakoppervlak_toggle: z.boolean().default(false).optional(),
+//     lockedField: z.number().default(5).optional(),
+
+// });
+
+// export type FormSchema = typeof formSchema;
