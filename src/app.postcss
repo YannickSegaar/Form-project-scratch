@@ -4,10 +4,8 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-	@apply h-full overflow-hidden;
-}
+html, body { @apply h-full overflow-hidden; }
+
 
 @layer base {
 	:root {
@@ -75,14 +73,11 @@ body {
 	}
 }
 
-@layer base {
-	* {
-		@apply border-border;
+@layer components {
+	.border-border {
+	  border: 1px solid;
 	}
-	body {
-		@apply bg-background text-foreground;
-	}
-}
+  }
 
 /* YRS: Hieronder staan CSS styling voor icons die gebruikt worden */
 @layer components {
