@@ -98,7 +98,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     <Stepper>
       <!-- Step 1: Postcode, Huisnummer -->
       <Step>
-        <svelte:fragment slot="header">Step 1: Location Details</svelte:fragment>
+        <svelte:fragment slot="header">Stap 1: Voor welke locatie wilt u de Quickscan uitvoeren? </svelte:fragment>
         <!-- Postcode -->
         <Form.Field {form} name="postcode" class="form-field">
             <Form.Control let:attrs>
@@ -130,7 +130,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
   
     <!-- Step 2: Dakoppervlak, Stroomaansluiting, Daktype -->
       <Step>
-        <svelte:fragment slot="header">Step 2: Property Details</svelte:fragment>
+        <svelte:fragment slot="header">Stap 2: Oppervlaktegegevens & eigenschappen</svelte:fragment>
         <!-- Include Muted dakoppervlak, Dakoppervlak with action toggle switch, Stroomaansluiting, and Daktype fields here -->
   
                     <!-- YRS DAKOPPERVLAK MUTED -->            
@@ -251,7 +251,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
   
       <!-- Step 3: Personal Information -->
       <Step>
-        <svelte:fragment slot="header">Step 3: Personal Information</svelte:fragment>
+        <svelte:fragment slot="header">Stap 3: Persoonsgegevens</svelte:fragment>
         <!-- Include Naam, Telefoonnummer, Email, Klantopmerkingen textarea, PrivacyAkkoord checkbox, and Submit button here -->
   
      <!-- NAAM -->

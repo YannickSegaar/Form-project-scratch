@@ -329,7 +329,8 @@ html, body { @apply h-full overflow-hidden; }
 /* YRS: CSS styling voor hovercard. Here's an example that positions the hovercard at the bottom right of the form, with some padding and margins: */
 
 .hovercard-container {
-	position: absolute;
+	display: block; /* Ensures the hovercard is block-level for margin utilities to take effect */
+	position: relative;
 	bottom: 0;
 	right: 0;
 	padding: 10px;
@@ -390,5 +391,21 @@ html, body { @apply h-full overflow-hidden; }
 .tooltip-trigger-container:hover .tooltip-content {
 	display: block !important; /* Force the tooltip to show on hover */
 }
-@tailwind components;
-@tailwind utilities;
+
+/* YRS: CSS styling voor logo in app bar in +layout.svelte code */
+
+/* Class to style the company logo within the AppBar */
+.logo-in-appbar {
+	/* Adjust height as needed to fit your AppBar */
+	height: 3rem; /* Example height - adjust as needed */
+	/* Set margin as needed */
+	margin: auto; /* Centers the logo vertically and horizontally */
+	display: block; /* Makes it a block-level element to respect margin: auto */
+  }
+  
+  /* You can use media queries if you need responsiveness */
+  @media (max-width: 640px) {
+	.logo-in-appbar {
+	  height: 2rem; /* Smaller height for smaller screens */
+	}
+  }

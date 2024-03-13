@@ -89,7 +89,7 @@ export const myCustomTheme: CustomThemeConfig = {
 		"--color-error-900": "105 20 20", // #691414
 		// surface | #e9ecef 
 		"--color-surface-50": "252 252 253", // #fcfcfd
-		"--color-surface-100": "251 251 252", // #fbfbfc
+		"--color-surface-100": "117 200 216", // #75c8d8 //YRS: verander kort naar Protium banner kleur. Originele code is: "--color-surface-100": "251 251 252"
 		"--color-surface-200": "250 250 251", // #fafafb
 		"--color-surface-300": "246 247 249", // #f6f7f9
 		"--color-surface-400": "240 242 244", // #f0f2f4
