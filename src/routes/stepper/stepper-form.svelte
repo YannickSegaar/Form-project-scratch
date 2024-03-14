@@ -25,10 +25,12 @@
     import { browser } from "$app/environment";
     import { page } from "$app/stores";
     import { Stepper, Step } from '@skeletonlabs/skeleton'; //YRS: Stepper importeren van Skeletonlabs
+    import { focusTrap } from '@skeletonlabs/skeleton'; //YRS: focusTrap importeren van Skeletonlabs
 
 export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     
-    // export let data: SuperValidated<Infer<FormSchema>>;
+    //YRS: focus trap opzetten
+    let isFocused: boolean = true;
     
         // YRS: Reactieve variabele toe om de form submission status bij te houden
     let isSubmitted = false;
@@ -94,7 +96,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     {/if}
 </div>
 
-<form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance>
+<form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance use:focusTrap={isFocused}>
     <Stepper>
       <!-- Step 1: Postcode, Huisnummer -->
       <Step>
