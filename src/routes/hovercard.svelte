@@ -10,7 +10,7 @@
     rel="noreferrer noopener"
     class="rounded-full favicon-margin" 
   >
-    <img src="/Protium Favicon Yellow.png" alt="Protium" class="w-10 h-10"/> <!-- Adjust width and height as needed -->
+    <img src="/Protium Favicon Yellow.png" alt="Protium" class="w-8 h-8" style="margin-top: 22px;"/> <!-- Adjust width and height as needed -->
   </HoverCard.Trigger>
   <HoverCard.Content class="w-auto">
     <div class="flex justify-between space-x-4">

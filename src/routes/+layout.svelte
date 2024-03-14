@@ -83,11 +83,11 @@ function openInstagramModal() {
                 </a> -->
 				<!-- YRS: Instagram Modal -->
 				<button class="btn btn-sm variant-ghost-surface" on:click={openInstagramModal}>
-					Instagram
+					<span class="material-symbols-outlined icon">photo_camera</span>
 				</button>
 				<!-- YRS: Calendly Modal -->
 				<button class="btn btn-sm variant-ghost-surface" on:click={openCalendlyModal}>
-					<span class="material-symbols-outlined icon">event_available</span> Adviesgesprek plannen
+					<span class="material-symbols-outlined icon">event_available</span>
 				</button>
                 <!-- HoverCard component will go here in place of the GitHub link -->
 				<div class="hover-card-container">
