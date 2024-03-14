@@ -60,7 +60,7 @@
 					Twitter
                 </a>
 				<button class="btn btn-sm variant-ghost-surface" on:click={openCalendlyModal}>
-					<i class="fa fa-calendar"></i> Calendar
+					<span class="material-symbols-outlined icon">event_available</span> Adviesgesprek plannen
 				</button>
                 <!-- HoverCard component will go here in place of the GitHub link -->
 				<div class="hover-card-container">
