@@ -65,7 +65,7 @@ function openInstagramModal() {
 					  />
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
-				<a
+				<!-- <a
 					class="btn btn-sm variant-ghost-surface"
 					href="https://discord.gg/EXqV7W8MtY"
 					target="_blank"
@@ -80,7 +80,7 @@ function openInstagramModal() {
 					rel="noreferrer"
 				>
 					Twitter
-                </a>
+                </a> -->
 				<!-- YRS: Instagram Modal -->
 				<button class="btn btn-sm variant-ghost-surface" on:click={openInstagramModal}>
 					Instagram

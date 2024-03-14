@@ -326,17 +326,31 @@ html, body { @apply h-full overflow-hidden; }
 
 /* Add additional styles as needed */
 
-/* YRS: CSS styling voor hovercard. Here's an example that positions the hovercard at the bottom right of the form, with some padding and margins: */
-
+/* YRS: Updated CSS styling for hovercard container */
 .hovercard-container {
 	display: block; /* Ensures the hovercard is block-level for margin utilities to take effect */
-	position: relative;
-	bottom: 0;
-	right: 0;
-	padding: 10px;
-	margin: 0px;
-	width: 500px; /* adjust as needed */
-	height: 500px; /* adjust as needed */
+	position: relative; /* Keeps existing positioning */
+	bottom: 0; /* Keeps at the bottom */
+	right: 16px; /* Adds space to the right, adjust as needed */
+	padding: 10px; /* Existing padding */
+	margin-top: 50px; /* Creates a gap between the hovercard and the app bar */
+	width: 300px; /* Updated width as suggested */
+	height: auto; /* Set height to auto to adjust to content */
+	/* Additional styles for positioning the content below the trigger */
+	transform: translateY(100%); /* Positions the hovercard below the trigger */
+	background-color: #cce3de; /* Change this to your desired color */
+	/* Optional: Use a larger value if the hovercard needs to be lower */
+}
+
+/* Additional styles to ensure that the hovercard content does not go off-screen */
+:host {
+	--radix-hover-card-content-transform-origin: var(--radix-hover-card-arrow-transform-origin, center top);
+	transform: translate(0, 60px) !important;
+}
+
+/* This class can be added to the favicon trigger to adjust the margin */
+.favicon-margin {
+	margin-right: 50px; /* Adjust this value to increase the right margin of the favicon */
 }
 
 /* YRS: CSS styling voor tooltip icon */
