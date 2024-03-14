@@ -4,11 +4,13 @@
 	import HoverCard from './hovercard.svelte'; // YRS: Import HoverCard from hovercard.svelte voor testen van hovercard in form
 	import CalendlyModal from './CalendlyModal.svelte';
     import { initializeStores, getModalStore, Modal } from '@skeletonlabs/skeleton';
+	import InstagramModal from './InstagramModal.svelte'; // YRS: Import InstagramModal from InstagramModal.svelte voor testen van InstagramModal in form
 
 	    // Call this function to ensure the Skeleton store is initialized
 		initializeStores();
     const modalStore = getModalStore();
 
+	//YRS: Function to open Calendly Modal
 	function openCalendlyModal() {
     console.log('Opening modal'); // This should be logged when you click the Calendar button
     modalStore.trigger({
@@ -27,6 +29,26 @@
     });
 	console.log($modalStore); // Log the modalStore immediately after triggering the modal
 }
+
+//YRS: Function to open Instagram Modal
+function openInstagramModal() {
+        console.log('Opening Instagram modal');
+        modalStore.trigger({
+            type: 'component',
+            component: { 
+                ref: InstagramModal, 
+                props: { 
+                    parent: {
+                        onClose: () => {
+                            console.log('Closing Instagram modal');
+                            modalStore.close();
+                        }
+                    } 
+                }
+            },
+        });
+    }
+
 </script>
 
 
@@ -59,6 +81,11 @@
 				>
 					Twitter
                 </a>
+				<!-- YRS: Instagram Modal -->
+				<button class="btn btn-sm variant-ghost-surface" on:click={openInstagramModal}>
+					Instagram
+				</button>
+				<!-- YRS: Calendly Modal -->
 				<button class="btn btn-sm variant-ghost-surface" on:click={openCalendlyModal}>
 					<span class="material-symbols-outlined icon">event_available</span> Adviesgesprek plannen
 				</button>
