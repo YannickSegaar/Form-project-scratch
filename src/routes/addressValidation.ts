@@ -2,10 +2,19 @@
 
 export const GOOGLE_MAPS_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-export const initGoogle = (): HTMLScriptElement => {
-    const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_KEY}&libraries=places&callback=initAutocomplete&lang=nl`;
-    return script;
+declare global {
+  interface Window {
+    initGoogleCallback: () => void;
+  }
+}
+
+export const initGoogle = (callback: () => void): HTMLScriptElement => {
+  const script = document.createElement("script");
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAPS_KEY}&libraries=places&callback=initGoogleCallback&lang=nl`;
+  script.async = true;
+  script.defer = true;
+  window.initGoogleCallback = callback;
+  return script;
 };
 
 export const parseGoogleAddressComponents = (addressComponents: google.maps.GeocoderAddressComponent[]): Record<string, string> => {

@@ -39,15 +39,23 @@ let streetName = '';
   let city = '';
 
   onMount(async () => {
-    try {
-      document.head.appendChild(initGoogle());
-      const addressComponents = await initAutocomplete("#postcode", "#huisnummer");
-      streetName = addressComponents.route;
-      city = addressComponents.locality;
-    } catch (error) {
-      console.error(error);
-    }
+    document.head.appendChild(initGoogle(() => {
+      const postcodeInput = document.querySelector("#postcode");
+      const huisnummerInput = document.querySelector("#huisnummer");
+
+      if (postcodeInput instanceof HTMLInputElement && huisnummerInput instanceof HTMLInputElement) {
+        initAutocomplete("#postcode", "#huisnummer")
+          .then(addressComponents => {
+            streetName = addressComponents.route;
+            city = addressComponents.locality;
+          })
+          .catch(console.error);
+      } else {
+        console.error("Postcode and/or huisnummer input not found");
+      }
+    }));
   });
+
 
 
 
@@ -125,40 +133,42 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
       <!-- Step 1: Postcode, Huisnummer -->
       <Step>
         <svelte:fragment slot="header">Stap 1: Voor welke locatie wilt u de Quickscan uitvoeren? </svelte:fragment>
-        <!-- Postcode -->
-        <Form.Field {form} name="postcode" class="form-field">
-            <Form.Control let:attrs>
-                <div class="flex flex-col"> 
-                    <div class="flex items-center mb-2">
-                        <span class="material-symbols-outlined icon">home</span>
-                        <Form.Label>Postcode</Form.Label>
-                    </div>
-                    <Input {...attrs} class="placeholder-custom" type="postcode" bind:value={$formData.postcode} placeholder="1234 AA" />
-                </div>
-            </Form.Control>
-            <Form.FieldErrors /> 
-        </Form.Field>
-        <!-- Huisnummer -->
-        <Form.Field {form} name="huisnummer" class="form-field">
-            <Form.Control let:attrs>
-                <div class="flex flex-col"> 
-                    <div class="flex items-center mb-2">
-                        <span class="material-symbols-outlined icon">pin</span>
-                        <Form.Label>Huisnummer</Form.Label>
-                    </div>
-                    <Input {...attrs} class="placeholder-custom" type="huisnummer" bind:value={$formData.huisnummer} placeholder="1 " />
-                </div>
-            </Form.Control>
-            <Form.FieldErrors />
-        </Form.Field>
+<!-- Postcode -->
+<Form.Field {form} name="postcode" class="form-field">
+    <Form.Control let:attrs>
+      <div class="flex flex-col"> 
+        <div class="flex items-center mb-2">
+          <span class="material-symbols-outlined icon">home</span>
+          <Form.Label>Postcode</Form.Label>
+        </div>
+        <Input {...attrs} id="postcode" class="placeholder-custom" type="postcode" bind:value={$formData.postcode} placeholder="1234 AA" />
+      </div>
+    </Form.Control>
+    <Form.FieldErrors /> 
+  </Form.Field>
+  
+  <!-- Huisnummer -->
+  <Form.Field {form} name="huisnummer" class="form-field">
+    <Form.Control let:attrs>
+      <div class="flex flex-col"> 
+        <div class="flex items-center mb-2">
+          <span class="material-symbols-outlined icon">pin</span>
+          <Form.Label>Huisnummer</Form.Label>
+        </div>
+        <Input {...attrs} id="huisnummer" class="placeholder-custom" type="huisnummer" bind:value={$formData.huisnummer} placeholder="1 " />
+      </div>
+    </Form.Control>
+    <!-- Display street name and city -->
+    {#if streetName && city}
+    <p>{streetName}, {city}</p>
+    <p>Klopt dit niet? 
+      <button on:click={() => { streetName = ''; city = ''; }}>Klik hier om handmatig in te vullen</button>
+    </p>
+    {/if}
+    <Form.FieldErrors />
+  </Form.Field>
 
-          <!-- Display street name and city -->
-          {#if streetName && city}
-          <p>{streetName}, {city}</p>
-          <p>Klopt dit niet? 
-            <button on:click={() => { streetName = ''; city = ''; }}>Klik hier om handmatig in te vullen</button>
-          </p>
-        {/if}
+
 
       </Step>
       <!-- The rest of your Steps go here -->
