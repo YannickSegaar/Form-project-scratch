@@ -29,48 +29,32 @@ export const parseGoogleAddressComponents = (addressComponents: google.maps.Geoc
 };
 
 export const initAutocomplete = (postcodeInput: HTMLInputElement, huisnummerInput: HTMLInputElement): Promise<Record<string, string>> => {
-  console.log("initAutocomplete called"); // Added console.log
+  console.log("initAutocomplete called");
   return new Promise((resolve, reject) => {
-    let autocomplete: google.maps.places.Autocomplete | null = null;
-
-    // Initialize the Autocomplete when both fields are filled
+    // Initialize the Geocoder when both fields are filled
     const init = () => {
-      console.log("init function called"); // Added console.log
-      if (postcodeInput.value && huisnummerInput.value && !autocomplete) {
-        console.log("Initializing Autocomplete"); // Added console.log
-        const options: google.maps.places.AutocompleteOptions = {
-          fields: ["geometry", "address_components"],
-          types: ["geocode"],
-          componentRestrictions: {
-            country: "nl",
-          },
-        };
+      console.log("init function called");
+      if (postcodeInput.value && huisnummerInput.value) {
+        console.log("Initializing Geocoder");
+        const address = `${postcodeInput.value} ${huisnummerInput.value}, Netherlands`;
 
-        autocomplete = new google.maps.places.Autocomplete(postcodeInput, options);
-        autocomplete.setFields(["address_component"]);
-
-        autocomplete.addListener("place_changed", () => {
-          console.log("place_changed event triggered"); // Added console.log
-          const place = autocomplete?.getPlace();
-
-          if (!place || !place.geometry || !place.geometry.location) {
-            console.error("No data found for: '" + (place?.name || "") + "'"); // Changed to console.error
-            reject("Geen gegevens gevonden voor: '" + (place?.name || "") + "'");
-            return;
-          }
-
-          const parsed = parseGoogleAddressComponents(place.address_components || []);
-          console.log("Parsed address components", parsed); // Added console.log
-
-          if (parsed.street_number === undefined) {
-            huisnummerInput.value = "";
-          } else {
-            postcodeInput.value = `${parsed.route} ${parsed.street_number}`;
-            huisnummerInput.value = parsed.locality;
-          }
-
-          resolve(parsed);
-        });
+        fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${GOOGLE_MAPS_KEY}`)
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === 'OK') {
+              console.log("Geocoding successful");
+              const parsed = parseGoogleAddressComponents(data.results[0].address_components);
+              console.log("Parsed address components", parsed);
+              resolve(parsed);
+            } else {
+              console.error("Geocoding failed", data.status);
+              reject("Geocoding failed: " + data.status);
+            }
+          })
+          .catch(error => {
+            console.error("Error fetching geocoding data", error);
+            reject(error);
+          });
       }
     };
 

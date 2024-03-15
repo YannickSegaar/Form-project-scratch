@@ -35,7 +35,7 @@
 //     (window as any)['initAutocomplete'] = () => initAutocomplete("#postcode", "#huisnummer");
 // });
 
-let streetName = '';
+  let streetName = '';
   let city = '';
 
 onMount(async () => {
@@ -63,6 +63,7 @@ onMount(async () => {
 });
 
 
+
 export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     
     //YRS: focus trap opzetten
@@ -71,14 +72,32 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
         // YRS: Reactieve variabele toe om de form submission status bij te houden
     let isSubmitted = false;
 
-        const form = superForm(data, {
+    const form = superForm(data, {
         validators: zodClient(formSchema),
         delayMs: 50, // Start showing the loading spinner after ...ms, adjust to your needs
         timeoutMs: 8000, // Consider as timeout after ...ms, adjust to your needs
         onUpdated: ({ form: f }) => {
-            if (f.valid) {
+          if (f.valid) {
                 toast.success("Form submission successful.");
                 isSubmitted = true; // YRS: Verander is submitted naar true
+
+                // Call initAutocomplete when postcode and huisnummer are filled
+                if ($formData.postcode && $formData.huisnummer) {
+                    const postcodeInput = document.getElementById('postcode') as HTMLInputElement;
+                    const huisnummerInput = document.getElementById('huisnummer') as HTMLInputElement;
+
+                    if (postcodeInput && huisnummerInput) {
+                        initAutocomplete(postcodeInput, huisnummerInput)
+                            .then(parsed => {
+                                streetName = parsed.route;
+                                city = parsed.locality;
+                            })
+                            .catch(error => {
+                                console.error(error);
+                                toast.error("Geocoding failed: " + error);
+                            });
+                    }
+                }
             } else {
                 toast.error("Please fix the errors in the form.");
             }
