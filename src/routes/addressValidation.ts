@@ -19,35 +19,39 @@ export const parseGoogleAddressComponents = (addressComponents: google.maps.Geoc
     return components;
 };
 
-export const initAutocomplete = (inputId: string, cityId: string): void => {
-    const input = document.querySelector(inputId) as HTMLInputElement;
-    const city = document.querySelector(cityId) as HTMLInputElement;
-
-    const options: google.maps.places.AutocompleteOptions = {
+export const initAutocomplete = (inputId: string, cityId: string): Promise<Record<string, string>> => {
+    return new Promise((resolve, reject) => {
+      const input = document.querySelector(inputId) as HTMLInputElement;
+      const city = document.querySelector(cityId) as HTMLInputElement;
+  
+      const options: google.maps.places.AutocompleteOptions = {
         fields: ["geometry", "address_components"],
         types: ["geocode"],
         componentRestrictions: {
-            country: "nl",
+          country: "nl",
         },
-    };
-
-    const autocomplete = new google.maps.places.Autocomplete(input, options);
-
-    autocomplete.addListener("place_changed", () => {
+      };
+  
+      const autocomplete = new google.maps.places.Autocomplete(input, options);
+  
+      autocomplete.addListener("place_changed", () => {
         const place = autocomplete.getPlace();
-
+  
         if (!place.geometry || !place.geometry.location) {
-            window.alert("Geen gegevens gevonden voor: '" + place.name + "'");
-            return;
+          reject("Geen gegevens gevonden voor: '" + place.name + "'");
+          return;
         }
-
+  
         const parsed = parseGoogleAddressComponents(place.address_components || []);
-
+  
         if (parsed.street_number === undefined) {
-            city.value = "";
+          city.value = "";
         } else {
-            input.value = `${parsed.route} ${parsed.street_number}`;
-            city.value = parsed.locality;
+          input.value = `${parsed.route} ${parsed.street_number}`;
+          city.value = parsed.locality;
         }
+  
+        resolve(parsed);
+      });
     });
-};
+  };

@@ -29,11 +29,27 @@
     import { onMount } from 'svelte';
     import { initGoogle, initAutocomplete } from '../addressValidation';
 
-    // YRS: Opzetten van postal code validation
-    onMount(() => {
-    document.head.appendChild(initGoogle());
-    (window as any)['initAutocomplete'] = () => initAutocomplete("#postcode", "#huisnummer");
-});
+//     // YRS: Opzetten van postal code validation
+//     onMount(() => {
+//     document.head.appendChild(initGoogle());
+//     (window as any)['initAutocomplete'] = () => initAutocomplete("#postcode", "#huisnummer");
+// });
+
+let streetName = '';
+  let city = '';
+
+  onMount(async () => {
+    try {
+      document.head.appendChild(initGoogle());
+      const addressComponents = await initAutocomplete("#postcode", "#huisnummer");
+      streetName = addressComponents.route;
+      city = addressComponents.locality;
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
+
 
 export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     
@@ -135,6 +151,15 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
             </Form.Control>
             <Form.FieldErrors />
         </Form.Field>
+
+          <!-- Display street name and city -->
+          {#if streetName && city}
+          <p>{streetName}, {city}</p>
+          <p>Klopt dit niet? 
+            <button on:click={() => { streetName = ''; city = ''; }}>Klik hier om handmatig in te vullen</button>
+          </p>
+        {/if}
+
       </Step>
       <!-- The rest of your Steps go here -->
   
