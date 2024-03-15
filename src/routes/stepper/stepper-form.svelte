@@ -26,6 +26,14 @@
     import { page } from "$app/stores";
     import { Stepper, Step } from '@skeletonlabs/skeleton'; //YRS: Stepper importeren van Skeletonlabs
     import { focusTrap } from '@skeletonlabs/skeleton'; //YRS: focusTrap importeren van Skeletonlabs
+    import { onMount } from 'svelte';
+    import { initGoogle, initAutocomplete } from '../addressValidation';
+
+    // YRS: Opzetten van postal code validation
+    onMount(() => {
+    document.head.appendChild(initGoogle());
+    (window as any)['initAutocomplete'] = () => initAutocomplete("#postcode", "#huisnummer");
+});
 
 export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     

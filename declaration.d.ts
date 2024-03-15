@@ -1,5 +1,10 @@
 declare module 'postcss-nesting';
 
+declare global {
+    interface Window {
+        initAutocomplete: () => void;
+    }
+}
 
 // YRS: Deze file is gecreerd omdat ik na het toevoegen van nested structures in mijn app.css file problemen kreeg
 // met het compileren van de CSS. Ik heb daarna via npm install postcss-nesting --save-dev en het aanpassen van mijn
