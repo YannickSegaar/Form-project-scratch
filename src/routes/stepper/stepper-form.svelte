@@ -38,25 +38,29 @@
 let streetName = '';
   let city = '';
 
-  onMount(async () => {
-    document.head.appendChild(initGoogle(() => {
-      const postcodeInput = document.querySelector("#postcode");
-      const huisnummerInput = document.querySelector("#huisnummer");
+onMount(async () => {
+  console.log("onMount called");
+  document.head.appendChild(initGoogle(() => {
+    console.log("initGoogle callback called");
+    const postcodeInput = document.querySelector("#postcode");
+    const huisnummerInput = document.querySelector("#huisnummer");
 
-      if (postcodeInput instanceof HTMLInputElement && huisnummerInput instanceof HTMLInputElement) {
-        initAutocomplete("#postcode", "#huisnummer")
-          .then(addressComponents => {
-            streetName = addressComponents.route;
-            city = addressComponents.locality;
-          })
-          .catch(console.error);
-      } else {
-        console.error("Postcode and/or huisnummer input not found");
-      }
-    }));
-  });
-
-
+    if (postcodeInput instanceof HTMLInputElement && huisnummerInput instanceof HTMLInputElement) {
+      console.log("postcodeInput and huisnummerInput are HTMLInputElement");
+      initAutocomplete(postcodeInput, huisnummerInput)
+        .then(addressComponents => {
+          console.log("initAutocomplete resolved", addressComponents);
+          streetName = addressComponents.route;
+          city = addressComponents.locality;
+        })
+        .catch(error => {
+          console.error("initAutocomplete rejected", error);
+        });
+    } else {
+      console.error("Postcode and/or huisnummer input not found");
+    }
+  }));
+});
 
 
 export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;

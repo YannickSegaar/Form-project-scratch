@@ -28,39 +28,53 @@ export const parseGoogleAddressComponents = (addressComponents: google.maps.Geoc
     return components;
 };
 
-export const initAutocomplete = (inputId: string, cityId: string): Promise<Record<string, string>> => {
-    return new Promise((resolve, reject) => {
-      const input = document.querySelector(inputId) as HTMLInputElement;
-      const city = document.querySelector(cityId) as HTMLInputElement;
-  
-      const options: google.maps.places.AutocompleteOptions = {
-        fields: ["geometry", "address_components"],
-        types: ["geocode"],
-        componentRestrictions: {
-          country: "nl",
-        },
-      };
-  
-      const autocomplete = new google.maps.places.Autocomplete(input, options);
-  
-      autocomplete.addListener("place_changed", () => {
-        const place = autocomplete.getPlace();
-  
-        if (!place.geometry || !place.geometry.location) {
-          reject("Geen gegevens gevonden voor: '" + place.name + "'");
-          return;
-        }
-  
-        const parsed = parseGoogleAddressComponents(place.address_components || []);
-  
-        if (parsed.street_number === undefined) {
-          city.value = "";
-        } else {
-          input.value = `${parsed.route} ${parsed.street_number}`;
-          city.value = parsed.locality;
-        }
-  
-        resolve(parsed);
-      });
-    });
-  };
+export const initAutocomplete = (postcodeInput: HTMLInputElement, huisnummerInput: HTMLInputElement): Promise<Record<string, string>> => {
+  console.log("initAutocomplete called"); // Added console.log
+  return new Promise((resolve, reject) => {
+    let autocomplete: google.maps.places.Autocomplete | null = null;
+
+    // Initialize the Autocomplete when both fields are filled
+    const init = () => {
+      console.log("init function called"); // Added console.log
+      if (postcodeInput.value && huisnummerInput.value && !autocomplete) {
+        console.log("Initializing Autocomplete"); // Added console.log
+        const options: google.maps.places.AutocompleteOptions = {
+          fields: ["geometry", "address_components"],
+          types: ["geocode"],
+          componentRestrictions: {
+            country: "nl",
+          },
+        };
+
+        autocomplete = new google.maps.places.Autocomplete(postcodeInput, options);
+        autocomplete.setFields(["address_component"]);
+
+        autocomplete.addListener("place_changed", () => {
+          console.log("place_changed event triggered"); // Added console.log
+          const place = autocomplete?.getPlace();
+
+          if (!place || !place.geometry || !place.geometry.location) {
+            console.error("No data found for: '" + (place?.name || "") + "'"); // Changed to console.error
+            reject("Geen gegevens gevonden voor: '" + (place?.name || "") + "'");
+            return;
+          }
+
+          const parsed = parseGoogleAddressComponents(place.address_components || []);
+          console.log("Parsed address components", parsed); // Added console.log
+
+          if (parsed.street_number === undefined) {
+            huisnummerInput.value = "";
+          } else {
+            postcodeInput.value = `${parsed.route} ${parsed.street_number}`;
+            huisnummerInput.value = parsed.locality;
+          }
+
+          resolve(parsed);
+        });
+      }
+    };
+
+    postcodeInput.addEventListener("input", init);
+    huisnummerInput.addEventListener("input", init);
+  });
+};
