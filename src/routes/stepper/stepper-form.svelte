@@ -28,6 +28,7 @@
     import { focusTrap } from '@skeletonlabs/skeleton'; //YRS: focusTrap importeren van Skeletonlabs
     import { onMount } from 'svelte';
     import { initGoogle, initAutocomplete } from '../addressValidation';
+    import { getPostcodeData } from '../postcodeValidation';
 
 //     // YRS: Opzetten van postal code validation
 //     onMount(() => {
@@ -35,32 +36,49 @@
 //     (window as any)['initAutocomplete'] = () => initAutocomplete("#postcode", "#huisnummer");
 // });
 
+  // Reactive statements to watch for changes in postcode and huisnummer
+  $: if ($formData.postcode && $formData.huisnummer) {
+    console.log('Postcode and huisnummer are filled');
+    getPostcodeData($formData.postcode, $formData.huisnummer)
+      .then(data => {
+        console.log('Received data from API:', data);
+        streetName = data.street;
+        city = data.city;
+      })
+      .catch(error => {
+        console.error('API call failed:', error);
+        toast.error("Postcode API call failed: " + error);
+      });
+  } else {
+    console.log('Postcode and/or huisnummer are not filled');
+  }
+
   let streetName = '';
   let city = '';
 
-onMount(async () => {
-  console.log("onMount called");
-  document.head.appendChild(initGoogle(() => {
-    console.log("initGoogle callback called");
-    const postcodeInput = document.querySelector("#postcode");
-    const huisnummerInput = document.querySelector("#huisnummer");
+// onMount(async () => {
+//   console.log("onMount called");
+//   document.head.appendChild(initGoogle(() => {
+//     console.log("initGoogle callback called");
+//     const postcodeInput = document.querySelector("#postcode");
+//     const huisnummerInput = document.querySelector("#huisnummer");
 
-    if (postcodeInput instanceof HTMLInputElement && huisnummerInput instanceof HTMLInputElement) {
-      console.log("postcodeInput and huisnummerInput are HTMLInputElement");
-      initAutocomplete(postcodeInput, huisnummerInput)
-        .then(addressComponents => {
-          console.log("initAutocomplete resolved", addressComponents);
-          streetName = addressComponents.route;
-          city = addressComponents.locality;
-        })
-        .catch(error => {
-          console.error("initAutocomplete rejected", error);
-        });
-    } else {
-      console.error("Postcode and/or huisnummer input not found");
-    }
-  }));
-});
+//     if (postcodeInput instanceof HTMLInputElement && huisnummerInput instanceof HTMLInputElement) {
+//       console.log("postcodeInput and huisnummerInput are HTMLInputElement");
+//       initAutocomplete(postcodeInput, huisnummerInput)
+//         .then(addressComponents => {
+//           console.log("initAutocomplete resolved", addressComponents);
+//           streetName = addressComponents.route;
+//           city = addressComponents.locality;
+//         })
+//         .catch(error => {
+//           console.error("initAutocomplete rejected", error);
+//         });
+//     } else {
+//       console.error("Postcode and/or huisnummer input not found");
+//     }
+//   }));
+// });
 
 
 
@@ -73,36 +91,38 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     let isSubmitted = false;
 
     const form = superForm(data, {
-        validators: zodClient(formSchema),
-        delayMs: 50, // Start showing the loading spinner after ...ms, adjust to your needs
-        timeoutMs: 8000, // Consider as timeout after ...ms, adjust to your needs
-        onUpdated: ({ form: f }) => {
-          if (f.valid) {
-                toast.success("Form submission successful.");
-                isSubmitted = true; // YRS: Verander is submitted naar true
+    validators: zodClient(formSchema),
+    delayMs: 50, // Start showing the loading spinner after ...ms, adjust to your needs
+    timeoutMs: 8000, // Consider as timeout after ...ms, adjust to your needs
+    onUpdated: ({ form: f }) => {
+  console.log('Form updated');
+  if (f.valid) {
+    console.log('Form is valid');
+    toast.success("Form submission successful.");
+    isSubmitted = true;
 
-                // Call initAutocomplete when postcode and huisnummer are filled
-                if ($formData.postcode && $formData.huisnummer) {
-                    const postcodeInput = document.getElementById('postcode') as HTMLInputElement;
-                    const huisnummerInput = document.getElementById('huisnummer') as HTMLInputElement;
-
-                    if (postcodeInput && huisnummerInput) {
-                        initAutocomplete(postcodeInput, huisnummerInput)
-                            .then(parsed => {
-                                streetName = parsed.route;
-                                city = parsed.locality;
-                            })
-                            .catch(error => {
-                                console.error(error);
-                                toast.error("Geocoding failed: " + error);
-                            });
-                    }
-                }
-            } else {
-                toast.error("Please fix the errors in the form.");
-            }
-        },
-    });
+    // Call getPostcodeData when postcode and huisnummer are filled
+    if ($formData.postcode && $formData.huisnummer) {
+      console.log('Postcode and huisnummer are filled');
+      getPostcodeData($formData.postcode, $formData.huisnummer)
+        .then(data => {
+          console.log('Received data from API:', data);
+          streetName = data.street;
+          city = data.city;
+        })
+        .catch(error => {
+          console.error('API call failed:', error);
+          toast.error("Postcode API call failed: " + error);
+        });
+    } else {
+      console.log('Postcode and/or huisnummer are not filled');
+    }
+  } else {
+    console.log('Form is not valid');
+    toast.error("Please fix the errors in the form.");
+  }
+},
+});
 
     const { form: formData, enhance, delayed } = form; // Add 'delayed' here
     $: selectedDakType = $formData.dakType ? { label: $formData.dakType, value: $formData.dakType } : undefined;
