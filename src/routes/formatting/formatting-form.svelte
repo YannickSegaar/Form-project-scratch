@@ -329,11 +329,12 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
       <!-- Step 3: Personal Information -->
       <Step>
         <svelte:fragment slot="header">Stap 3: Persoonsgegevens</svelte:fragment>
+        <div class="step-3-container"> <!-- Use the new container class -->
         <!-- Include Naam, Telefoonnummer, Email, Klantopmerkingen textarea, PrivacyAkkoord checkbox, and Submit button here -->
   
      <!-- NAAM -->
   
-      <Form.Field {form} name="naam" class="form-field">
+      <Form.Field {form} name="naam" class="form-field full-width"> <!-- YRS: Apply full-width class voor step 3-->
           <Form.Control let:attrs>
               <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                   <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
@@ -348,8 +349,8 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
       </Form.Field>
   
           <!-- TELEFOONNUMMER -->
-  
-          <Form.Field {form} name="telefoonNummer" class="form-field">
+          <div class="flex-row"> <!-- YRS: Use the new class for side-by-side layout voor stap 3 -->
+          <Form.Field {form} name="telefoonNummer" class="flex-field"> <!-- YRS: new class "flex-field" voor stap 3 -->
               <Form.Control let:attrs>
                   <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                       <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
@@ -366,7 +367,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
       
       <!-- EMAIL -->
   
-      <Form.Field {form} name="email" class="form-field">
+      <Form.Field {form} name="email" class="flex-field"> <!-- YRS: new class "flex-field" voor stap 3 -->
           <Form.Control let:attrs>
               <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                   <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
@@ -379,10 +380,11 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
           <!-- <Form.Description>Wat is uw email?</Form.Description> YRS: omschrijving is overbodig -->
           <Form.FieldErrors /> 
       </Form.Field>
+    </div>
   
       <!-- KLANTVRAGEN EN/OF OPMERKINGEN TEXTAREA -->
   
-      <Form.Field {form} name="klantOpmerkingen" class="form-field">
+      <Form.Field {form} name="klantOpmerkingen" class="form-field full-width"> <!-- YRS: nieuwe class voor stap 3 -->
           <Form.Control let:attrs>
               <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
                   <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
@@ -407,6 +409,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
   
   <Form.Field {form} name="privacyAkkoord" class="form-field">
       <Form.Control let:attrs>
+        <div class="privacy-policy"> <!-- YRS: Use the new class for layout voor stap 3 -->
           <Checkbox {...attrs} bind:checked={$formData.privacyAkkoord} />
           <Form.Label style="font-size: 12px;">&nbsp;&nbsp;Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label> 
           <Form.Description style="font-size: 12px;">
@@ -427,14 +430,15 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
       <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-right" />
       <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-left" />
     </Form.Button>
-  
+
+
     <!-- Display success message after submission -->
   {#if isSubmitted}
   <div class="success-banner">
       Uw Quickscan gegevens zijn succesvol opgeslagen, een expert van Protium neemt contact met u op ☀️
   </div>
   {/if}
-
+</div>
       </Step>
     </Stepper>
   </form>
