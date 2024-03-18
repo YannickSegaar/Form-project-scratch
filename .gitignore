@@ -1,5 +1,6 @@
 .DS_Store
 node_modules
+insp_css_styling
 /build
 /.svelte-kit
 /package

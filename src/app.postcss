@@ -182,6 +182,8 @@ html, body { @apply h-full overflow-hidden; }
 .form-field {
 	margin-bottom: 15px; /* Adjust as needed */
 	margin-top: 15px; /* Adjust as needed */
+	margin-right: 10px;
+	flex: 1;
 }
 /* YRS: BUTTON STYLING */
 .form-button {
@@ -448,3 +450,46 @@ html, body { @apply h-full overflow-hidden; }
         width: 100%;
         height: 100%;
     }
+
+
+  /* YRS: Styling voor form-container: */
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  margin: auto;
+  max-width: 800px; /* Adjust based on your preference */
+  background-color: #f9f9f9; /* Light background to distinguish the form */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds depth to the form */
+  transition: all 0.3s ease; /* Smooth transition for any changes */
+}
+
+.first-step-fields-container {
+  display: flex; /* This will lay out its children in a row */
+  justify-content: space-between; /* This will distribute space between the children */
+  align-items: center; /* This will vertically align the children in the middle */
+}
+
+.form-field:last-child {
+  margin-right: 0; /* Ensures that the last field doesn't have a margin on the right */
+}
+
+
+/* Add responsiveness */
+@media (max-width: 900px) {
+  .form-container {
+    width: 90%; /* Slightly smaller on smaller screens */
+  }
+}
+
+@media (max-width: 600px) {
+  .form-container {
+    flex-direction: column;
+    padding: 15px;
+    width: 95%; /* More padding and adjusts to screen size on very small devices */
+  }
+}
