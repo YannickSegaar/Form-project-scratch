@@ -405,22 +405,20 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
           <Form.FieldErrors />
       </Form.Field>
       
-  <!-- CHECKBOX COMPONENT PRIVACY VERKLARING -->
-  
-  <Form.Field {form} name="privacyAkkoord" class="form-field">
-      <Form.Control let:attrs>
-        <div class="privacy-policy"> <!-- YRS: Use the new class for layout voor stap 3 -->
-          <Checkbox {...attrs} bind:checked={$formData.privacyAkkoord} />
-          <Form.Label style="font-size: 12px;">&nbsp;&nbsp;Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label> 
-          <Form.Description style="font-size: 12px;">
-              <!-- Wij gebruiken deze gegevens enkel om je van informatie over zakelijke zonnepanelen te voorzien. -->
-              Voor meer informatie bekijk onze
-              <a href="https://protium.nl/privacy-policy" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">privacyverklaring</a>.
-          </Form.Description>
-          <input name={attrs.name} value={$formData.privacyAkkoord} hidden />
-      </Form.Control>
-      <!-- <Form.FieldErrors /> YRS: Default error messages uitgezet. NL foutmeldingen zijn gedefineerd in schema.ts file -->
-  </Form.Field>
+<!-- CHECKBOX COMPONENT PRIVACY VERKLARING -->
+
+<Form.Field {form} name="privacyAkkoord" class="form-field full-width">
+    <Form.Control let:attrs>
+        <Checkbox {...attrs} bind:checked={$formData.privacyAkkoord} />
+        <Form.Label style="font-size: 12px;">&nbsp;&nbsp;Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label>
+    </Form.Control>
+    <!-- Separate block for the privacy policy link -->
+    <div class="full-width" style="font-size: 12px;">
+        Voor meer informatie bekijk onze
+        <a href="https://protium.nl/privacy-policy" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">privacyverklaring</a>.
+    </div>
+    <Form.FieldErrors />
+</Form.Field>
   
   <!-- loading spinner vlak voor submit button -->
   {#if $delayed}<img src={spinner} alt="Loading..." class="spinner" />{/if}
