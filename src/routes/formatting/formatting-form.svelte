@@ -221,66 +221,51 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     <!-- Step 2: Dakoppervlak, Stroomaansluiting, Daktype -->
       <Step>
         <svelte:fragment slot="header">Stap 2: Oppervlaktegegevens & eigenschappen</svelte:fragment>
+        <div class="step-2-container">
         <!-- Include Muted dakoppervlak, Dakoppervlak with action toggle switch, Stroomaansluiting, and Daktype fields here -->
   
-                    <!-- YRS DAKOPPERVLAK MUTED -->            
+<!-- YRS: DAKOPPERVLAK MET TOGGLE SWITCH ACTION -->
+
+<div class="parent-flex-container">
+    <Form.Field {form} name="dakoppervlak_toggle" class="child-flex-container">
+      <Form.Control let:attrs>
+        <!-- Utilize the space-y-* utility to add vertical space -->
+        <div class="space-y-2"> <!-- Adjust 'space-y-2' to manage the space between elements -->
+          <Form.Label>Dakoppervlak</Form.Label>
+          <Form.Description>
+            <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
+            <p>Klopt dit niet?</p>
+            <p>Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
+          </Form.Description>
+        </div>
+        <Switch includeInput {...attrs} bind:checked={$formData.dakoppervlak_toggle} />
+      </Form.Control>
+    </Form.Field>
   
-          <Form.Field {form} name="dakOppervlak" class="form-field">
-              <Form.Control let:attrs>
-                  <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
-                      <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                          <span class="material-symbols-outlined icon">lock</span>
-                          <Form.Label>Dakoppervlak in m²</Form.Label>
-                      </div>
-                      <Input {...attrs} class="placeholder-custom" type="number" value={roofsizeDrawing.toString()} disabled />
-                  </div>
-              </Form.Control>
-              <Form.Description>
-                  <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
-                  <p>Klopt dit niet? Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
-              </Form.Description>
-              <Form.FieldErrors />
-              </Form.Field>
-  
-                      <!-- YRS: DAKOPPERVLAK MET TOGGLE SWITCH ACTION -->
-  
-  <div class="parent-flex-container">
-      <Form.Field {form} name="dakoppervlak_toggle" class="child-flex-container">
-        <Form.Control let:attrs>
-          <div class="space-y-0.5">
-            <Form.Label>Dakoppervlak</Form.Label>
-            <Form.Description>
-              <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
-              <p>Klopt dit niet?</p>
-              <p>Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
-            </Form.Description>
+    <Form.Field {form} name="dakoppervlakManual" class="form-field">
+      <Form.Control let:attrs>
+        <div class="flex flex-col">
+          <div class="flex items-center mb-2">
+            <span class="material-symbols-outlined icon">
+              {$formData.dakoppervlak_toggle ? 'lock_open' : 'lock'}
+            </span>
+            <Form.Label>Dakoppervlak in m²</Form.Label>
           </div>
-          <Switch includeInput {...attrs} bind:checked={$formData.dakoppervlak_toggle} />
-        </Form.Control>
-      </Form.Field>
-    
-      <Form.Field {form} name="dakoppervlakManual" class="form-field">
-        <Form.Control let:attrs>
-          <div class="flex flex-col">
-            <div class="flex items-center mb-2">
-              <span class="material-symbols-outlined icon">
-                {$formData.dakoppervlak_toggle ? 'lock_open' : 'lock'}
-              </span>
-              <Form.Label>Dakoppervlak in m²</Form.Label>
-            </div>
-            <Input {...attrs} class="placeholder-custom" type="number" placeholder="2500 m²" value={roofsizeDrawing} disabled={!$formData.dakoppervlak_toggle} />
-          </div>
-        </Form.Control>
-        <Form.Description>
-          Vul hier zelf uw dakoppervlak in
-        </Form.Description>
-        <Form.FieldErrors />
-      </Form.Field>
+          <Input {...attrs} class="placeholder-custom" type="number" placeholder="2500 m²" value={roofsizeDrawing} disabled={!$formData.dakoppervlak_toggle} />
+        </div>
+      </Form.Control>
+      <Form.Description>
+        Vul hier zelf uw dakoppervlak in
+      </Form.Description>
+      <Form.FieldErrors />
+    </Form.Field>
   </div>
   
   
-              
+    <!-- Daktype and Stroomaansluiting Fields (side by side in the third row) -->
+    <div class="horizontal-flex"> <!-- Flex container for horizontal fields -->
               <!-- DAKTYPE -->
+              
           <Form.Field {form} name="dakType" class="form-field">
               <Form.Control let:attrs>
                   <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
@@ -321,7 +306,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
                       <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
                           <!-- Icon inside the select trigger -->
                           <!-- <span class="material-symbols-outlined icon">electrical_services</span> -->
-                          <Select.Value placeholder="Kies uw type stroomaansluiting" style="text-align: left; padding-left: 1rem;" />
+                          <Select.Value placeholder="Kies uw stroomaansluiting" style="text-align: left; padding-left: 1rem;" />
                       </Select.Trigger>
                       <Select.Content>
                           <Select.Item value="<630 KVA" label="< 630 KVA" />
@@ -333,10 +318,12 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
                   <input hidden bind:value={$formData.stroomAansluiting} name={attrs.name} />
               </div>
           </Form.Control>
-          <Form.Description>Kies uw stroomaansluiting.</Form.Description>
+          <!-- <Form.Description>Kies uw stroomaansluiting.</Form.Description> -->
           <Form.FieldErrors /> 
       </Form.Field>
-  
+    </div>
+</div>
+
       </Step>
   
       <!-- Step 3: Personal Information -->

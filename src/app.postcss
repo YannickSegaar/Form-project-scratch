@@ -493,3 +493,84 @@ html, body { @apply h-full overflow-hidden; }
     width: 95%; /* More padding and adjusts to screen size on very small devices */
   }
 }
+
+  /* YRS: Styling voor tweede stap van form container: */
+
+  .step-2-container {
+  display: grid;
+  grid-template-rows: auto auto auto; /* Creates three row tracks */
+  gap: 20px; /* Space between grid items */
+}
+
+.toggle-switch-container {
+  /* This will center the toggle switch form field in its grid row */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* For fields that should be side by side */
+.horizontal-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-field:last-child {
+  margin-right: 0; /* No margin on the right for the last child */
+}
+
+
+/* YRS: CSS Styles voor stap 3: */
+
+/* Container for the entire step to manage the layout */
+.step-3-container {
+  display: grid;
+  gap: 20px; /* Space between grid items */
+  grid-template-columns: 1fr; /* Single column layout */
+}
+
+/* Class for side-by-side fields */
+.flex-row {
+  display: flex;
+  gap: 20px; /* Space between flex items */
+}
+
+/* Ensure that each field takes up only the necessary width */
+.flex-field {
+  flex: 1;
+}
+
+/* Full width for single fields and textarea */
+.full-width {
+  width: 100%;
+}
+
+/* Style for your buttons, adjust as necessary */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Adjust the size of the buttons if necessary */
+.form-button {
+  flex-grow: 1;
+  margin: 10px;
+}
+
+/* Style for privacy policy label and checkbox */
+.privacy-policy {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between checkbox and label */
+}
+
+/* Style for the success banner */
+.success-banner {
+  padding: 20px;
+  background-color: #d4edda;
+  color: #155724;
+  border-radius: 5px;
+  margin-top: 20px;
+  text-align: center;
+}
