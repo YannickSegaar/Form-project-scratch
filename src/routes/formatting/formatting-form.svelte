@@ -31,6 +31,9 @@
     import { getPostcodeData } from '../postcodeValidation';
     import { AppBar } from '@skeletonlabs/skeleton'; //YRS: Import App Bar om app bar te maken voor Stepper form
 
+    let activeStep = 0;
+  const steps = ['Step 1', 'Step 2', 'Step 3'];
+
 //     // YRS: Opzetten van postal code validation
 //     onMount(() => {
 //     document.head.appendChild(initGoogle());
@@ -187,7 +190,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     <Stepper stepTerm="Stap" active="badge-active" class="stepper-custom p-3 rounded-lg" buttonBackLabel="← Terug" buttonNext="stepper-next-button" buttonNextLabel="Volgende Stap →" buttonComplete="stepper-complete-button" buttonCompleteLabel="Verzenden">
       <!-- Step 1: Postcode, Huisnummer -->
       <Step regionHeader="region-header-custom">
-        <svelte:fragment slot="header">Stap 1: Voor welke locatie wilt u de Quickscan uitvoeren? </svelte:fragment>
+        <svelte:fragment slot="header">Voor welke locatie wilt u de Quickscan uitvoeren? </svelte:fragment>
         <svelte:fragment slot="navigation"> <div style="display: none;"></div> </svelte:fragment> <!-- YRS: Deze navigation slot leeg laten zodat "Terug" button voor eerste stap niet getoond wordt --> 
         <div class="first-step-fields-container"> <!-- This is the new container div for the form fields -->
 <!-- Postcode -->
@@ -233,7 +236,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
   
     <!-- Step 2: Dakoppervlak, Stroomaansluiting, Daktype -->
       <Step regionHeader="region-header-custom">
-        <svelte:fragment slot="header">Stap 2: Locatiekenmerken</svelte:fragment>
+        <svelte:fragment slot="header">Locatiekenmerken</svelte:fragment>
         <div class="step-2-container">
         <!-- Include Muted dakoppervlak, Dakoppervlak with action toggle switch, Stroomaansluiting, and Daktype fields here -->
   
@@ -345,7 +348,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
   
       <!-- Step 3: Personal Information -->
       <Step regionHeader="region-header-custom">
-        <svelte:fragment slot="header">Stap 3: Persoonsgegevens</svelte:fragment>
+        <svelte:fragment slot="header">Persoonsgegevens</svelte:fragment>
         <div class="step-3-container"> <!-- Use the new container class -->
         <!-- Include Naam, Telefoonnummer, Email, Klantopmerkingen textarea, PrivacyAkkoord checkbox, and Submit button here -->
   
@@ -431,12 +434,12 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
           <Form.Label style="font-size: 12px;">&nbsp;&nbsp;Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label>
       </div>
   </Form.Control>
+  <Form.FieldErrors class="error-message" />
   <!-- Separate block for the privacy policy link -->
   <div class="full-width" style="font-size: 12px;">
       Voor meer informatie bekijk onze
       <a href="https://protium.nl/privacy-policy" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">privacyverklaring</a>.
   </div>
-  <Form.FieldErrors class="error-message" />
 </Form.Field>
   
   <!-- loading spinner vlak voor submit button -->
@@ -448,6 +451,13 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
       <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-left" />
     </Form.Button> -->
 
+    {#if activeStep === steps.length - 1}
+  <Form.Button class="special-button">
+    Verzenden
+    <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-right" />
+    <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-left" />
+  </Form.Button>
+{/if}
     <!-- YRS: toevoegen van form button als Stepper Complete button -->
     <!-- <div class="stepper-complete-button">
         Verzenden
@@ -456,11 +466,11 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
       </div> -->
 
         <!-- "Complete" button with new styling and logos -->
-      <button class="stepper-complete-button"> <!-- on:click={handleComplete}> -->
+      <!-- <button class="stepper-complete-button" on:click={handleComplete}>
     Verzenden
     <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="stepper-complete-logo left" />
     <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="stepper-complete-logo right" />
-  </button>
+  </button> -->
 
     <!-- Display success message after submission -->
   {#if isSubmitted}
