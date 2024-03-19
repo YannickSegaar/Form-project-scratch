@@ -13,7 +13,7 @@ export const formSchema = z.object({
     dakType: z.string().refine(value => value !== '', { message: "Kies uw daktype" }),
     stroomAansluiting: z.string().refine(value => value !== '', { message: "Kies uw type stroomaansluiting" }),
     klantOpmerkingen: z.string().optional(),
-    privacyAkkoord: z.boolean().refine(value => value),
+    privacyAkkoord: z.boolean().refine(value => value, { message: "Gaat u akkoord?" }),
     postcode: z.string().refine(value => postalCodeRegex.test(value), { message: "Ongeldige postcode" }),
     huisnummer: z.string().min(1, "Voer een geldig huisnummer in").max(10, "Voer een geldig huisnummer in"),
     // Add these lines to the existing schema in combined/schema.ts

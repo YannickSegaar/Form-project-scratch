@@ -153,6 +153,12 @@ html, body { @apply h-full overflow-hidden; }
 	@apply text-left; /* Aligns text to the left */
 }
 
+/* YRS: Styling zodat select dropdown background niet meer doorzichtig is */
+
+.select-background {
+    background-color: white;
+}
+
 /* YRS: Styling voor font color van de placeholder select value form component */
 .select-placeholder::placeholder {
 	color: #ffff00; /* Replace with the color you want */
@@ -573,4 +579,69 @@ html, body { @apply h-full overflow-hidden; }
   border-radius: 5px;
   margin-top: 20px;
   text-align: center;
+}
+
+/* YRS: Styling classes voor stepper-complete button */
+
+/* Base styling for the "Complete" button, similar to ".special-button" */
+.stepper-complete-button {
+  background: #015257; /* Your button color */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Your desired shadow effect */
+  border-radius: 50px; /* Rounded corners */
+  margin-bottom: 30px; /* Space at the bottom */
+  margin-top: 10px; /* Space at the top */
+  height: 4rem; /* Button height */
+  color: #ffffff; /* Text color */
+  font-weight: bold; /* Text weight */
+  font-size: 20px; /* Text size */
+  position: relative; /* For positioning the logos absolutely */
+  display: flex; /* To center the content and logos */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  gap: 40px; /* Space between logos and text, adjust as needed */
+  padding: 0 60px; /* Added padding to account for the space the logos will occupy */
+}
+
+/* Styling for the company logos inside the button */
+.stepper-complete-logo {
+  height: 60%; /* Logo height relative to the button size */
+  width: auto; /* Maintain the aspect ratio */
+  position: absolute;
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%);
+}
+
+/* Position the left logo */
+.stepper-complete-logo.left {
+  left: 20px; /* Distance from the left edge */
+}
+
+/* Position the right logo */
+.stepper-complete-logo.right {
+  right: 20px; /* Distance from the right edge */
+}
+
+/* YRS: Styling class zodat error messages in rood zijn */
+.error-message {
+    color: red;
+}
+
+/* YRS: Styling zodat input field background niet meer doorzichtig is (gebruik deze ook voor text area)*/
+
+.select-input-field {
+    background-color: white;
+}
+
+/* YRS: Styling classes voor toggle switch */
+
+[data-switch-root][data-state=checked] {
+    background-color: #015256; /* Change to the color you want for the checked state */
+}
+
+[data-switch-root][data-state=unchecked] {
+    background-color: #727475; /* Change to the color you want for the unchecked state */
+}
+
+[data-switch-thumb] {
+    background-color: white; /* Change to the color you want for the thumb */
 }

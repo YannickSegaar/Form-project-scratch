@@ -172,7 +172,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
 </div>
 
 <form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance use:focusTrap={isFocused}>
-    <Stepper stepTerm="Stap" class="bg-surface-600 p-3 rounded-lg" buttonBackLabel="← Terug" buttonNextLabel="Volgende Stap →">
+    <Stepper stepTerm="Stap" class="bg-surface-600 p-3 rounded-lg" buttonBackLabel="← Terug" buttonNextLabel="Volgende Stap →" buttonComplete="stepper-complete-button" buttonCompleteLabel="Verzenden">
       <!-- Step 1: Postcode, Huisnummer -->
       <Step>
         <svelte:fragment slot="header">Stap 1: Voor welke locatie wilt u de Quickscan uitvoeren? </svelte:fragment>
@@ -186,10 +186,10 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
           <span class="material-symbols-outlined icon">home</span>
           <Form.Label>Postcode</Form.Label>
         </div>
-        <Input {...attrs} id="postcode" class="placeholder-custom" type="postcode" bind:value={$formData.postcode} placeholder="1234 AA" />
+        <Input {...attrs} id="postcode" class="placeholder-custom select-input-field" type="postcode" bind:value={$formData.postcode} placeholder="1234 AA" />
       </div>
     </Form.Control>
-    <Form.FieldErrors /> 
+    <Form.FieldErrors class="error-message" /> 
   </Form.Field>
   
   <!-- Huisnummer -->
@@ -200,7 +200,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
           <span class="material-symbols-outlined icon">pin</span>
           <Form.Label>Huisnummer</Form.Label>
         </div>
-        <Input {...attrs} id="huisnummer" class="placeholder-custom" type="huisnummer" bind:value={$formData.huisnummer} placeholder="1 " />
+        <Input {...attrs} id="huisnummer" class="placeholder-custom select-input-field" type="huisnummer" bind:value={$formData.huisnummer} placeholder="1 " />
       </div>
     </Form.Control>
     <!-- Display street name and city -->
@@ -210,7 +210,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
       <button on:click={() => { streetName = ''; city = ''; }}>Klik hier om handmatig in te vullen</button>
     </p>
     {/if}
-    <Form.FieldErrors />
+    <Form.FieldErrors class="error-message" />
   </Form.Field>
 </div>
 
@@ -252,13 +252,13 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
             </span>
             <Form.Label>Dakoppervlak in m²</Form.Label>
           </div>
-          <Input {...attrs} class="placeholder-custom" type="number" placeholder="2500 m²" value={roofsizeDrawing} disabled={!$formData.dakoppervlak_toggle} />
+          <Input {...attrs} class="placeholder-custom select-input-field" type="number" placeholder="2500 m²" value={roofsizeDrawing} disabled={!$formData.dakoppervlak_toggle} />
         </div>
       </Form.Control>
       <Form.Description>
         Vul hier zelf uw dakoppervlak in
       </Form.Description>
-      <Form.FieldErrors />
+      <Form.FieldErrors class="error-message" />
     </Form.Field>
   </div>
   
@@ -275,23 +275,25 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
                           <span class="material-symbols-outlined icon">roofing</span>  
                           <Form.Label>Daktype</Form.Label>
                       </div>
+                      <div class="select-background"> <!-- YRS: Class zodat select dropdown menu niet meer doorzichtig is -->
                       <Select.Root selected={selectedDakType} onSelectedChange={(v) => { v && ($formData.dakType = v.value); }} required>
                           <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
                               <!-- Icon inside the select trigger -->
                               <!-- <span class="material-symbols-outlined icon">roofing</span> -->
                               <Select.Value placeholder="Kies uw daktype" class="select-placeholder" />
                           </Select.Trigger>
-                          <Select.Content>
+                          <Select.Content class="select-background"> <!-- YRS: Class zodat select dropdown menu niet meer doorzichtig is -->
                               <Select.Item value="Plat" label="Plat" />
                               <Select.Item value="Schuin" label="Schuin" />
                               <Select.Item value="Kas" label="Kas" />
                           </Select.Content>
                       </Select.Root>
+                    </div>
                       <input hidden bind:value={$formData.dakType} name={attrs.name} />
                   </div>
               </Form.Control>
               <!-- <Form.Description>Kies uw daktype.</Form.Description> YRS: omschrijving is overbodig -->
-              <Form.FieldErrors />
+              <Form.FieldErrors class="error-message" />
           </Form.Field>
       
       <!-- STROOMAANSLUITING -->
@@ -303,24 +305,26 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
                       <span class="material-symbols-outlined icon">electrical_services</span>  
                       <Form.Label>Stroomaansluiting</Form.Label>
                   </div>
+                  <div class="select-background"> <!-- YRS: Class zodat select dropdown menu niet meer doorzichtig is -->
                   <Select.Root selected={selectedStroomAansluiting} onSelectedChange={(v) => { v && ($formData.stroomAansluiting = v.value); }} required>
-                      <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
+                    <Select.Trigger {...attrs} class="flex items-center"> <!-- Use flex and items-center to align icon with text inside the select -->
                           <!-- Icon inside the select trigger -->
                           <!-- <span class="material-symbols-outlined icon">electrical_services</span> -->
                           <Select.Value placeholder="Kies uw stroomaansluiting" style="text-align: left; padding-left: 1rem;" />
                       </Select.Trigger>
-                      <Select.Content>
+                      <Select.Content class="select-background"> <!-- YRS: Class zodat select dropdown menu niet meer doorzichtig is -->
                           <Select.Item value="<630 KVA" label="< 630 KVA" />
                           <Select.Item value="630 KVA" label="630 KVA" />
                           <Select.Item value=">630 KVA" label="> 630 KVA" />
                           <Select.Item value="Weet ik niet" label="Weet ik niet" />
                       </Select.Content>
                   </Select.Root>
+                  </div>
                   <input hidden bind:value={$formData.stroomAansluiting} name={attrs.name} />
               </div>
           </Form.Control>
           <!-- <Form.Description>Kies uw stroomaansluiting.</Form.Description> -->
-          <Form.FieldErrors /> 
+          <Form.FieldErrors class="error-message" /> 
       </Form.Field>
     </div>
 </div>
@@ -342,11 +346,11 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
                       <span class="material-symbols-outlined icon" style="margin-bottom: 0.1rem; font-size: 1.55rem;">person</span> <!-- Inline style for vertical adjustment -->
                       <Form.Label>Naam</Form.Label>
                   </div>
-                  <Input {...attrs} class="placeholder-custom" type="naam" bind:value={$formData.naam} placeholder="Protium NL" />
+                  <Input {...attrs} class="placeholder-custom select-input-field" type="naam" bind:value={$formData.naam} placeholder="Protium NL" />
               </div>
           </Form.Control>
           <!-- <Form.Description>Wat is uw naam?</Form.Description> YRS: omschrijving is overbodig -->
-          <Form.FieldErrors />
+          <Form.FieldErrors class="error-message" />
       </Form.Field>
   
           <!-- TELEFOONNUMMER -->
@@ -358,11 +362,11 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
                           <span class="material-symbols-outlined icon">call</span>
                           <Form.Label>Telefoonnummer</Form.Label>
                       </div>
-                      <Input {...attrs} class="placeholder-custom" type="tel" bind:value={$formData.telefoonNummer} placeholder=" " />
+                      <Input {...attrs} class="placeholder-custom select-input-field" type="tel" bind:value={$formData.telefoonNummer} placeholder=" " />
                   </div>
               </Form.Control>
               <!-- <Form.Description>Wat is uw telefoonnummer?</Form.Description> YRS: omschrijving is overbodig -->
-              <Form.FieldErrors /> 
+              <Form.FieldErrors class="error-message" /> 
           </Form.Field>
   
       
@@ -375,11 +379,11 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
                       <span class="material-symbols-outlined icon">mail</span>
                       <Form.Label>E-mail</Form.Label>
                   </div>
-                  <Input {...attrs} class="placeholder-custom" type="email" bind:value={$formData.email} placeholder="hallo@protium.nl" />
+                  <Input {...attrs} class="placeholder-custom select-input-field" type="email" bind:value={$formData.email} placeholder="hallo@protium.nl" />
               </div>
           </Form.Control>
           <!-- <Form.Description>Wat is uw email?</Form.Description> YRS: omschrijving is overbodig -->
-          <Form.FieldErrors /> 
+          <Form.FieldErrors class="error-message" /> 
       </Form.Field>
     </div>
   
@@ -395,7 +399,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
                   <Textarea
                       {...attrs}
                       placeholder="Zijn er nog vragen of opmerkingen over uw Quickscan?"
-                      class="resize-none h-32 placeholder-custom"
+                      class="resize-none h-32 placeholder-custom select-input-field"
                       bind:value={$formData.klantOpmerkingen}
                   />
               </div>
@@ -403,33 +407,48 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
                   Zijn er nog belangrijke dingen die wij moeten weten?
               </Form.Description> YRS: omschrijving is overbodig -->
           </Form.Control>
-          <Form.FieldErrors />
+          <Form.FieldErrors class="error-message" />
       </Form.Field>
       
 <!-- CHECKBOX COMPONENT PRIVACY VERKLARING -->
 
 <Form.Field {form} name="privacyAkkoord" class="form-field full-width">
-    <Form.Control let:attrs>
-        <Checkbox {...attrs} bind:checked={$formData.privacyAkkoord} />
-        <Form.Label style="font-size: 12px;">&nbsp;&nbsp;Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label>
-    </Form.Control>
-    <!-- Separate block for the privacy policy link -->
-    <div class="full-width" style="font-size: 12px;">
-        Voor meer informatie bekijk onze
-        <a href="https://protium.nl/privacy-policy" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">privacyverklaring</a>.
-    </div>
-    <Form.FieldErrors />
+  <Form.Control let:attrs>
+      <div style="display: flex; align-items: center;">
+          <Checkbox {...attrs} bind:checked={$formData.privacyAkkoord} class="select-input-field" />
+          <Form.Label style="font-size: 12px;">&nbsp;&nbsp;Ik ga akkoord met de verwerking van de bovenstaande gegevens</Form.Label>
+      </div>
+  </Form.Control>
+  <!-- Separate block for the privacy policy link -->
+  <div class="full-width" style="font-size: 12px;">
+      Voor meer informatie bekijk onze
+      <a href="https://protium.nl/privacy-policy" target="_blank" rel="noopener noreferrer" style="color: blue; text-decoration: underline;">privacyverklaring</a>.
+  </div>
+  <Form.FieldErrors class="error-message" />
 </Form.Field>
   
   <!-- loading spinner vlak voor submit button -->
   {#if $delayed}<img src={spinner} alt="Loading..." class="spinner" />{/if}
   
-  <Form.Button class="special-button">
+  <!-- <Form.Button class="special-button">
       Verzenden
       <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-right" />
       <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="logo-inside-special-button-left" />
-    </Form.Button>
+    </Form.Button> -->
 
+    <!-- YRS: toevoegen van form button als Stepper Complete button -->
+    <!-- <div class="stepper-complete-button">
+        Verzenden
+        <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="stepper-complete-logo-left" />
+        <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="stepper-complete-logo-right" />
+      </div> -->
+
+        <!-- "Complete" button with new styling and logos -->
+      <button class="stepper-complete-button"> <!-- on:click={handleComplete}> -->
+    Verzenden
+    <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="stepper-complete-logo left" />
+    <img src="/Protium Favicon Yellow.png" alt="Protium Logo" class="stepper-complete-logo right" />
+  </button>
 
     <!-- Display success message after submission -->
   {#if isSubmitted}
