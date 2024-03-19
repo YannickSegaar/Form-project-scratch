@@ -172,10 +172,11 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
 </div>
 
 <form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance use:focusTrap={isFocused}>
-    <Stepper class="bg-surface-600 p-3 rounded-lg">
+    <Stepper stepTerm="Stap" class="bg-surface-600 p-3 rounded-lg" buttonBackLabel="← Terug" buttonNextLabel="Volgende Stap →">
       <!-- Step 1: Postcode, Huisnummer -->
       <Step>
         <svelte:fragment slot="header">Stap 1: Voor welke locatie wilt u de Quickscan uitvoeren? </svelte:fragment>
+        <svelte:fragment slot="navigation"> <div style="display: none;"></div> </svelte:fragment> <!-- YRS: Deze navigation slot leeg laten zodat "Terug" button voor eerste stap niet getoond wordt --> 
         <div class="first-step-fields-container"> <!-- This is the new container div for the form fields -->
 <!-- Postcode -->
 <Form.Field {form} name="postcode" class="form-field">
@@ -233,9 +234,9 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
         <div class="space-y-2"> <!-- Adjust 'space-y-2' to manage the space between elements -->
           <Form.Label>Dakoppervlak</Form.Label>
           <Form.Description>
-            <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
-            <p>Klopt dit niet?</p>
-            <p>Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
+            <p style="font-size: 12px;">Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
+            <p style="font-size: 12px;">Klopt dit niet?</p>
+            <p style="font-size: 12px;">Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
           </Form.Description>
         </div>
         <Switch includeInput {...attrs} bind:checked={$formData.dakoppervlak_toggle} />
