@@ -29,6 +29,7 @@
     import { onMount } from 'svelte';
     import { initGoogle, initAutocomplete } from '../addressValidation';
     import { getPostcodeData } from '../postcodeValidation';
+    import { AppBar } from '@skeletonlabs/skeleton'; //YRS: Import App Bar om app bar te maken voor Stepper form
 
 //     // YRS: Opzetten van postal code validation
 //     onMount(() => {
@@ -172,6 +173,17 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
 </div>
 
 <form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance use:focusTrap={isFocused}>
+  <AppBar class="appbar-custom p-3 rounded-lg">
+    <!-- Your AppBar content here -->
+    <svelte:fragment slot="lead">
+      <!-- Replace title with company logo image -->
+  <img 
+  src="/Protium Quickscan Logo.png" 
+  alt="Company Logo" 
+  class="logo-in-appbar"
+  />
+</svelte:fragment>
+</AppBar>
     <Stepper stepTerm="Stap" active="badge-active" class="stepper-custom p-3 rounded-lg" buttonBackLabel="← Terug" buttonNext="stepper-next-button" buttonNextLabel="Volgende Stap →" buttonComplete="stepper-complete-button" buttonCompleteLabel="Verzenden">
       <!-- Step 1: Postcode, Huisnummer -->
       <Step regionHeader="region-header-custom">
