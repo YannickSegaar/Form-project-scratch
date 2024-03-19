@@ -172,9 +172,9 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
 </div>
 
 <form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance use:focusTrap={isFocused}>
-    <Stepper stepTerm="Stap" class="bg-surface-600 p-3 rounded-lg" buttonBackLabel="← Terug" buttonNextLabel="Volgende Stap →" buttonComplete="stepper-complete-button" buttonCompleteLabel="Verzenden">
+    <Stepper stepTerm="Stap" active="badge-active" class="stepper-custom p-3 rounded-lg" buttonBackLabel="← Terug" buttonNext="stepper-next-button" buttonNextLabel="Volgende Stap →" buttonComplete="stepper-complete-button" buttonCompleteLabel="Verzenden">
       <!-- Step 1: Postcode, Huisnummer -->
-      <Step>
+      <Step regionHeader="region-header-custom">
         <svelte:fragment slot="header">Stap 1: Voor welke locatie wilt u de Quickscan uitvoeren? </svelte:fragment>
         <svelte:fragment slot="navigation"> <div style="display: none;"></div> </svelte:fragment> <!-- YRS: Deze navigation slot leeg laten zodat "Terug" button voor eerste stap niet getoond wordt --> 
         <div class="first-step-fields-container"> <!-- This is the new container div for the form fields -->
@@ -220,8 +220,8 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
       <!-- The rest of your Steps go here -->
   
     <!-- Step 2: Dakoppervlak, Stroomaansluiting, Daktype -->
-      <Step>
-        <svelte:fragment slot="header">Stap 2: Oppervlaktegegevens & eigenschappen</svelte:fragment>
+      <Step regionHeader="region-header-custom">
+        <svelte:fragment slot="header">Stap 2: Locatiekenmerken</svelte:fragment>
         <div class="step-2-container">
         <!-- Include Muted dakoppervlak, Dakoppervlak with action toggle switch, Stroomaansluiting, and Daktype fields here -->
   
@@ -332,7 +332,7 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
       </Step>
   
       <!-- Step 3: Personal Information -->
-      <Step>
+      <Step regionHeader="region-header-custom">
         <svelte:fragment slot="header">Stap 3: Persoonsgegevens</svelte:fragment>
         <div class="step-3-container"> <!-- Use the new container class -->
         <!-- Include Naam, Telefoonnummer, Email, Klantopmerkingen textarea, PrivacyAkkoord checkbox, and Submit button here -->

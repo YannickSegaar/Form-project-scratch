@@ -186,8 +186,8 @@ html, body { @apply h-full overflow-hidden; }
 
 /* YRS: FORM FIELD STYLING voor ruimte te creeren tussen elk form component */
 .form-field {
-	margin-bottom: 15px; /* Adjust as needed */
-	margin-top: 15px; /* Adjust as needed */
+	margin-bottom: 5px; /* Adjust as needed */
+	margin-top: 5px; /* Adjust as needed */
 	margin-right: 10px;
 	flex: 1;
 }
@@ -623,10 +623,10 @@ html, body { @apply h-full overflow-hidden; }
 
 /* YRS: Styling class zodat error messages in rood zijn */
 .error-message {
-    color: red;
+    color: #ef233c;
 }
 
-/* YRS: Styling zodat input field background niet meer doorzichtig is (gebruik deze ook voor text area)*/
+/* YRS: Styling zodat input field background niet meer doorzichtig is (gebruik deze ook voor text area en checkbox)*/
 
 .select-input-field {
     background-color: white;
@@ -639,9 +639,54 @@ html, body { @apply h-full overflow-hidden; }
 }
 
 [data-switch-root][data-state=unchecked] {
-    background-color: #727475; /* Change to the color you want for the unchecked state */
+    background-color: #dee2e6; /* Change to the color you want for the unchecked state */
 }
 
 [data-switch-thumb] {
     background-color: white; /* Change to the color you want for the thumb */
+}
+
+/* YRS: Styling voor stepper badges van Skeleton (stap 1, stap 2, etc. kleur) */
+
+.badge-custom {
+    background-color: #015256; /* Replace with your desired color */
+	color: #ffffff; /* Your desired badge text color */
+}
+
+/* YRS: Styling voor active stepper badge */
+
+.badge-active {
+    background-color: #fff59d; /* Replace with your desired color for active badge */
+    color: #000000; /* Replace with your desired text color for active badge */
+    font-size: 1.0em; /* Increase the size of the badge */
+}
+
+/* YRS: Styling classes voor Stepper Next button */
+
+/* Base styling for the "Next" button */
+.stepper-next-button {
+  background: #fff59d; /* Your button color */
+  color: #000000; /* Text color */
+}
+
+/* YRS: Styling classes voor Step regionHeader */
+
+.region-header-custom {
+    background-color: #015256; /* Replace with your desired background color */
+    color: #ffffff; /* Replace with your desired text color */
+    font-size: 1em; /* Replace with your desired font size */
+    padding: 5px 20px; /* 10px padding for top and bottom, 20px padding for left and right */
+    border-radius: 0px; /* Optional: add some rounding to the corners */
+}
+
+
+/* YRS: Styling zodat ik Stepper kan stylen, zoals background en/of een border rondom Stepper kan maken */
+
+.stepper-custom {
+    border: 0px solid #015256; /* Change '2px' to control the thickness and '#000000' to control the color */
+	/* YRS: Ik heb voor nu deze border rondom de stepper weg gelaten, want ik weet niet of ik het mooi vind */
+	background-color: #e5e6e4; /* Replace with your desired background color */
+    /* width: 500px; */ /* Replace with your desired width */
+    /* height: auto; */ /* Replace with your desired height, 'auto' will adjust the height based on the content */
+    /* Add your other styles here */
 }
