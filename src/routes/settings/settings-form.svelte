@@ -140,24 +140,6 @@
             <Form.FieldErrors />
             </Form.Field>
 
-                    <!-- YRS DAKOPPERVLAK MUTED (TEST OF DIT LUKT) -->            
-
-        <Form.Field {form} name="dakOppervlak" class="form-field">
-            <Form.Control let:attrs>
-                <div class="flex flex-col"> <!-- Use flex-col for vertical stacking -->
-                    <div class="flex items-center mb-2"> <!-- Flex container for icon and label -->
-                        <span class="material-symbols-outlined icon">lock</span>
-                        <Form.Label>Dakoppervlak in m²</Form.Label>
-                    </div>
-                        <Input {...attrs} class="placeholder-custom" type="number" bind:value={dakOppervlakInput} placeholder="2500 m²" on:input={handleInput} disabled />
-                </div>
-            </Form.Control>
-            <Form.Description>
-                <p>Volgens de teken tool is de dakgrootte {roofsizeDrawing} m²</p>
-                <p>Klopt dit niet? Gebruik dan de schakelaar om dit handmatig in te vullen.</p>
-            </Form.Description>
-            <Form.FieldErrors />
-            </Form.Field>
 
             
             <!-- DAKTYPE -->

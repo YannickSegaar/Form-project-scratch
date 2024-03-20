@@ -9,7 +9,7 @@ export const formSchema = z.object({
     naam: z.string().min(2, "Wat is uw naam?").max(50, "Naam mag maximaal 50 karakters bevatten"),
     email: z.string().min(8, "Voer een geldig e-mailadres in"),
     telefoonNummer: z.string().min(9, "Voer een geldig telefoonnummer in" ).max(15, "Telefoonnummer mag uit maximaal 15 karakters bestaan"),
-    dakOppervlak: z.number().optional(),
+    dakOppervlak: z.number().refine(value => value, { message: "Gebruik alstublieft de teken tool of voer de dakgrootte handmatig in." }),    
     dakType: z.string().refine(value => value !== '', { message: "Kies uw daktype" }),
     stroomAansluiting: z.string().refine(value => value !== '', { message: "Kies uw type stroomaansluiting" }),
     klantOpmerkingen: z.string().optional(),
@@ -19,7 +19,9 @@ export const formSchema = z.object({
     // Add these lines to the existing schema in combined/schema.ts
     dakoppervlak_toggle: z.boolean().default(false).optional(),
     dakoppervlakManual: z.number().optional(),
+    // roofsizeDrawing: z.number().optional(),
 
 });
 
 export type FormSchema = typeof formSchema;
+
