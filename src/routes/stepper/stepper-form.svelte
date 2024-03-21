@@ -37,21 +37,21 @@
 // });
 
   // Reactive statements to watch for changes in postcode and huisnummer
-  $: if ($formData.postcode && $formData.huisnummer) {
-    console.log('Postcode and huisnummer are filled');
-    getPostcodeData($formData.postcode, $formData.huisnummer)
-      .then(data => {
-        console.log('Received data from API:', data);
-        streetName = data.street;
-        city = data.city;
-      })
-      .catch(error => {
-        console.error('API call failed:', error);
-        toast.error("Postcode API call failed: " + error);
-      });
-  } else {
-    console.log('Postcode and/or huisnummer are not filled');
-  }
+  // $: if ($formData.postcode && $formData.huisnummer) {
+  //   console.log('Postcode and huisnummer are filled');
+  //   getPostcodeData($formData.postcode, $formData.huisnummer)
+  //     .then(data => {
+  //       console.log('Received data from API:', data);
+  //       streetName = data.street;
+  //       city = data.city;
+  //     })
+  //     .catch(error => {
+  //       console.error('API call failed:', error);
+  //       toast.error("Postcode API call failed: " + error);
+  //     });
+  // } else {
+  //   // console.log('Postcode and/or huisnummer are not filled');
+  // }
 
   let streetName = '';
   let city = '';
@@ -102,27 +102,27 @@ export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
     isSubmitted = true;
 
     // Call getPostcodeData when postcode and huisnummer are filled
-    if ($formData.postcode && $formData.huisnummer) {
-      console.log('Postcode and huisnummer are filled');
-      getPostcodeData($formData.postcode, $formData.huisnummer)
-        .then(data => {
-          console.log('Received data from API:', data);
-          streetName = data.street;
-          city = data.city;
-        })
-        .catch(error => {
-          console.error('API call failed:', error);
-          toast.error("Postcode API call failed: " + error);
-        });
-    } else {
-      console.log('Postcode and/or huisnummer are not filled');
-    }
-  } else {
-    console.log('Form is not valid');
-    toast.error("Please fix the errors in the form.");
-  }
-},
-});
+//     if ($formData.postcode && $formData.huisnummer) {
+//       console.log('Postcode and huisnummer are filled');
+//       getPostcodeData($formData.postcode, $formData.huisnummer)
+//         .then(data => {
+//           console.log('Received data from API:', data);
+//           streetName = data.street;
+//           city = data.city;
+//         })
+//         .catch(error => {
+//           console.error('API call failed:', error);
+//           toast.error("Postcode API call failed: " + error);
+//         });
+//     } else {
+//       console.log('Postcode and/or huisnummer are not filled');
+//     }
+//   } else {
+//     console.log('Form is not valid');
+//     toast.error("Please fix the errors in the form.");
+//   }
+// },
+// });
 
     const { form: formData, enhance, delayed } = form; // Add 'delayed' here
     $: selectedDakType = $formData.dakType ? { label: $formData.dakType, value: $formData.dakType } : undefined;

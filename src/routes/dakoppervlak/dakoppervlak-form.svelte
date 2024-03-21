@@ -392,4 +392,3 @@ class="logo-in-appbar"
     </Step>
   </Stepper>
 </form>
-
