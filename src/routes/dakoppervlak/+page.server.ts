@@ -22,6 +22,7 @@ export const actions: Actions = {
             return fail(400, { form });
         }
 
+
         // Prepare the data for Airtable
         const airtableData = {
             records: [
