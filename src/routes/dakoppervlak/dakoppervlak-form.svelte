@@ -32,13 +32,16 @@
   import { AppBar } from '@skeletonlabs/skeleton'; //YRS: Import App Bar om app bar te maken voor Stepper form
 
 
-export let data: SuperValidated<Infer<FormSchema>>;
+// export let data: SuperValidated<Infer<FormSchema>> = $page.data.switch;
+  export let data: SuperValidated<Infer<FormSchema>>;
+
 
 let isFocused: boolean = true;
 let isSubmitted = false;
 
 const form = superForm(data, {
 validators: zodClient(formSchema),
+dataType: "json",
 delayMs: 50,
 timeoutMs: 8000,
 onUpdated: ({ form: f }) => {
