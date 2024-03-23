@@ -3,6 +3,7 @@
 <!-- YRS: shadcn-svelte docs form creation -->
 
 <script lang="ts">
+
 	import * as Form from '$lib/components/ui/form';
 	import { Input } from '$lib/components/ui/input';
 	import * as Select from '$lib/components/ui/select'; // Import Select from shadcn-svelte
@@ -113,6 +114,7 @@
 	}
 
 	let locked = true; //YRS: Stepper locked op true zetten
+
 </script>
 
 <!-- YRS: SuperDebug zorgt voor window met JSON formatting van display form input -->
