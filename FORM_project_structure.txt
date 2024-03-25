@@ -1,0 +1,37 @@
+.
+├── FORM_project_structure.txt
+├── README.md
+├── ROmAIx - Skeleton Docs.txt
+├── RomAIx - Pre-Skeleton Forms.txt
+├── components.json
+├── concatenate.cjs
+├── declaration.d.ts
+├── my-custom-theme.ts
+├── package-lock.json
+├── package.json
+├── playwright.config.ts
+├── postcode_validator.js
+├── postcss.config.cjs
+├── src
+│   ├── app.d.ts
+│   ├── app.html
+│   ├── app.postcss
+│   ├── index.test.ts
+│   └── routes
+│       ├── +layout.svelte
+│       ├── +page.svelte
+│       ├── CalendlyModal.svelte
+│       ├── InstagramModal.svelte
+│       ├── addressValidation.ts
+│       ├── dakoppervlak
+│       │   ├── +page.server.ts
+│       │   ├── +page.svelte
+│       │   ├── TESTroofsizeDrawing.ts
+│       │   ├── dakoppervlak-form.svelte
+│       │   └── schema.ts
+│       ├── hovercard.svelte
+├── svelte.config.js
+├── tailwind.config.js
+├── tailwind.config.ts
+├── tsconfig.json
+└── vite.config.ts

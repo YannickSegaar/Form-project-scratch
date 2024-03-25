@@ -31,29 +31,29 @@
 
 	///// Debugging ///////////////////////////////////////////////////
 
-	const DEBUG = true;
+	// const DEBUG = true;
 
-	const testData = {
-		naam: 'Name',
-		email: 'test@example.com',
-		telefoonNummer: '+46701234567',
-		dakOppervlak: 8500,
-		dakType: 'Plat',
-		stroomAansluiting: '630 KVA',
-		klantOpmerkingen: undefined,
-		privacyAkkoord: true,
-		postcode: '1234 AA',
-		huisnummer: '33',
-		dakoppervlak_toggle: true,
-		dakoppervlakManual: 8500
-	};
+	// const testData = {
+	// 	naam: 'Name',
+	// 	email: 'test@example.com',
+	// 	telefoonNummer: '+46701234567',
+	// 	dakOppervlak: 8500,
+	// 	dakType: 'Plat',
+	// 	stroomAansluiting: '630 KVA',
+	// 	klantOpmerkingen: undefined,
+	// 	privacyAkkoord: true,
+	// 	postcode: '1234 AA',
+	// 	huisnummer: '33',
+	// 	dakoppervlak_toggle: true,
+	// 	dakoppervlakManual: 8500
+	// };
 
-	onMount(async () => {
-		if (DEBUG && dev) {
-			await tick(); // Wait for the stores to update
-			form.form.update(() => testData, { taint: false });
-		}
-	});
+	// onMount(async () => {
+	// 	if (DEBUG && dev) {
+	// 		await tick(); // Wait for the stores to update
+	// 		form.form.update(() => testData, { taint: false });
+	// 	}
+	// });
 
 	///////////////////////////////////////////////////////////////////
 
@@ -119,11 +119,11 @@
 
 <!-- YRS: SuperDebug zorgt voor window met JSON formatting van display form input -->
 
-<div class="mx-auto flex max-w-md flex-col">
+<!-- <div class="mx-auto flex max-w-md flex-col">
 	{#if browser}
 		<SuperDebug data={{ $errors, $formData }} />
 	{/if}
-</div>
+</div> -->
 
 <form method="POST" class="mx-auto flex max-w-md flex-col" use:enhance use:focusTrap={isFocused}>
 	<AppBar class="appbar-custom rounded-lg p-3">
