@@ -138,6 +138,7 @@
 		active="badge-active"
 		class="stepper-custom rounded-lg p-3"
 		buttonBackLabel="← Terug"
+		buttonBack="stepper-back-button"
 		buttonNext="stepper-next-button"
 		buttonNextLabel="Volgende Stap →"
 		buttonComplete="stepper-complete-button"

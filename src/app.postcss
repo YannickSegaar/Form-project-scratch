@@ -595,7 +595,7 @@ html, body { @apply h-full overflow-hidden; }
   font-weight: bold; /* Text weight */
   font-size: 20px; /* Text size */
   position: relative; /* For positioning the logos absolutely */
-  display: none; /* To center the content and logos */
+  display: none; /* YRS: dit was eerst flex, maar heb hem nu op none gezet zodat stepper default button weg is. To center the content and logos */ 
   align-items: center; /* Center items vertically */
   justify-content: center; /* Center items horizontally */
   gap: 40px; /* Space between logos and text, adjust as needed */
@@ -669,6 +669,14 @@ html, body { @apply h-full overflow-hidden; }
   color: #000000; /* Text color */
 }
 
+/* YRS: Styling classes voor Stepper Back button */
+
+/* Base styling for the "Back" button */
+.stepper-back-button {
+  background: #ced4da; /* Your button color */
+  color: #000000; /* Text color */
+}
+
 /* YRS: Styling classes voor Step regionHeader */
 
 .region-header-custom {
@@ -699,4 +707,5 @@ html, body { @apply h-full overflow-hidden; }
     font-size: 16px; /* Replace with your desired font size */
     color: #ffffff; /* Replace with your desired font color */
     width: 100%; /* This will make the AppBar the same width as its parent container */
+	margin-top: 50px; /* YRS: Toegevoegd om wat ruimte te houden tussen onderkant van App Bar en bovenkant van form. Adjust this value as needed */
 }

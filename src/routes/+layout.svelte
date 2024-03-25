@@ -96,10 +96,10 @@ function openInstagramModal() {
             </svelte:fragment>
         </AppBar>
     </svelte:fragment>
-    <svelte:fragment slot="pageHeader">Page Header</svelte:fragment>
+    <!-- <svelte:fragment slot="pageHeader">Page Header</svelte:fragment> --> <!-- YRS: Page Header tijdelijk weg gehaald van layout omdat hij niet gebruikt werd-->
     <slot />
-    <svelte:fragment slot="pageFooter">Page Footer</svelte:fragment>
-    <svelte:fragment slot="footer">Footer</svelte:fragment>
+    <!-- <svelte:fragment slot="pageFooter">Page Footer</svelte:fragment> --> <!-- YRS: Page Footer tijdelijk weg gehaald van layout omdat hij niet gebruikt werd-->
+    <!-- <svelte:fragment slot="footer">Footer</svelte:fragment> --> <!-- YRS: Page Footer tijdelijk weg gehaald van layout omdat hij niet gebruikt werd-->
 </AppShell>
 
 
